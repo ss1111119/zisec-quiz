@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>資通安全概論 模擬測驗</title>
+<style>
+  :root{
+    --bg:#f4f5f7; --card:#fff; --ink:#1d2129; --muted:#6b7280; --line:#e3e5e8;
+    --brand:#1a4f8a; --brand-soft:#e8f0f9; --ok:#1a7f4b; --ok-soft:#e6f4ec;
+    --bad:#b3261e; --bad-soft:#fdecea; --warn:#8a5a00; --warn-soft:#fff4e0;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);
+    font-family:"Noto Sans TC","Microsoft JhengHei",system-ui,sans-serif;
+    font-size:16px;line-height:1.75}
+  .wrap{max-width:900px;margin:0 auto;padding:24px 16px 80px}
+  h1{font-size:22px;margin:0 0 4px}
+  h2{font-size:18px;margin:0 0 12px}
+  .sub{color:var(--muted);font-size:14px;margin:0 0 20px}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:20px;margin-bottom:16px}
+  textarea{width:100%;min-height:220px;padding:12px;border:1px solid var(--line);border-radius:8px;
+    font-family:ui-monospace,Consolas,monospace;font-size:13px;line-height:1.6;resize:vertical}
+  button{font:inherit;font-size:15px;padding:9px 18px;border-radius:8px;border:1px solid var(--brand);
+    background:var(--brand);color:#fff;cursor:pointer}
+  button:hover{filter:brightness(1.08)}
+  button.ghost{background:#fff;color:var(--brand)}
+  button.sm{font-size:13px;padding:5px 12px}
+  button:disabled{opacity:.45;cursor:not-allowed}
+  .row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+  label.opt{display:flex;gap:10px;align-items:flex-start;padding:9px 12px;border:1px solid var(--line);
+    border-radius:8px;margin:7px 0;cursor:pointer;background:#fff}
+  label.opt:hover{background:#fafbfc}
+  label.opt.sel{border-color:var(--brand);background:var(--brand-soft)}
+  label.opt input{margin-top:6px;flex:none}
+  label.opt .k{font-weight:700;flex:none;min-width:1.6em}
+  .q{border-bottom:1px solid var(--line);padding:20px 0}
+  .q:last-child{border-bottom:none}
+  .qhead{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:8px}
+  .tag{font-size:12px;padding:2px 9px;border-radius:99px;background:#eef0f2;color:var(--muted)}
+  .tag.multi{background:var(--warn-soft);color:var(--warn);font-weight:700}
+  .tag.single{background:var(--brand-soft);color:var(--brand)}
+  .stem{margin:6px 0 10px;white-space:pre-wrap}
+  .bar{position:sticky;top:0;z-index:9;background:var(--card);border:1px solid var(--line);
+    border-radius:10px;padding:10px 16px;margin-bottom:16px;display:flex;justify-content:space-between;
+    align-items:center;gap:12px;flex-wrap:wrap}
+  .clock{font-variant-numeric:tabular-nums;font-size:20px;font-weight:700}
+  .clock.low{color:var(--bad)}
+  .pal{display:flex;flex-wrap:wrap;gap:6px;margin-top:4px}
+  .pal a{display:grid;place-items:center;width:32px;height:32px;border:1px solid var(--line);
+    border-radius:6px;font-size:13px;text-decoration:none;color:var(--muted);background:#fff}
+  .pal a.done{background:var(--brand-soft);border-color:var(--brand);color:var(--brand);font-weight:700}
+  .score{font-size:44px;font-weight:800;line-height:1.2}
+  .pass{color:var(--ok)}.fail{color:var(--bad)}
+  .box{border-left:4px solid var(--line);padding:10px 14px;margin-top:10px;background:#fafbfc;border-radius:0 8px 8px 0}
+  .box.ok{border-color:var(--ok);background:var(--ok-soft)}
+  .box.bad{border-color:var(--bad);background:var(--bad-soft)}
+  .box h4{margin:0 0 4px;font-size:13px;color:var(--muted);letter-spacing:.04em}
+  .box p{margin:0;white-space:pre-wrap}
+  .opt.correct{border-color:var(--ok);background:var(--ok-soft)}
+  .opt.wrong{border-color:var(--bad);background:var(--bad-soft)}
+  .msg{padding:10px 14px;border-radius:8px;margin-bottom:12px;font-size:14px}
+  .msg.err{background:var(--bad-soft);color:var(--bad)}
+  .msg.info{background:var(--brand-soft);color:var(--brand)}
+  .hide{display:none}
+  input[type=number]{font:inherit;width:70px;padding:6px 8px;border:1px solid var(--line);border-radius:6px}
+  table{width:100%;border-collapse:collapse;font-size:14px}
+  th,td{border-bottom:1px solid var(--line);padding:7px 8px;text-align:left;vertical-align:top}
+  th{color:var(--muted);font-weight:600;font-size:13px}
+  .foot{color:var(--muted);font-size:13px;margin-top:8px}
+  @media print{
+    body{background:#fff}
+    .bar,.pal,button,.noprint{display:none !important}
+    .card{border:none;padding:0}
+    .q{page-break-inside:avoid}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<!-- ========== 匯入 ========== -->
+<section id="scr-import">
+  <h1>資通安全概論 模擬測驗</h1>
+  <p class="sub">選一份題庫開始作答,或把 NotebookLM／Gemini 產出的題目整段貼進來。答案與解析會先藏起來,交卷後才顯示。</p>
+
+  <div class="card hide" id="bankfiles">
+    <h2>內建題庫</h2>
+    <div id="bankfiles-body"></div>
+  </div>
+
+  <div class="card">
+    <h2>或自行貼上題目</h2>
+    <div id="parse-msg"></div>
+    <textarea id="raw" placeholder="從「第 1 題」開始整段複製貼上即可,後面的檢查表與統計會自動忽略。"></textarea>
+    <div class="row" style="margin-top:12px">
+      <button onclick="doParse()">解析題目</button>
+      <button class="ghost" onclick="document.getElementById('raw').value='';document.getElementById('parse-msg').innerHTML='';document.getElementById('preview').classList.add('hide')">清空</button>
+    </div>
+  </div>
+
+  <div class="card hide" id="preview">
+    <h2>2. 確認並開始</h2>
+    <div id="preview-body"></div>
+    <div class="row" style="margin-top:16px">
+      <span>作答時間</span><input type="number" id="mins" min="1" max="300" value="75"><span>分鐘</span>
+      <label style="display:flex;gap:6px;align-items:center"><input type="checkbox" id="shuffle"> 題目隨機排序</label>
+    </div>
+    <div class="row" style="margin-top:14px">
+      <button onclick="startExam()">開始作答</button>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>累積題庫</h2>
+    <div id="bank-body"></div>
+    <div class="row" style="margin-top:12px">
+      <button class="ghost sm" onclick="exportPoints()">匯出「已考過考點」清單</button>
+      <button class="ghost sm" onclick="exportJSON()">備份 JSON</button>
+      <button class="ghost sm" onclick="clearBank()">清除題庫</button>
+    </div>
+    <p class="foot">下次請 NotebookLM 出題時,把「已考過考點」清單連同命題規則一起貼進去,規則第 3 條的考點盤點才有依據(它記不住前幾次對話)。</p>
+    <textarea id="pointsOut" class="hide" style="min-height:200px;margin-top:12px"></textarea>
+  </div>
+</section>
+
+<!-- ========== 作答 ========== -->
+<section id="scr-exam" class="hide">
+  <div class="bar">
+    <div>
+      <div style="font-size:13px;color:var(--muted)">已作答 <span id="answered">0</span> / <span id="total">0</span></div>
+      <div class="clock" id="clock">75:00</div>
+    </div>
+    <div class="row">
+      <button class="ghost sm" onclick="window.print()">列印試題卷</button>
+      <button onclick="submitExam(false)">交卷</button>
+    </div>
+  </div>
+  <div class="card noprint"><div class="pal" id="pal"></div></div>
+  <div class="card" id="exam-body"></div>
+  <div class="row"><button onclick="submitExam(false)">交卷</button></div>
+</section>
+
+<!-- ========== 成績 ========== -->
+<section id="scr-result" class="hide">
+  <div class="card">
+    <h2>測驗結果</h2>
+    <div class="score" id="score">0</div>
+    <div id="result-sum" class="sub"></div>
+    <div class="row">
+      <button class="ghost" onclick="retryWrong()" id="btn-retry">只重做錯題</button>
+      <button class="ghost" onclick="show('scr-import');renderBank()">回到匯入</button>
+      <label style="display:flex;gap:6px;align-items:center;margin-left:8px">
+        <input type="checkbox" id="onlyWrong" onchange="renderReview()"> 只看錯題
+      </label>
+    </div>
+  </div>
+  <div class="card" id="review-body"></div>
+</section>
+
+</div>
+<script>
+const LS='zisec-quiz-v1';
+let parsed=[], exam=null;
+
+/* ---------- 解析器 ---------- */
+function toHalf(s){return s.replace(/[Ａ-Ｈ]/g,c=>String.fromCharCode(c.charCodeAt(0)-0xFEE0));}
+
+function parseQuiz(raw){
+  const errs=[], out=[];
+  let text=raw.replace(/\r/g,'').replace(/ /g,' ');
+  text=text.replace(/（\s*([A-HＡ-Ｈ])\s*）/g,(m,p)=>'('+toHalf(p)+')');
+  text=text.split(/出題後檢查表|【本次出題統計】/)[0];
+
+  const parts=text.split(/第\s*(\d+)\s*題/);
+  for(let i=1;i<parts.length;i+=2){
+    const no=parts[i], body=parts[i+1]||'';
+    const unit=(body.match(/【\s*單元\s*[：:]\s*第?\s*(\d+)/)||[])[1]||'';
+    const typeRaw=(body.match(/【\s*題型\s*[：:]\s*([^】]+)】/)||[])[1]||'';
+    const point=((body.match(/【\s*核心考點\s*[：:]\s*([^】]+)】/)||[])[1]||'').trim();
+
+    const ansM=body.match(/答案\s*[：:]\s*([^\n]*)/);
+    if(!ansM){errs.push('第 '+no+' 題:找不到「答案：」');continue;}
+    const answer=(ansM[1].match(/[A-HＡ-Ｈ]/g)||[]).map(toHalf);
+    if(!answer.length){errs.push('第 '+no+' 題:答案讀不出選項代號');continue;}
+
+    let seg=body.slice(0,ansM.index);
+    const stemM=seg.match(/題\s*目\s*[：:]/);
+    if(stemM) seg=seg.slice(stemM.index+stemM[0].length);
+    else{const lb=seg.lastIndexOf('】'); if(lb>=0) seg=seg.slice(lb+1);}
+
+    const marks=[]; const re=/\(([A-H])\)/g; let m;
+    while((m=re.exec(seg))!==null) marks.push({k:m[1],s:m.index,e:re.lastIndex});
+    if(marks.length<2){errs.push('第 '+no+' 題:選項少於 2 個,已略過');continue;}
+    const stem=seg.slice(0,marks[0].s).trim();
+    const options=marks.map((mk,j)=>({
+      key:mk.k,
+      text:seg.slice(mk.e,(j+1<marks.length?marks[j+1].s:seg.length)).trim().replace(/\s*\n\s*/g,' ')
+    }));
+
+    const tail=body.slice(ansM.index);
+    const expl=((tail.match(/解\s*析\s*[：:]([\s\S]*?)(?=教材依據\s*[：:]|$)/)||[])[1]||'').trim();
+    const src=((tail.match(/教材依據\s*[：:]([\s\S]*)$/)||[])[1]||'').trim();
+
+    const multi=/複選/.test(typeRaw)||answer.length>1;
+    if(multi&&answer.length<2) errs.push('第 '+no+' 題:標示複選但答案只有一個,請確認');
+    if(!multi&&answer.length>1) errs.push('第 '+no+' 題:標示單選但答案有多個,已當複選處理');
+    if(answer.some(a=>!options.find(o=>o.key===a))) errs.push('第 '+no+' 題:答案代號不在選項中');
+
+    out.push({no,unit,point,multi,stem,options,answer,expl,src});
+  }
+  return {items:out,errs};
+}
+
+async function loadBankList(){
+  try{
+    const r=await fetch('banks/index.json',{cache:'no-store'});
+    if(!r.ok)return;
+    const list=await r.json();
+    if(!list.length)return;
+    let h='';
+    list.forEach((b,i)=>{
+      h+='<div style="padding:10px 0;border-bottom:1px solid var(--line)">'
+        +'<div class="row" style="justify-content:space-between">'
+        +'<strong>'+esc(b.title)+'</strong>'
+        +'<button class="sm" onclick="loadBankFile('+i+')">載入 '+(b.count||'')+' 題</button></div>'
+        +(b.note?'<p class="foot" style="margin:4px 0 0">'+esc(b.note)+'</p>':'')+'</div>';
+    });
+    window.__banks=list;
+    document.getElementById('bankfiles-body').innerHTML=h;
+    document.getElementById('bankfiles').classList.remove('hide');
+  }catch(e){/* 本機以 file:// 開啟時取不到,維持貼上模式 */}
+}
+
+async function loadBankFile(i){
+  const b=window.__banks[i];
+  const msg=document.getElementById('parse-msg');
+  try{
+    const r=await fetch('banks/'+b.file,{cache:'no-store'});
+    if(!r.ok)throw new Error(r.status);
+    document.getElementById('raw').value=await r.text();
+    doParse();
+    document.getElementById('preview').scrollIntoView({behavior:'smooth'});
+  }catch(e){
+    msg.innerHTML='<div class="msg err">載入失敗:'+esc(String(e))+'</div>';
+  }
+}
+
+function doParse(){
+  const raw=document.getElementById('raw').value;
+  const msg=document.getElementById('parse-msg');
+  if(!raw.trim()){msg.innerHTML='<div class="msg err">請先貼上題目。</div>';return;}
+  const r=parseQuiz(raw);
+  parsed=r.items;
+  let h='';
+  if(!parsed.length){
+    h='<div class="msg err">一題都沒解析出來。請確認格式是否為「第 N 題 …(A)…(B)… 答案：X 解析：… 教材依據：…」。</div>';
+    msg.innerHTML=h;document.getElementById('preview').classList.add('hide');return;
+  }
+  const single=parsed.filter(q=>!q.multi).length;
+  h='<div class="msg info">解析成功 '+parsed.length+' 題(單選 '+single+' 題、複選 '+(parsed.length-single)+' 題)。</div>';
+  if(r.errs.length) h+='<div class="msg err">需注意:<br>'+r.errs.join('<br>')+'</div>';
+  msg.innerHTML=h;
+
+  let t='<table><tr><th>題號</th><th>單元</th><th>題型</th><th>核心考點</th><th>選項</th><th>答案</th></tr>';
+  parsed.forEach(q=>{t+='<tr><td>'+esc(q.no)+'</td><td>'+esc(q.unit)+'</td><td>'+(q.multi?'複選':'單選')
+    +'</td><td>'+esc(q.point)+'</td><td>'+q.options.length+'</td><td>'+q.answer.join(', ')+'</td></tr>';});
+  t+='</table>';
+  document.getElementById('preview-body').innerHTML=t;
+  document.getElementById('mins').value=Math.max(5,Math.round(parsed.length/50*75));
+  document.getElementById('preview').classList.remove('hide');
+}
+
+/* ---------- 作答 ---------- */
+function startExam(items){
+  const list=(items&&items.length)?items:parsed.slice();
+  if(!list.length)return;
+  if(!items&&document.getElementById('shuffle').checked){
+    for(let i=list.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[list[i],list[j]]=[list[j],list[i]];}
+  }
+  const mins=items?Math.max(5,Math.round(list.length/50*75)):(+document.getElementById('mins').value||75);
+  exam={items:list,resp:list.map(()=>[]),left:mins*60,timer:null,submitted:false};
+  if(!items) saveBank(parsed);
+  renderExam();show('scr-exam');
+  document.getElementById('total').textContent=list.length;
+  tick();exam.timer=setInterval(tick,1000);
+  window.scrollTo(0,0);
+}
+
+function tick(){
+  if(!exam||exam.submitted)return;
+  const c=document.getElementById('clock');
+  const m=Math.floor(exam.left/60),s=exam.left%60;
+  c.textContent=String(m).padStart(2,'0')+':'+String(s).padStart(2,'0');
+  c.classList.toggle('low',exam.left<=300);
+  if(exam.left<=0){clearInterval(exam.timer);submitExam(true);return;}
+  exam.left--;
+}
+
+function renderExam(){
+  let h='',pal='';
+  exam.items.forEach((q,i)=>{
+    h+='<div class="q" id="q'+i+'"><div class="qhead"><strong>第 '+(i+1)+' 題</strong>'
+      +'<span class="tag '+(q.multi?'multi':'single')+'">'+(q.multi?'複選':'單選')+'</span>'
+      +(q.unit?'<span class="tag">第 '+esc(q.unit)+' 單元</span>':'')+'</div>'
+      +'<div class="stem">'+esc(q.stem)+'</div>';
+    q.options.forEach(o=>{
+      h+='<label class="opt" id="o'+i+o.key+'"><input type="'+(q.multi?'checkbox':'radio')+'" name="q'+i+'" value="'+o.key+'" onchange="pick('+i+',this)">'
+        +'<span class="k">('+o.key+')</span><span>'+esc(o.text)+'</span></label>';
+    });
+    h+='</div>';
+    pal+='<a href="#q'+i+'" id="p'+i+'">'+(i+1)+'</a>';
+  });
+  document.getElementById('exam-body').innerHTML=h;
+  document.getElementById('pal').innerHTML=pal;
+}
+
+function pick(i,el){
+  const q=exam.items[i];
+  if(q.multi){
+    const set=new Set(exam.resp[i]);
+    el.checked?set.add(el.value):set.delete(el.value);
+    exam.resp[i]=[...set].sort();
+  }else exam.resp[i]=[el.value];
+  q.options.forEach(o=>{
+    document.getElementById('o'+i+o.key).classList.toggle('sel',exam.resp[i].includes(o.key));
+  });
+  document.getElementById('p'+i).classList.toggle('done',exam.resp[i].length>0);
+  document.getElementById('answered').textContent=exam.resp.filter(r=>r.length).length;
+}
+
+function submitExam(auto){
+  if(exam.submitted)return;
+  const blank=exam.resp.filter(r=>!r.length).length;
+  if(!auto&&blank&&!confirm('還有 '+blank+' 題未作答,確定交卷?'))return;
+  exam.submitted=true;clearInterval(exam.timer);
+  let right=0;
+  exam.items.forEach((q,i)=>{
+    const a=[...q.answer].sort().join(''),r=[...exam.resp[i]].sort().join('');
+    q._ok=(a===r&&r!=='');if(q._ok)right++;
+  });
+  const total=exam.items.length,pts=Math.round(right*2*(50/total)*100)/100;
+  const pass=pts>=70;
+  document.getElementById('score').innerHTML='<span class="'+(pass?'pass':'fail')+'">'+pts+' 分</span>';
+  document.getElementById('result-sum').textContent=
+    '答對 '+right+' / '+total+' 題　'+(auto?'(時間到自動交卷)　':'')
+    +'換算為正式考試 50 題滿分 100 分制,'+(pass?'達到 70 分及格標準':'未達 70 分及格標準');
+  document.getElementById('btn-retry').disabled=(right===total);
+  document.getElementById('onlyWrong').checked=false;
+  renderReview();show('scr-result');window.scrollTo(0,0);
+}
+
+function renderReview(){
+  const only=document.getElementById('onlyWrong').checked;
+  let h='';
+  exam.items.forEach((q,i)=>{
+    if(only&&q._ok)return;
+    const mine=exam.resp[i].length?exam.resp[i].join(', '):'未作答';
+    h+='<div class="q"><div class="qhead"><strong>第 '+(i+1)+' 題</strong>'
+      +'<span class="tag '+(q.multi?'multi':'single')+'">'+(q.multi?'複選':'單選')+'</span>'
+      +(q.unit?'<span class="tag">第 '+esc(q.unit)+' 單元</span>':'')
+      +'<span class="tag" style="background:'+(q._ok?'var(--ok-soft);color:var(--ok)':'var(--bad-soft);color:var(--bad)')+';font-weight:700">'
+      +(q._ok?'答對':'答錯')+'</span></div>'
+      +'<div class="stem">'+esc(q.stem)+'</div>';
+    q.options.forEach(o=>{
+      const isAns=q.answer.includes(o.key),chose=exam.resp[i].includes(o.key);
+      const cls=isAns?'correct':(chose?'wrong':'');
+      h+='<div class="opt '+cls+'"><span class="k">('+o.key+')</span><span>'+esc(o.text)
+        +(isAns?' <strong>← 正解</strong>':'')+(chose&&!isAns?' <strong>← 你的選擇</strong>':'')+'</span></div>';
+    });
+    h+='<div class="box '+(q._ok?'ok':'bad')+'"><h4>答案</h4><p>正解 '+q.answer.join(', ')+'　你的作答 '+mine+'</p></div>';
+    if(q.expl) h+='<div class="box"><h4>解析</h4><p>'+esc(q.expl)+'</p></div>';
+    if(q.src) h+='<div class="box"><h4>教材依據</h4><p>'+esc(q.src)+'</p></div>';
+    if(q.point) h+='<div class="box"><h4>核心考點</h4><p>'+esc(q.point)+'</p></div>';
+    h+='</div>';
+  });
+  document.getElementById('review-body').innerHTML=h||'<p class="sub">沒有錯題。</p>';
+}
+
+function retryWrong(){
+  const w=exam.items.filter(q=>!q._ok);
+  if(w.length)startExam(w);
+}
+
+/* ---------- 題庫 ---------- */
+function loadBank(){try{return JSON.parse(localStorage.getItem(LS))||[];}catch(e){return[];}}
+function saveBank(items){
+  const bank=loadBank();
+  const stamp=new Date().toISOString().slice(0,16).replace('T',' ');
+  bank.push({date:stamp,items:items.map(q=>({no:q.no,unit:q.unit,point:q.point,multi:q.multi,stem:q.stem}))});
+  localStorage.setItem(LS,JSON.stringify(bank));renderBank();
+}
+function renderBank(){
+  const bank=loadBank(),n=bank.reduce((a,b)=>a+b.items.length,0);
+  document.getElementById('bank-body').innerHTML=bank.length
+    ?'<p class="sub" style="margin:0">已累積 '+bank.length+' 份、共 '+n+' 題。<br>'
+      +bank.map(b=>b.date+'（'+b.items.length+' 題）').join('<br>')+'</p>'
+    :'<p class="sub" style="margin:0">尚未累積任何題目。每次開始作答時會自動存入。</p>';
+}
+function exportPoints(){
+  const bank=loadBank();
+  if(!bank.length){alert('題庫是空的。');return;}
+  let t='以下為過去已經出過的題目與核心考點,全部列入黑名單,本次命題不得再使用相同核心考點:\n\n';
+  let i=1;
+  bank.forEach(b=>b.items.forEach(q=>{
+    t+=i+++'. 【第'+(q.unit||'?')+'單元】【'+(q.multi?'複選':'單選')+'】'+q.point
+      +'\n   題幹摘要:'+q.stem.slice(0,45)+'…\n';
+  }));
+  const ta=document.getElementById('pointsOut');
+  ta.value=t;ta.classList.remove('hide');ta.select();
+  try{document.execCommand('copy');alert('已複製到剪貼簿,可直接貼進 NotebookLM。');}catch(e){alert('請手動複製下方文字。');}
+}
+function exportJSON(){
+  const blob=new Blob([JSON.stringify(loadBank(),null,2)],{type:'application/json'});
+  const a=document.createElement('a');
+  a.href=URL.createObjectURL(blob);a.download='資安題庫備份.json';a.click();
+}
+function clearBank(){
+  if(confirm('確定清除所有累積題目?此動作無法復原。')){localStorage.removeItem(LS);renderBank();}
+}
+
+/* ---------- 工具 ---------- */
+function esc(s){return String(s==null?'':s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));}
+function show(id){['scr-import','scr-exam','scr-result'].forEach(s=>
+  document.getElementById(s).classList.toggle('hide',s!==id));}
+renderBank();
+loadBankList();
+</script>
+</body>
+</html>

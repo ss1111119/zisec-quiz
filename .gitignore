@@ -1,0 +1,7 @@
+# 官方教材與法規 PDF：體積大、不需版控，且不宜轉載
+*.pdf
+
+# 暫存
+*.tmp
+.DS_Store
+Thumbs.db
