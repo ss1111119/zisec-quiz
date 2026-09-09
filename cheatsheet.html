@@ -92,6 +92,9 @@
   <a href="#t11">風險評鑑三階段</a>
   <a href="#t12">數字總表</a>
   <a href="#t13">SSDLC 各階段</a>
+  <a href="#t14">弱點掃描 PDCA</a>
+  <a href="#t15">程式庫與職責區隔</a>
+  <a href="#t16">組態管理與 GCB</a>
   <button id="mask" onclick="toggleMask()">背誦模式</button>
   <input id="q" placeholder="輸入關鍵字過濾表格列，例如「滲透」「罰鍰」「36」">
 </nav>
@@ -576,6 +579,79 @@ VANS 是唯一 C 級也要、但期限放寬到 2 年的項目。</div>
 <li>SSDLC 部署維運：系統源碼備份是<b>普級</b>就要；版本控制與變更管理才是中級以上</li>
 <li>獲得程序：第三方元件盤點三級皆須，但「環境區隔」只有中、高級</li>
 </ul>
+</div>
+
+<h2 id="t14">十四、弱點掃描六步驟與 PDCA 對應 <span class="tag v">已核對</span></h2>
+<div class="card">
+<p class="sub" style="margin:0 0 10px">教材圖 51 弱點掃描流程圖。六個步驟各自標了 PDCA 階段，且<b>不是</b>依序 P→D→C→A，最容易考的就是這個錯位。</p>
+<div class="scroll">
+<table>
+<thead><tr><th class="c">#</th><th>步驟</th><th class="c">PDCA</th><th>主要工作</th></tr></thead>
+<tbody>
+<tr><td class="c">1</td><td>確認掃描需求</td><td class="c"><b class="hl">Plan</b></td><td>定義掃描目標、類型、範圍，確認合規性要求及排程；需<b>合法授權並知會相關單位</b>，避免影響業務</td></tr>
+<tr><td class="c">2</td><td>執行初掃</td><td class="c"><b class="hl">Do</b></td><td>依需求使用選定工具（如 Nessus、Qualys）對目標進行首次全面掃描，配置掃描參數並執行自動化掃描</td></tr>
+<tr><td class="c">3</td><td>分析初掃報告</td><td class="c"><b class="hl">Check</b></td><td>分析原始結果、<b>排除誤報</b>，依風險等級與影響程度進行優先級排序</td></tr>
+<tr><td class="c">4</td><td>確認並修復弱點</td><td class="c"><b class="hl">Act</b></td><td>驗證弱點，將修復任務分配給 IT／開發團隊並執行修補（安裝修補程式、修正組態、修正程式碼）。教材稱<b>這是最重要的環節，強調修復的「執行力」</b></td></tr>
+<tr><td class="c">5</td><td>執行複測</td><td class="c"><b class="hl">Do</b></td><td>修復後再次掃描，驗證弱點是否已成功修復且未引入新問題，避免<b>「假修復」</b></td></tr>
+<tr><td class="c">6</td><td>生成複測報告</td><td class="c"><b class="hl">Check</b></td><td>總結修復成效、評估風險降低狀況並提供後續建議，作為高層匯報與持續改進之證明</td></tr>
+</tbody>
+</table>
+</div>
+<div class="note"><b>記法：兩掃兩報一修</b>。兩次「掃描動作」（初掃、複測）都是 <b class="hl">Do</b>；兩次「報告分析」（分析初掃報告、生成複測報告）都是 <b class="hl">Check</b>；<b class="hl">Act 只有一個</b>，就是中間的「確認並修復弱點」。<br>
+所以序列是 <b>P → D → C → A → D → C</b>，不是 PDCA 各一次。看到選項把「執行複測」說成 Act、或把「確認並修復弱點」說成 Do，就是錯的。</div>
+</div>
+
+<h2 id="t15">十五、程式庫維護與職責區隔 <span class="tag v">已核對</span></h2>
+<div class="card">
+<h3>15-1　三種角色、三個動作</h3>
+<div class="scroll">
+<table>
+<thead><tr><th>角色</th><th>合法動作</th><th>流程說明</th><th>禁止事項</th></tr></thead>
+<tbody>
+<tr><td>開發部門<br>（開發人員）</td><td><b class="hl">簽入 Check In</b><br>簽出 Check Out</td><td>凍結版本後簽入程式庫；需修改時由程式庫簽出取得最新版本</td><td rowspan="2">線上運作的軟體應由<b>程式庫發行</b>，<b class="hl">不應直接由程式設計人員或測試人員進行更新</b></td></tr>
+<tr><td>測試／品管部門<br>（測試人員）</td><td>簽出 Check Out</td><td>由程式庫簽出取得最新版本進行測試；品管部門測試方法應<b>與開發部門不同</b></td></tr>
+<tr><td>上線人員<br>（維運）</td><td><b class="hl">發行 Release</b></td><td>由程式庫發行最新版本應用程式至線上系統</td><td>僅執行經核准之發行，不得逕自修改程式碼</td></tr>
+</tbody>
+</table>
+</div>
+<div class="note"><b>只有開發人員會「簽入」，只有上線人員會「發行」，「簽出」則是開發與測試都會做。</b>
+考題常把角色與動作對調——例如說「測試人員將程式碼簽入程式庫」或「開發人員將版本發行至線上」，都違反職責區隔。<br>
+版本控制須保留所有版本，包括<b>主版本（1.0）、次版本（1.0＋）及緊急修正版本（1.0.1）</b>。</div>
+</div>
+
+<h2 id="t16">十六、組態管理、CMDB 與 GCB <span class="tag v">已核對</span></h2>
+<div class="card">
+<h3>16-1　組態管理四個定義（教材 6.8.1）</h3>
+<div class="scroll">
+<table>
+<thead><tr><th>項目</th><th>教材定義</th></tr></thead>
+<tbody>
+<tr><td><b>組態</b><br>Configuration</td><td>IT 系統的<b>邏輯模型</b>，包含服務、軟體、硬體、設定、文件及 IT 人員等<b>組態項目（CI）</b>；組態項目間有互動與關聯性（例如一個應用程式需要特定伺服器與網路設定才能運行）</td></tr>
+<tr><td><b>組態管理目標</b></td><td><b class="hl">識別、控制、維護及檢查</b>現有 IT 系統中所有的組態元件<b>及其之間的關聯性</b>，確保 IT 環境的穩定性、一致性、安全性及合規性</td></tr>
+<tr><td><b>CMDB</b><br>組態管理資料庫</td><td>儲存最新 IT 系統所有組態項目及其關聯性的資料庫，提供 IT 環境的<b class="hl">單一真實來源</b>；儲存形式可以是文件、檔案或關聯式資料庫</td></tr>
+<tr><td><b>組態管理目的</b><br>（<b class="hl">恰好三項</b>）</td><td>① IT 資產管理　② 提供 IT 服務管理作業中所需的<b>精確資訊</b>　③ <b>降低因變更對系統造成的各類負面影響</b></td></tr>
+</tbody>
+</table>
+</div>
+<div class="fix"><b>目標 vs 目的，最常被混淆。</b>「目標」是<b>做什麼</b>（識別、控制、維護、檢查組態元件與關聯性）；「目的」是<b>得到什麼效益</b>（資產管理、精確資訊、降低變更衝擊，就這三項）。<br>
+另一個陷阱：<b class="hl">CMDB 只是資料庫</b>，不會自動修補弱點、不會自動派送組態、也不能取代變更授權與審查。變更管理流程中要加入「變更組態」動作以更新 CMDB，確保它反映真實現況。</div>
+
+<h3>16-2　GCB 五大設備類別（教材 6.8）</h3>
+<div class="scroll">
+<table>
+<thead><tr><th class="c">#</th><th>類別</th><th>教材列舉之代表項目</th><th>防護重點</th></tr></thead>
+<tbody>
+<tr><td class="c">1</td><td>作業系統<br>Operating Systems</td><td>Windows、Linux（RHEL、Ubuntu LTS）、macOS 15</td><td>帳戶密碼策略、服務啟用、系統日誌配置</td></tr>
+<tr><td class="c">2</td><td>瀏覽器<br>Browsers</td><td>Chrome、Firefox、Edge、Safari</td><td>安全性區域設定、彈出視窗阻擋、外掛管理；防惡意網站與網路釣魚</td></tr>
+<tr><td class="c">3</td><td>網通設備<br>Network Devices</td><td>無線網路設備；防火牆（Juniper、Fortinet Fortigate、Cisco、Palo Alto）</td><td>網路基礎設施安全配置，防未經授權存取及網路攻擊</td></tr>
+<tr><td class="c">4</td><td>應用程式<br>Applications</td><td>Exchange（郵件）、IIS（網頁）、SQL Server（資料庫）、Openfind（EaaS）、Apache（HTTP Server、Tomcat）、Office</td><td>應用程式本身及其配置符合安全規範，防應用層漏洞被利用</td></tr>
+<tr><td class="c">5</td><td>雲端服務</td><td>AWS 基礎環境</td><td><b>共同責任模型</b>下的組態、存取權限管理及資料保護，防雲端組態錯誤</td></tr>
+</tbody>
+</table>
+</div>
+<div class="note">GCB 的目的是<b>規範資通訊設備一致性的安全組態設定</b>（個人電腦、伺服器主機及網通設備等），消除因配置不一致產生的漏洞。適用對象為 <b class="hl">A 級及 B 級公務機關</b>（技術面應辦事項）。<br>
+記五類：<b>作業系統、瀏覽器、網通設備、應用程式、雲端服務</b>——由端點往外推，最後才是雲。<br>
+<span class="tag u">教材筆誤</span>教材原文將 RHEL 寫成「RHE」，應為 Red Hat Enterprise Linux。</div>
 </div>
 
 </div>
