@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>資通安全概論 考點速查</title>
+<style>
+  :root{
+    --bg:#f4f5f7; --card:#fff; --ink:#1d2129; --muted:#6b7280; --line:#e3e5e8;
+    --brand:#1a4f8a; --brand-soft:#e8f0f9; --ok:#1a7f4b; --ok-soft:#e6f4ec;
+    --bad:#b3261e; --bad-soft:#fdecea; --warn:#8a5a00; --warn-soft:#fff4e0;
+    --head:#eef1f4;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bg:#15171a; --card:#1e2125; --ink:#e6e8ea; --muted:#9aa3ad; --line:#2f343a;
+      --brand:#7fb2e8; --brand-soft:#1b2a3c; --ok:#6cc99a; --ok-soft:#152a20;
+      --bad:#f08a80; --bad-soft:#2e1a18; --warn:#e0b25a; --warn-soft:#2c2415;
+      --head:#252a30;
+    }
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);
+    font-family:"Noto Sans TC","Microsoft JhengHei",system-ui,sans-serif;
+    font-size:15px;line-height:1.7}
+  .wrap{max-width:1000px;margin:0 auto;padding:20px 14px 80px}
+  h1{font-size:22px;margin:0 0 4px}
+  h2{font-size:17px;margin:28px 0 10px;padding-top:8px;border-top:2px solid var(--line)}
+  h3{font-size:15px;margin:18px 0 8px;color:var(--muted)}
+  p.sub{color:var(--muted);font-size:13px;margin:0 0 16px}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:14px 16px;margin-bottom:14px}
+  .scroll{overflow-x:auto;-webkit-overflow-scrolling:touch}
+  table{width:100%;border-collapse:collapse;font-size:14px;min-width:560px}
+  th,td{border:1px solid var(--line);padding:6px 9px;text-align:left;vertical-align:top}
+  th{background:var(--head);font-weight:700;font-size:13px;white-space:nowrap}
+  td.c,th.c{text-align:center;white-space:nowrap}
+  tbody tr:hover{background:var(--brand-soft)}
+  .grp{background:var(--head);font-weight:700}
+  b.hl{color:var(--brand)}
+  .dot{color:var(--ok);font-weight:700;font-size:16px}
+  .dash{color:var(--muted)}
+  .tag{display:inline-block;font-size:11px;padding:1px 7px;border-radius:99px;margin-left:6px;vertical-align:middle}
+  .v{background:var(--ok-soft);color:var(--ok)}
+  .u{background:var(--warn-soft);color:var(--warn)}
+  .note{background:var(--warn-soft);border-left:4px solid var(--warn);padding:9px 13px;border-radius:0 8px 8px 0;margin:10px 0;font-size:13.5px}
+  .fix{background:var(--bad-soft);border-left:4px solid var(--bad);padding:9px 13px;border-radius:0 8px 8px 0;margin:10px 0;font-size:13.5px}
+  nav{position:sticky;top:0;z-index:9;background:var(--card);border:1px solid var(--line);
+    border-radius:10px;padding:9px 12px;margin-bottom:14px}
+  nav a{display:inline-block;margin:2px 9px 2px 0;font-size:13px;color:var(--brand);text-decoration:none}
+  nav a:hover{text-decoration:underline}
+  #q{width:100%;padding:8px 10px;margin-top:8px;border:1px solid var(--line);border-radius:7px;
+    font:inherit;font-size:14px;background:var(--bg);color:var(--ink)}
+  .hidden{display:none}
+  .foot{color:var(--muted);font-size:12.5px;margin-top:6px}
+  a.back{color:var(--brand);font-size:13px;text-decoration:none}
+  @media print{nav,#q{display:none}.card{border:none;padding:0}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<h1>資通安全概論 考點速查</h1>
+<p class="sub">
+  <span class="tag v">已核對</span> 表示該列數字已逐字對照法規原文（責任等級分級辦法條文對照表、通報應變及演練辦法、資通安全管理法）。
+  <span class="tag u">未核對</span> 表示出自教材整理、尚未對照原文，作答前請自行確認。
+  <br><a class="back" href="./">← 回模擬測驗</a>
+</p>
+
+<nav>
+  <a href="#t1">責任等級應辦事項</a>
+  <a href="#t2">技術面防護</a>
+  <a href="#t3">訓練與證照</a>
+  <a href="#t4">事件通報時限</a>
+  <a href="#t5">事件分級</a>
+  <a href="#t6">罰則</a>
+  <a href="#t7">防護基準等級</a>
+  <a href="#t8">分級原則</a>
+  <input id="q" placeholder="輸入關鍵字過濾表格列，例如「滲透」「罰鍰」「36」">
+</nav>
+
+<h2 id="t1">一、公務機關 A／B／C 級應辦事項 <span class="tag v">已核對</span></h2>
+<div class="card">
+<div class="scroll">
+<table>
+<thead><tr><th>面向</th><th>辦理項目</th><th class="c">A 級</th><th class="c">B 級</th><th class="c">C 級</th><th>備註</th></tr></thead>
+<tbody>
+<tr><td rowspan="6" class="grp">管理面</td><td>資通安全專職人員</td><td class="c"><b class="hl">4 人以上</b></td><td class="c"><b class="hl">2 人以上</b></td><td class="c"><b class="hl">1 人以上</b></td><td>受核定後 <b>1 年內</b>配置完成；人員異動時亦同</td></tr>
+<tr><td>內部資通安全稽核</td><td class="c"><b class="hl">2 次／年</b></td><td class="c"><b class="hl">1 次／年</b></td><td class="c"><b class="hl">1 次／2 年</b></td><td>屬第一方稽核，範圍為全機關</td></tr>
+<tr><td>營運持續計畫演練</td><td class="c">1 次／年</td><td class="c">1 次／2 年</td><td class="c">1 次／2 年</td><td>針對全部核心資通系統；舊稱「業務持續運作演練」</td></tr>
+<tr><td>資安治理成熟度評估</td><td class="c">1 次／年</td><td class="c">1 次／年</td><td class="c dash">—</td><td>特定非公務機關限「關鍵基礎設施提供者」每年一次</td></tr>
+<tr><td>ISMS 導入與驗證</td><td class="c">2 年內導入<br>3 年內驗證</td><td class="c">2 年內導入<br>3 年內驗證</td><td class="c">2 年內導入<br><b class="hl">免驗證</b></td><td>全部核心資通系統；A／B 須維持第三方驗證有效性</td></tr>
+<tr><td>資通系統分級及防護基準</td><td class="c">1 年內</td><td class="c">1 年內</td><td class="c">1 年內</td><td>三級皆為 1 年內；每年至少檢視 1 次分級與防護基準妥適性</td></tr>
+<tr><td rowspan="3" class="grp">技術面<br>檢測</td><td>弱點掃描</td><td class="c"><b class="hl">2 次／年</b></td><td class="c"><b class="hl">1 次／年</b></td><td class="c"><b class="hl">1 次／2 年</b></td><td>全部核心資通系統</td></tr>
+<tr><td>滲透測試</td><td class="c"><b class="hl">1 次／年</b></td><td class="c"><b class="hl">1 次／2 年</b></td><td class="c"><b class="hl">1 次／2 年</b></td><td>全部核心資通系統</td></tr>
+<tr><td>資通安全健診</td><td class="c">1 次／年<br>（6 項）</td><td class="c">1 次／2 年<br>（6 項）</td><td class="c">1 次／2 年<br>（<b class="hl">5 項</b>）</td><td>C 級不含「核心資通系統資料庫安全檢視」</td></tr>
+</tbody>
+</table>
+</div>
+<div class="note"><b>最容易混淆的三組：</b>
+① 稽核與演練不同調——A 級稽核 2 次/年但演練只 1 次/年；B 級稽核 1 次/年但演練 2 年 1 次。<br>
+② 弱掃與滲透在 B 級分家——弱掃每年，滲透兩年。到 C 級才又合流成兩年一次。<br>
+③ ISMS 是「2 年導入、3 年驗證」，但 C 級只導入不驗證。</div>
+<p class="foot">健診六項：網路架構檢視／網路惡意活動檢視／使用者端電腦惡意活動檢視／伺服器主機惡意活動檢視／目錄服務系統設定及防火牆連線設定檢視／核心資通系統資料庫安全檢視（115 年新增，C 級無）。</p>
+</div>
+
+<h2 id="t2">二、技術面防護與偵測機制之適用等級 <span class="tag v">已核對</span></h2>
+<div class="card">
+<div class="scroll">
+<table>
+<thead><tr><th>機制</th><th class="c">A</th><th class="c">B</th><th class="c">C</th><th class="c">D</th><th>條件與期限</th></tr></thead>
+<tbody>
+<tr><td>防毒軟體</td><td class="c dot">●</td><td class="c dot">●</td><td class="c dot">●</td><td class="c dot">●</td><td>1 年內完成啟用，持續使用並適時更新升級</td></tr>
+<tr><td>網路防火牆</td><td class="c dot">●</td><td class="c dot">●</td><td class="c dot">●</td><td class="c dot">●</td><td>同上</td></tr>
+<tr><td>電子郵件過濾機制</td><td class="c dot">●</td><td class="c dot">●</td><td class="c dot">●</td><td class="c dash">—</td><td><b class="hl">具有郵件伺服器者，應備</b></td></tr>
+<tr><td>入侵偵測及防禦機制 IDS/IPS</td><td class="c dot">●</td><td class="c dot">●</td><td class="c dot">●</td><td class="c dash">—</td><td>最低適用到 <b class="hl">C 級</b></td></tr>
+<tr><td>應用程式防火牆 WAF</td><td class="c dot">●</td><td class="c dot">●</td><td class="c dash">—</td><td class="c dash">—</td><td><b class="hl">具有對外服務之核心資通系統者，應備</b></td></tr>
+<tr><td>進階持續性威脅攻擊防禦 APT</td><td class="c dot">●</td><td class="c dash">—</td><td class="c dash">—</td><td class="c dash">—</td><td><b class="hl">僅 A 級</b></td></tr>
+<tr><td>資通安全監控管理機制 SOC</td><td class="c dot">●</td><td class="c dot">●</td><td class="c dash">—</td><td class="c dash">—</td><td>1 年內導入。舊稱「資通安全威脅偵測管理機制」</td></tr>
+<tr><td>政府組態基準 GCB</td><td class="c dot">●</td><td class="c dot">●</td><td class="c dash">—</td><td class="c dash">—</td><td>1 年內導入；<b>僅公務機關</b>，特定非公務機關無此項</td></tr>
+<tr><td>端點偵測及應變機制 EDR</td><td class="c dot">●</td><td class="c dot">●</td><td class="c dash">—</td><td class="c dash">—</td><td>1 年內導入</td></tr>
+<tr><td>資通安全弱點管理 VANS</td><td class="c">1 年內</td><td class="c">1 年內</td><td class="c"><b class="hl">2 年內</b></td><td class="c dash">—</td><td>知悉弱點時應適時修補或採行緩解措施</td></tr>
+</tbody>
+</table>
+</div>
+<div class="note"><b>記法：</b>防毒與防火牆是全民必備（到 D 級）；郵件過濾與 IDS/IPS 撐到 C 級；WAF／SOC／GCB／EDR 停在 B 級；APT 只有 A 級。<br>
+兩個附條件的：郵件過濾「有郵件伺服器才要」、WAF「有對外服務核心系統才要」。<br>
+VANS 是唯一 C 級也要、但期限放寬到 2 年的項目。</div>
+<div class="fix"><b>常見錯誤：</b>把 IDS/IPS 誤記成「A、B 級限定」。C 級也要建置 IDS/IPS，這是 C 級技術面唯一超出「防毒＋防火牆」的偵測機制。</div>
+</div>
+
+<h2 id="t3">三、教育訓練與證照證書 <span class="tag v">已核對</span></h2>
+<div class="card">
+<div class="scroll">
+<table>
+<thead><tr><th>對象</th><th>專業課程／職能訓練</th><th>通識教育訓練</th></tr></thead>
+<tbody>
+<tr><td>資通安全專職人員</td><td><b class="hl">每年 12 小時以上</b></td><td class="dash">—</td></tr>
+<tr><td>專職人員以外之資訊人員</td><td><b class="hl">每 2 年 3 小時以上</b></td><td><b class="hl">每年 3 小時以上</b></td></tr>
+<tr><td>一般使用者及主管</td><td class="dash">—</td><td><b class="hl">每年 3 小時以上</b></td></tr>
+</tbody>
+</table>
+</div>
+<div class="scroll" style="margin-top:12px">
+<table>
+<thead><tr><th>機關別</th><th>證照與證書要求</th></tr></thead>
+<tbody>
+<tr><td>A／B 級公務機關</td><td>資通安全專職人員<b class="hl">各自</b>持有<b class="hl">證照及證書各 1 張以上</b>，並持續維持有效性</td></tr>
+<tr><td>C 級公務機關</td><td><b class="hl">至少一名</b>資通安全專職人員，分別持有證照及證書各 1 張以上</td></tr>
+<tr><td>特定非公務機關</td><td>至少一名資通安全專職人員<b class="hl">持有證照 1 張以上</b></td></tr>
+</tbody>
+</table>
+</div>
+<div class="fix"><b>常見錯誤：</b>把「各自持有」套到 C 級。A／B 級是每一位專職人員都要有；C 級只要求「至少一名」。這一字之差是高頻考點。</div>
+<p class="foot">證照與證書之取得期限：初次受核定或等級變更後之 1 年內完成；人員異動時亦同。</p>
+</div>
+
+<h2 id="t4">四、資通安全事件通報、審核與應變時限 <span class="tag v">已核對</span></h2>
+<div class="card">
+<div class="scroll">
+<table>
+<thead><tr><th>作業階段</th><th class="c">第 1、2 級</th><th class="c">第 3、4 級（重大）</th><th>依據與記法</th></tr></thead>
+<tbody>
+<tr><td>通報（知悉後）</td><td class="c"><b class="hl">1 小時內</b></td><td class="c"><b class="hl">1 小時內</b></td><td>不分等級皆 1 小時。無法用平臺通報時，仍應於 1 小時內以其他方式通報並註記事由</td></tr>
+<tr><td>受通報機關審核</td><td class="c"><b class="hl">8 小時內</b></td><td class="c"><b class="hl">2 小時內</b></td><td>重大事件才縮短為 2 小時</td></tr>
+<tr><td>審核結果送主管機關</td><td class="c">1 小時內</td><td class="c">1 小時內</td><td>不分等級，審核完成後 1 小時內</td></tr>
+<tr><td>損害控制或復原完成</td><td class="c"><b class="hl">72 小時內</b></td><td class="c"><b class="hl">36 小時內</b></td><td>重大事件減半</td></tr>
+<tr><td>調查、處理及改善報告</td><td class="c">1 個月內</td><td class="c">1 個月內</td><td>完成損害控制或復原後起算，經受通報機關同意得延長</td></tr>
+</tbody>
+</table>
+</div>
+<div class="note"><b>1／2／8／36／72 五個數字就是全部。</b>通報 1 小時、送交 1 小時、一般審核 8 小時、重大審核 2 小時、重大復原 36 小時、一般復原 72 小時、報告 1 個月。</div>
+<h3>演練頻率</h3>
+<div class="scroll">
+<table>
+<thead><tr><th>演練項目</th><th class="c">頻率</th></tr></thead>
+<tbody>
+<tr><td>社交工程演練</td><td class="c"><b class="hl">每半年 1 次</b></td></tr>
+<tr><td>資通安全事件通報及應變演練</td><td class="c"><b class="hl">每年 1 次</b></td></tr>
+</tbody>
+</table>
+</div>
+<p class="foot">演練完成後 1 個月內，將執行情形及成果報告送交主管機關。</p>
+</div>
+
+<h2 id="t5">五、資通安全事件分級（機密性／完整性／可用性） <span class="tag v">已核對</span></h2>
+<div class="card">
+<div class="scroll">
+<table>
+<thead><tr><th class="c">等級</th><th>洩漏（機密性）</th><th>竄改（完整性）</th><th>中斷（可用性）</th></tr></thead>
+<tbody>
+<tr><td class="c"><b>1 級</b></td><td>非核心業務資訊遭<b class="hl">輕微</b>洩漏</td><td>非核心業務資訊或非核心系統遭<b class="hl">輕微</b>竄改</td><td>非核心系統中斷，<b class="hl">可</b>於可容忍中斷時間內回復</td></tr>
+<tr><td class="c"><b>2 級</b></td><td>非核心業務資訊遭<b class="hl">嚴重</b>洩漏，或未涉 CI 之核心業務資訊遭輕微洩漏</td><td>非核心遭嚴重竄改，或未涉 CI 之核心遭輕微竄改</td><td>非核心系統中斷<b class="hl">無法</b>於容忍時間內回復，或未涉 CI 之核心系統中斷但可於容忍時間內回復</td></tr>
+<tr><td class="c"><b>3 級</b></td><td>未涉 CI 之核心業務資訊遭嚴重洩漏</td><td>未涉 CI 之核心遭嚴重竄改</td><td>未涉 CI 之核心系統中斷<b class="hl">無法</b>於容忍時間內回復，或涉 CI 之核心系統中斷但可於容忍時間內回復</td></tr>
+<tr><td class="c"><b>4 級</b></td><td>涉 CI 之核心業務資訊遭嚴重洩漏</td><td>涉 CI 之核心遭嚴重竄改</td><td>涉 CI 之核心系統中斷<b class="hl">無法</b>於容忍時間內回復</td></tr>
+</tbody>
+</table>
+</div>
+<div class="note"><b>三個變數決定等級：</b>①核心／非核心 ②輕微／嚴重 ③涉不涉關鍵基礎設施（CI）。每往上跳一格就升一級。第 3、4 級合稱「重大資通安全事件」。</div>
+</div>
+
+<h2 id="t6">六、罰則（特定非公務機關） <span class="tag v">已核對</span></h2>
+<div class="card">
+<div class="scroll">
+<table>
+<thead><tr><th>條號</th><th>違反行為</th><th class="c">罰鍰</th></tr></thead>
+<tbody>
+<tr><td>第 29 條</td><td>未依規定<b class="hl">通報</b>資通安全事件</td><td class="c"><b class="hl">30 萬 ～ 1,000 萬</b></td></tr>
+<tr><td>第 30 條</td><td>未訂定／修正／實施<b class="hl">維護計畫</b>、未提出實施情形或改善報告、未訂通報應變機制</td><td class="c"><b class="hl">10 萬 ～ 500 萬</b></td></tr>
+<tr><td>第 31 條</td><td><b class="hl">規避、妨礙或拒絕</b>重大事件之調查</td><td class="c"><b class="hl">10 萬 ～ 100 萬</b></td></tr>
+<tr><td>第 28 條</td><td>公務機關所屬人員未依本法辦理，情節重大</td><td class="c">依規定<b class="hl">懲戒或懲處</b>（無罰鍰）</td></tr>
+</tbody>
+</table>
+</div>
+<div class="note"><b>記法：</b>三個下限都是 10 萬起跳，只有「未通報」是 30 萬起。上限由重到輕：通報 1,000 萬 ＞ 計畫 500 萬 ＞ 妨礙調查 100 萬。<br>
+<b>罰鍰只罰特定非公務機關</b>；公務機關人員走懲戒懲處，不罰錢。</div>
+<div class="fix"><b>常見錯誤：</b>把第 31 條記成「20 萬～200 萬」。法條原文是「十萬元以上一百萬元以下」，沒有 20/200 這組數字。</div>
+</div>
+
+<h2 id="t7">七、資通系統防護基準：常考控制措施之等級 <span class="tag u">未核對</span></h2>
+<div class="card">
+<div class="scroll">
+<table>
+<thead><tr><th>構面</th><th>控制措施</th><th class="c">普</th><th class="c">中</th><th class="c">高</th></tr></thead>
+<tbody>
+<tr><td rowspan="5">身分驗證管理</td><td>預設密碼初次登入後立即變更</td><td class="c dot">●</td><td class="c dot">●</td><td class="c dot">●</td></tr>
+<tr><td>登入失敗 5 次、鎖定至少 15 分鐘</td><td class="c dot">●</td><td class="c dot">●</td><td class="c dot">●</td></tr>
+<tr><td>密碼不可與前 3 次相同、強制複雜度</td><td class="c dot">●</td><td class="c dot">●</td><td class="c dot">●</td></tr>
+<tr><td>防範自動化程式登入（CAPTCHA）</td><td class="c dash">—</td><td class="c dot">●</td><td class="c dot">●</td></tr>
+<tr><td>密碼重設發送一次性且具時效之符記</td><td class="c dash">—</td><td class="c dot">●</td><td class="c dot">●</td></tr>
+<tr><td rowspan="4">事件日誌</td><td>日誌保留至少 6 個月</td><td class="c dot">●</td><td class="c dot">●</td><td class="c dot">●</td></tr>
+<tr><td>日誌存取僅限有權限之使用者</td><td class="c dot">●</td><td class="c dot">●</td><td class="c dot">●</td></tr>
+<tr><td>運用雜湊等完整性確保機制</td><td class="c dash">—</td><td class="c dot">●</td><td class="c dot">●</td></tr>
+<tr><td>日誌處理失效時對特定人員提出警告</td><td class="c dash">—</td><td class="c dash">—</td><td class="c dot">●</td></tr>
+<tr><td rowspan="3">營運持續</td><td>訂定可容忍資料損失時間（RPO）、執行備份</td><td class="c dot">●</td><td class="c dot">●</td><td class="c dot">●</td></tr>
+<tr><td>定期測試備份資訊以驗證可靠性</td><td class="c dash">—</td><td class="c dot">●</td><td class="c dot">●</td></tr>
+<tr><td>異地備份；備份還原納入營運持續演練</td><td class="c dash">—</td><td class="c dash">—</td><td class="c dot">●</td></tr>
+<tr><td rowspan="2">系統與通訊保護</td><td>傳輸加密、公開未破解演算法、金鑰定期更換</td><td class="c dash">—</td><td class="c dash">—</td><td class="c dot">●</td></tr>
+<tr><td>重要組態設定檔案加密儲存</td><td class="c dash">—</td><td class="c dash">—</td><td class="c dot">●</td></tr>
+<tr><td rowspan="3">系統與服務獲得</td><td>設計階段威脅識別與風險分析</td><td class="c dash">—</td><td class="c dot">●</td><td class="c dot">●</td></tr>
+<tr><td>測試階段執行弱點掃描</td><td class="c dot">●</td><td class="c dot">●</td><td class="c dot">●</td></tr>
+<tr><td>測試階段執行滲透測試</td><td class="c dash">—</td><td class="c dash">—</td><td class="c dot">●</td></tr>
+</tbody>
+</table>
+</div>
+<div class="note">本表出自教材整理，附表十原文尚未逐列核對。<b>普級只有五類基本要求</b>：預設密碼、帳戶鎖定、密碼複雜度與歷程、日誌 6 個月、輸入驗證置於伺服器端。看到「異地備份」「傳輸加密」「滲透測試」就是高級專屬。</div>
+</div>
+
+<h2 id="t8">八、資通系統防護需求分級原則（CIA ＋ L） <span class="tag u">未核對</span></h2>
+<div class="card">
+<div class="scroll">
+<table>
+<thead><tr><th>構面</th><th>普級</th><th>中級</th><th>高級</th></tr></thead>
+<tbody>
+<tr><td>機密性 C</td><td>未經授權揭露，<b>有限</b>影響</td><td>未經授權揭露，<b>嚴重</b>影響</td><td>未經授權揭露，<b>非常嚴重或災難性</b>影響</td></tr>
+<tr><td>完整性 I</td><td>資訊錯誤或遭竄改，有限影響</td><td>資訊錯誤或遭竄改，嚴重影響</td><td>資訊錯誤或遭竄改，非常嚴重或災難性影響</td></tr>
+<tr><td>可用性 A</td><td>存取或使用中斷，有限影響</td><td>存取或使用中斷，嚴重影響</td><td>存取或使用中斷，非常嚴重或災難性影響</td></tr>
+<tr><td>法律遵循性 L</td><td>設置或運作於法令有相關規範之情形</td><td>未遵循法令致人員受<b class="hl">行政罰、懲戒或懲處</b></td><td>未遵循法令致人員負<b class="hl">刑事責任</b></td></tr>
+</tbody>
+</table>
+</div>
+<div class="note"><b>就高原則：</b>四個構面分別評估後，取<b>最高</b>者作為該系統之防護需求等級。<br>
+法律遵循性最好記：一般規範＝普、行政罰或懲處＝中、<b>刑事責任＝高</b>。</div>
+</div>
+
+<h2>九、與本站題庫的對照</h2>
+<div class="card">
+<p style="margin:0 0 8px">下列考點在題庫中出現頻率最高，也是最容易記錯的：</p>
+<ul style="margin:0;padding-left:20px">
+<li>C 級的 IDS/IPS 是「要」不是「不要」</li>
+<li>C 級證照證書是「至少一名」不是「各自持有」</li>
+<li>資安法第 31 條是 10 萬～100 萬</li>
+<li>MTPD ＝ RTO ＋ WRT（求 RTO 上限就是 MTPD 減 WRT）</li>
+<li>細則第 7 條的第三方檢測門檻是「核心資通系統，或委託金額達 1,000 萬元以上」</li>
+<li>社交工程演練每半年、通報應變演練每年</li>
+</ul>
+</div>
+
+</div>
+<script>
+document.getElementById('q').addEventListener('input', function(){
+  var k = this.value.trim();
+  document.querySelectorAll('table tbody tr').forEach(function(tr){
+    tr.classList.toggle('hidden', k !== '' && tr.textContent.indexOf(k) === -1);
+  });
+});
+</script>
+</body>
+</html>
