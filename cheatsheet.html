@@ -75,6 +75,7 @@
   <a href="#t6">罰則</a>
   <a href="#t7">防護基準等級</a>
   <a href="#t8">分級原則</a>
+  <a href="#t9">期限時間階梯</a>
   <input id="q" placeholder="輸入關鍵字過濾表格列，例如「滲透」「罰鍰」「36」">
 </nav>
 
@@ -265,7 +266,34 @@ VANS 是唯一 C 級也要、但期限放寬到 2 年的項目。</div>
 法律遵循性最好記：一般規範＝普、行政罰或懲處＝中、<b>刑事責任＝高</b>。</div>
 </div>
 
-<h2>九、與本站題庫的對照</h2>
+<h2 id="t9">九、辦理期限時間階梯 <span class="tag v">已核對</span></h2>
+<div class="card">
+<p class="sub" style="margin:0 0 10px">法規中所有「初次受核定或等級變更後」的期限，按時間排成一條階梯記最快。</p>
+<div class="scroll">
+<table>
+<thead><tr><th class="c">階梯</th><th>辦理項目</th><th>適用範圍與例外</th></tr></thead>
+<tbody>
+<tr><td class="c"><b class="hl">1 年內</b><br><span style="font-size:12px;color:var(--muted)">人員與基礎部署</span></td>
+<td>‧ 資通安全專職人員配置<br>‧ 資通安全專業證照及職能訓練證書<br>‧ 資通安全教育訓練<br>‧ 資通安全防護措施啟用（防毒、防火牆、郵件過濾、IDS/IPS、WAF、APT）<br>‧ SOC／GCB／EDR 導入<br>‧ VANS 導入<br>‧ 資通系統分級及防護基準</td>
+<td>‧ 人員異動時，證照與配置<b>重新起算 1 年</b><br>‧ SOC／GCB／EDR 只有 A、B 級有此項<br>‧ <b class="hl">VANS 在 C 級是 2 年內</b>，不是 1 年內<br>‧ 分級與控制措施在 <b class="hl">C 級拆成 1 年分級、2 年控制措施</b></td></tr>
+<tr><td class="c"><b class="hl">2 年內</b><br><span style="font-size:12px;color:var(--muted)">制度導入</span></td>
+<td>‧ 全部核心資通系統導入 ISMS<br>‧ C 級：完成附表十控制措施<br>‧ C 級：VANS 導入</td>
+<td>‧ ISMS 三級皆為 2 年內導入<br>‧ 導入標準為 CNS 27001／ISO 27001 或同等以上</td></tr>
+<tr><td class="c"><b class="hl">3 年內</b><br><span style="font-size:12px;color:var(--muted)">第三方驗證</span></td>
+<td>‧ 核心資通系統 ISMS 通過公正第三方驗證</td>
+<td>‧ <b class="hl">僅 A、B 級</b>，C 級只導入不驗證<br>‧ 「第三方」指通過我國標準法主管機關<b>委託機構認證之機構</b>，驗證證書應有該委託機構之認證標誌<br>‧ 須<b>持續維持</b>驗證有效性</td></tr>
+<tr><td class="c"><b class="hl">次年度起</b><br><span style="font-size:12px;color:var(--muted)">定期維運</span></td>
+<td>‧ 內部資通安全稽核<br>‧ 營運持續計畫演練<br>‧ 資安治理成熟度評估<br>‧ 安全性檢測（弱點掃描、滲透測試）<br>‧ 資通安全健診</td>
+<td>‧ 條文用語：「其餘應辦事項應於初次受核定、<b>等級變更或核心資通系統異動後</b>之次年度起，依附表規定辦理」<br>‧ 附表一至附表六<b>三級皆有</b>此條備註</td></tr>
+</tbody>
+</table>
+</div>
+<div class="note"><b>1 → 2 → 3 → 次年度，四階記法：</b>第一年把人和設備到位，第二年把制度導進來，第三年拿到驗證，日常的稽核與檢測從次年度才開始跑。<br>
+<b>三個 C 級專屬的例外</b>全部往後挪一格：控制措施 2 年、VANS 2 年、驗證免做。</div>
+<div class="fix"><b>不要跟「每 3 年」搞混。</b>3 年內的 ISMS 驗證是<b>一次性期限</b>；責任等級提報的<b>每 3 年</b>是<b>循環週期</b>（分級辦法 §3）。兩者都是 3，性質完全不同。</div>
+</div>
+
+<h2>十、與本站題庫的對照</h2>
 <div class="card">
 <p style="margin:0 0 8px">下列考點在題庫中出現頻率最高，也是最容易記錯的：</p>
 <ul style="margin:0;padding-left:20px">
@@ -275,6 +303,7 @@ VANS 是唯一 C 級也要、但期限放寬到 2 年的項目。</div>
 <li>MTPD ＝ RTO ＋ WRT（求 RTO 上限就是 MTPD 減 WRT）</li>
 <li>細則第 7 條的第三方檢測門檻是「核心資通系統，或委託金額達 1,000 萬元以上」</li>
 <li>社交工程演練每半年、通報應變演練每年</li>
+<li>C 級的 VANS 是 2 年內導入，其他等級是 1 年內</li>
 </ul>
 </div>
 
