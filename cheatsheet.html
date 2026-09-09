@@ -76,6 +76,7 @@
   <a href="#t7">防護基準等級</a>
   <a href="#t8">分級原則</a>
   <a href="#t9">期限時間階梯</a>
+  <a href="#t10">黑箱與白箱檢測</a>
   <input id="q" placeholder="輸入關鍵字過濾表格列，例如「滲透」「罰鍰」「36」">
 </nav>
 
@@ -105,6 +106,7 @@
 ③ ISMS 是「2 年導入、3 年驗證」，但 C 級只導入不驗證。<br>
 ④ 責任等級提報是 <b>3 年</b>一輪（舊版 2 年），跟上面所有「1 年內／2 年內」的一次性期限不是同一回事。</div>
 <p class="foot">健診六項：網路架構檢視／網路惡意活動檢視／使用者端電腦惡意活動檢視／伺服器主機惡意活動檢視／目錄服務系統設定及防火牆連線設定檢視／核心資通系統資料庫安全檢視（115 年新增，C 級無）。</p>
+<div class="fix"><b>教材與法規不一致，作答請留意。</b>主要教材表 48 仍寫「健診項目<b>五大類</b>，A 級每年 1 次、<b>B 級與 C 級併列</b>每 2 年 1 次」，尚未納入 115 年新增的「核心資通系統資料庫安全檢視」。上表依<b>法規條文對照表</b>（A 級 6 項、B 級 6 項、C 級 5 項）。若題目明寫「依教材」或選項只有五項，以教材為準。</div>
 </div>
 
 <h2 id="t2">二、技術面防護與偵測機制之適用等級 <span class="tag v">已核對</span></h2>
@@ -293,7 +295,33 @@ VANS 是唯一 C 級也要、但期限放寬到 2 年的項目。</div>
 <div class="fix"><b>不要跟「每 3 年」搞混。</b>3 年內的 ISMS 驗證是<b>一次性期限</b>；責任等級提報的<b>每 3 年</b>是<b>循環週期</b>（分級辦法 §3）。兩者都是 3，性質完全不同。</div>
 </div>
 
-<h2>十、與本站題庫的對照</h2>
+<h2 id="t10">十、黑箱檢測法與白箱檢測法比較 <span class="tag v">已核對</span></h2>
+<div class="card">
+<p class="sub" style="margin:0 0 10px">出自主要教材表 47，以下數值逐格對照教材原文。優 ＞ 佳 ＞ 普 ＞ 差。</p>
+<div class="scroll">
+<table>
+<thead><tr><th>比較項目</th><th class="c">黑箱<br>人工滲透測試</th><th class="c">黑箱<br>AP 弱點掃描工具</th><th class="c">白箱<br>人工源碼檢測</th><th class="c">白箱<br>自動源碼檢測</th></tr></thead>
+<tbody>
+<tr><td>弱點定位精準</td><td class="c">普</td><td class="c">差</td><td class="c">佳</td><td class="c"><b class="hl">優</b></td></tr>
+<tr><td>檢測詳細程度</td><td class="c">差</td><td class="c">普</td><td class="c"><b class="hl">優</b></td><td class="c"><b class="hl">優</b></td></tr>
+<tr><td>執行時錯誤</td><td class="c"><b class="hl">優</b></td><td class="c">佳</td><td class="c">差</td><td class="c">差</td></tr>
+<tr><td>邏輯性錯誤</td><td class="c">佳</td><td class="c">普</td><td class="c">差</td><td class="c">差</td></tr>
+<tr><td>存取控管機制</td><td class="c">佳</td><td class="c">普</td><td class="c">差</td><td class="c">差</td></tr>
+<tr><td>檢測時效</td><td class="c">差</td><td class="c">佳</td><td class="c">差</td><td class="c"><b class="hl">優</b></td></tr>
+<tr><td>程式開發人員修補溝通</td><td class="c">普</td><td class="c">差</td><td class="c">佳</td><td class="c"><b class="hl">優</b></td></tr>
+<tr><td>誤判情形</td><td class="c"><b class="hl">優</b></td><td class="c">普</td><td class="c">佳</td><td class="c">普</td></tr>
+<tr><td><b>綜合評比</b></td><td class="c"><b>佳</b></td><td class="c"><b>普</b></td><td class="c"><b>普</b></td><td class="c"><b class="hl">優</b></td></tr>
+</tbody>
+</table>
+</div>
+<div class="note"><b>兩條分界線就記完了：</b><br>
+‧ <b>執行時錯誤／邏輯性錯誤／存取控管機制</b>這三項，<b class="hl">黑箱贏、白箱全差</b>——因為這些問題要系統跑起來才看得出來。<br>
+‧ <b>弱點定位／詳細程度／修補溝通</b>這三項，<b class="hl">白箱贏</b>——因為看得到原始碼，能指到行號。<br>
+‧ 例外要單獨記：<b>誤判情形</b>是「人工滲透測試」拿優（真的打進去了，不會誤判）；<b>檢測時效</b>是自動源碼優、AP 弱掃佳，兩種人工都差。</div>
+<div class="note"><b>教材的採用建議：</b>預算充足 → 自動源碼掃描＋人工滲透測試併用；預算有限 → <b class="hl">優先採用自動源碼掃描</b>（不是人工滲透測試）。這是考點。</div>
+</div>
+
+<h2>十一、與本站題庫的對照</h2>
 <div class="card">
 <p style="margin:0 0 8px">下列考點在題庫中出現頻率最高，也是最容易記錯的：</p>
 <ul style="margin:0;padding-left:20px">
@@ -304,6 +332,7 @@ VANS 是唯一 C 級也要、但期限放寬到 2 年的項目。</div>
 <li>細則第 7 條的第三方檢測門檻是「核心資通系統，或委託金額達 1,000 萬元以上」</li>
 <li>社交工程演練每半年、通報應變演練每年</li>
 <li>C 級的 VANS 是 2 年內導入，其他等級是 1 年內</li>
+<li>預算有限時優先採用「自動源碼掃描」，不是人工滲透測試</li>
 </ul>
 </div>
 
