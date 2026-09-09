@@ -97,6 +97,10 @@
   <a href="#t16">組態管理與 GCB</a>
   <a href="#t17">成熟度與流程構面</a>
   <a href="#t18">CMMC 2.0</a>
+  <a href="#t19">委外八款</a>
+  <a href="#t20">適任性查核</a>
+  <a href="#t21">BCP 時間指標</a>
+  <a href="#t22">弱點機制邊界</a>
   <button id="mask" onclick="toggleMask()">背誦模式</button>
   <input id="q" placeholder="輸入關鍵字過濾表格列，例如「滲透」「罰鍰」「36」">
 </nav>
@@ -731,6 +735,113 @@ Level 1 的三個構面各屬一個面向（S1、M3、T2），Level 2 也是（M
 保護對象只有兩種：<b>Level 1 保護 FCI</b>；<b>Level 2 與 Level 3 都保護 CUI</b>（考題常把 Level 2 的保護對象寫成 FCI）。<br>
 Level 2 是唯一有「兩種評鑑路徑」的層級，主要路徑為第三方評鑑，僅特定計畫（select programs）可改為自我評鑑。<br>
 <span class="tag u">注意</span>教材僅於 Level 1、Level 2 明列「年度確認（annual affirmation）」，Level 3 只寫每 3 年政府主導評鑑，未一併列出年度確認。</div>
+</div>
+
+<h2 id="t19">十九、委外安全管理：施行細則第 7 條八款 <span class="tag v">已核對</span></h2>
+<div class="card">
+<h3>19-1　選任及監督受託者應注意之八款事項</h3>
+<div class="scroll">
+<table>
+<thead><tr><th class="c">款</th><th>主題</th><th>法定重點</th></tr></thead>
+<tbody>
+<tr><td class="c">1</td><td>專業人力配置</td><td>受託者應配置<b>充足</b>且經適當之資格訓練、擁有資安專業<b>證照</b>或具有類似業務<b>經驗</b>之資通安全專業人員</td></tr>
+<tr><td class="c">2</td><td>複委託</td><td><b>得否</b>複委託、得複委託之<b>範圍與對象</b>，及複委託之受託者<b>應具備之資安維護措施</b></td></tr>
+<tr><td class="c">3</td><td>涉及國家機密</td><td>執行受託業務之相關人員應接受<b class="hl">適任性查核</b>，並依國家機密保護法規定<b>管制其出境</b></td></tr>
+<tr><td class="c">4</td><td>客製化開發檢測</td><td>受託者應提供<b>安全性檢測證明</b>；屬核心資通系統或金額達 1,000 萬元以上者，<b class="hl">委託機關應自行或另行委託第三方</b>檢測；涉及利用非受託者自行開發之系統或資源者，並應<b>標示</b>非自行開發之內容與其來源及提供<b>授權證明</b></td></tr>
+<tr><td class="c">5</td><td>違法或事件通知</td><td>受託者違反資安相關法令<b>或知悉資安事件</b>時，應<b class="hl">立即</b>通知委託機關及採行之補救措施</td></tr>
+<tr><td class="c">6</td><td>終止或解除</td><td>應確認受託者<b>返還、移交、刪除或銷毀</b>履行契約而持有之資料</td></tr>
+<tr><td class="c">7</td><td>其他措施</td><td>受託者應採取之其他資通安全相關維護措施</td></tr>
+<tr><td class="c">8</td><td>定期確認</td><td>委託機關應<b>定期</b>或於知悉受託者發生可能影響受託業務之資安事件時，以<b class="hl">稽核</b>或其他適當方式確認受託業務之執行情形（即第二方稽核）</td></tr>
+</tbody>
+</table>
+</div>
+
+<h3>19-2　客製化系統開發：檢測責任主體之分水嶺</h3>
+<div class="scroll">
+<table>
+<thead><tr><th>情形</th><th>判定標準</th><th>安全性檢測責任主體</th></tr></thead>
+<tbody>
+<tr><td>一般客製化系統</td><td><b>非</b>核心資通系統，<b>且</b>金額<b>未達</b> 1,000 萬元</td><td><b>受託者（廠商）</b>提供該資通系統之安全性檢測證明</td></tr>
+<tr><td>重點管控</td><td>屬<b class="hl">核心資通系統</b>，<b class="hl">或</b>委託金額達<b class="hl">新臺幣 1,000 萬元以上</b></td><td><b class="hl">委託機關應自行或另行委託第三方</b>進行安全性檢測（廠商仍須提供檢測證明）</td></tr>
+</tbody>
+</table>
+</div>
+<div class="note"><b>口訣：核心或一千萬，機關自行或第三方。</b>兩個門檻是「<b class="hl">或</b>」不是「且」——只要屬核心資通系統，即使金額只有十萬元，機關仍須自行或另行委託第三方檢測。<br>
+另外「標示非自行開發之內容與來源、提供授權證明」不分門檻，<b>只要涉及利用非受託者自行開發之系統或資源就要做</b>；這一項也是附表十「獲得程序」普級「識別第三方軟體、服務、函式庫或其他元件」的法源呼應。</div>
+</div>
+
+<h2 id="t20">二十、兩種適任性查核不要混 <span class="tag v">已核對</span></h2>
+<div class="card">
+<p class="sub" style="margin:0 0 10px">法規裡有<b>兩套</b>適任性查核，對象、法源與程序都不同，考題常互相張冠李戴。</p>
+<div class="scroll">
+<table>
+<thead><tr><th>比較項目</th><th>機關<b>所屬人員</b>之查核</th><th><b>委外受託者</b>人員之查核</th></tr></thead>
+<tbody>
+<tr><td>法源</td><td>資安法第 19 條；<b>作業辦法第 3～5 條</b></td><td><b>施行細則第 7 條</b>第 1 項第 3 款、第 2 項、第 3 項</td></tr>
+<tr><td>對象</td><td>資通安全<b>專職人員</b>（辦理業務涉及國家機密、軍事機密或國防秘密，或機關綜合審認者）；資安類科考試<b>錄取人員</b></td><td>受託業務<b>涉及國家機密</b>者，其執行業務之相關人員及可能接觸該國家機密之其他人員</td></tr>
+<tr><td>辦理機關</td><td>公務機關於<b>必要時</b>得查核；錄取人員由<b>主管機關</b>查核</td><td><b>委託機關</b>辦理</td></tr>
+<tr><td>執行方式</td><td>應檢附附表<b class="hl">函請法務部調查局</b>辦理，並<b>知會當事人</b>；調查局函復後，應於收受日之次日起<b class="hl">3 日內</b>書面通知當事人</td><td>就必要範圍內查核有無 5 類情形（妨害電腦使用罪、洩密／內亂外患罪、違反安全保密規定受懲戒或記過以上、受外國或陸港澳利誘脅迫、其他國家機密保護相關具體項目）</td></tr>
+<tr><td>事前程序</td><td>—</td><td>應記載於<b class="hl">招標公告、招標文件及契約</b>；辦理查核前應經<b class="hl">當事人書面同意</b></td></tr>
+<tr><td>未通過之效果</td><td>拒絕查核或經用人機關認定未通過者，<b>不得辦理涉及國家機密、軍事機密及國防秘密之資安業務</b>；職務得依法調整</td><td>依契約及國家機密保護法辦理，並<b>管制出境</b></td></tr>
+</tbody>
+</table>
+</div>
+
+<h3>20-1　所屬人員查核：三款情形、兩種結果（作業辦法第 4 條）</h3>
+<div class="scroll">
+<table>
+<thead><tr><th class="c">款</th><th>查核項目</th><th>結果認定</th></tr></thead>
+<tbody>
+<tr><td class="c">1</td><td><b>公務人員任用法第 28 條第 1 項</b>所列情形之一（如兼具外國國籍、褫奪公權尚未復權、受監護或輔助宣告尚未撤銷等）</td><td><b class="hl">直接查核未通過</b>（第 2 項），無裁量空間，不送甄審會</td></tr>
+<tr><td class="c">2</td><td><b>涉及國家安全或重大利益公務人員特殊查核辦法第 3 條第 1 項第 1、3、8、10 款</b>所列情形之一</td><td rowspan="2">應交由<b class="hl">人事甄審委員會</b>審酌其情節及擬任職務之性質，<b>報請機關首長核定</b>（第 3 項）。經首長決定任用者<b>應加註理由</b>；認有危害國家安全或重大利益之虞者，其查核未通過。<br><span style="font-size:12px">未設人事甄審委員會者，以其他適當會議方式為之（第 4 項）</span></td></tr>
+<tr><td class="c">3</td><td>曾犯<b>刑法妨害電腦使用罪章</b>之罪，經有罪判決確定或通緝有案尚未結案</td></tr>
+</tbody>
+</table>
+</div>
+<div class="note"><b>記法：第一款一刀切，第二、三款有轉圜。</b>公務人員任用法的消極資格是<b class="hl">當然不通過</b>；國安特殊查核與電腦犯罪則<b class="hl">送甄審會審酌＋首長核定</b>，只有認定「有危害國家安全或重大利益之虞」才不通過。<br>
+救濟途徑也常考：<b>現職</b>公務人員依<b>公務人員保障法</b>提起救濟；<b>非現職</b>者依<b>訴願法</b>（第 5 項）。</div>
+</div>
+
+<h2 id="t21">二十一、營運持續指標：RPO／RTO／WRT／MTPD／BIA <span class="tag v">已核對</span></h2>
+<div class="card">
+<div class="scroll">
+<table>
+<thead><tr><th>指標</th><th>中文</th><th>教材定義</th><th>軸線</th></tr></thead>
+<tbody>
+<tr><td><b class="hl">RPO</b><br>Recovery Point Objective</td><td>復原點目標</td><td>訂定系統可容忍<b>資料損失</b>的時間要求。指從災害發生<b class="hl">回溯</b>至最近一次可用備份的時間長度，代表能容忍的最大資料丟失量。<b>RPO 越短→備份越頻繁</b></td><td>災難<b>前</b><br>（資料）</td></tr>
+<tr><td><b class="hl">RTO</b><br>Recovery Time Objective</td><td>復原時間目標</td><td>訂定資通系統從中斷後至<b>重新恢復服務</b>之可容忍時間要求。指從災害發生到系統服務恢復運作的時間長度。<b>RTO 越短→需更快速的復原機制</b>（備援設備或替代方案）</td><td>災難<b>後</b><br>（技術）</td></tr>
+<tr><td><b class="hl">WRT</b><br>Work Recovery Time</td><td>工作恢復時間</td><td>系統技術恢復之後，至業務恢復正常運作所需的時間</td><td>災難<b>後</b><br>（業務）</td></tr>
+<tr><td><b class="hl">MTPD</b><br>Maximum Tolerable<br>Period of Disruption</td><td>最大可容忍<br>中斷時間</td><td>組織於發生業務運作中斷而無法提供產品或服務時，<b>可承受最長的空窗期間</b>。超過即可能導致不可逆轉之嚴重後果（破產、法律制裁、聲譽毀滅、失去關鍵客戶）。<b class="hl">MTPD ＝ RTO ＋ WRT</b></td><td>總<b>上限</b></td></tr>
+<tr><td><b class="hl">BIA</b><br>Business Impact Analysis</td><td>營運衝擊分析</td><td>「分析業務運作中斷<b>隨時間推移</b>對組織的衝擊的過程」。識別關鍵業務功能及其對 IT 系統之依賴性，評估中斷 1 小時／4 小時／1 天／1 週之潛在影響。<b class="hl">BIA 的結果是設定 RTO 及 RPO 的基礎</b></td><td><b>事前</b>分析</td></tr>
+</tbody>
+</table>
+</div>
+<div class="note"><b>時間軸：災難發生 → RTO（系統服務起來了）→ WRT（資料補正、業務正常）→ 合計不得超過 MTPD。</b><br>
+<b>RTO 與 WRT 怎麼分？</b>RTO 看的是<b class="hl">技術</b>（主機開了嗎、服務通了嗎、資料庫上線了嗎）；WRT 看的是<b class="hl">業務</b>（資料對不對、中斷期間人工受理的交易補登了沒、流程切回正式運作了沒）。<br>
+<b>BIA 不是復原階段的工作</b>，它是事前規劃工具，用來決定 RTO／RPO 與復原優先順序。看到選項把 BIA 說成「災後執行」就是錯的。</div>
+<div class="fix"><b>兩個容易寫錯的地方。</b><br>
+‧ 教材用的縮寫是 <b class="hl">MTPD</b>（Maximum Tolerable Period of Disruption），不是 MTD／MTO。作答時以 MTPD 為準。<br>
+‧ 附表十的法定用語在 115.1.7 修正後為「<b>最大可容忍中斷時間</b>」（系統備援，普級即要求），而資料備份普級則是「訂定<b>資料</b>可容忍損失之時間要求」——RPO 在資料備份、RTO 在系統備援，兩項分屬營運持續計畫的不同控制措施。</div>
+</div>
+
+<h2 id="t22">二十二、四種弱點相關機制之邊界 <span class="tag v">已核對</span></h2>
+<div class="card">
+<div class="scroll">
+<table>
+<thead><tr><th>機制</th><th>運作原理</th><th>主要特色</th></tr></thead>
+<tbody>
+<tr><td><b class="hl">VANS</b><br>資通安全弱點管理</td><td>蒐集機關資訊資產盤點資料（軟體項目與版本），與<b>國際權威弱點資料庫</b>查詢或比對，取得已公開揭露之安全漏洞資訊</td><td>常態性<b>資產／弱點比對</b>，<b class="hl">不對系統發射掃描封包</b>。建議每季至少辦理 1 次，弱點處置紀錄建議於比對後 1 個月內留存。涵蓋應用軟體、應用框架與程式語言、中介軟體、作業系統四層</td></tr>
+<tr><td><b>IDS／IPS</b><br>入侵偵測及防禦</td><td>即時監控或側錄網路流量與封包，比對特徵碼及異常行為</td><td>偵測（IDS）或<b>阻斷</b>（IPS）進行中的網路攻擊，是<b class="hl">即時流量面</b>的防護</td></tr>
+<tr><td><b>弱點掃描</b></td><td>使用<b>自動化工具</b>（如 Nessus、Qualys）對目標主機進行模擬檢測與漏洞探測</td><td>主動發現組態缺陷與已知弱點，分<b>初掃與複測</b>（見第十四節六步驟）</td></tr>
+<tr><td><b>滲透測試</b></td><td>由資安專家<b class="hl">人工</b>模擬真實駭客邏輯與攻擊手法，深度驗證防禦能力</td><td>發現邏輯性漏洞與複合式攻擊路徑；黑箱／白箱／灰箱</td></tr>
+</tbody>
+</table>
+</div>
+<div class="note"><b>一句話分辨：VANS 比對版本、弱掃工具自動打、滲透專家手動打、IDS/IPS 守流量。</b><br>
+最常見的誤導是把 VANS 描述成「主動掃描目標主機」——VANS 的核心是<b class="hl">資產清冊與弱點資料庫的比對</b>，不需要對系統發送探測封包，這也是它能常態高頻執行而不影響營運的原因。<br>
+另一個誤導是「導入 VANS 後即可免除弱點掃描與滲透測試」——三者在附表十與附表應辦事項中<b>並存</b>，VANS 屬持續性預警，不能取代定期檢測。<br>
+適用等級：VANS 為 <b class="hl">A、B、C 級</b>；EDR、SOC、GCB、電子郵件過濾為 <b class="hl">A、B 級</b>；APT 防禦僅 <b class="hl">A 級</b>。</div>
+<div class="fix"><span class="tag u">用語提醒</span>坊間資料常說 VANS 是「CPE 資產清冊格式比對 NVD／CVE 弱點庫」。<b>教材並未出現 CPE 與 NVD 兩個詞</b>，只寫「資訊資產盤點資料」與「國際權威弱點資料庫」，CVE 則有出現。依教材作答時請用教材用語，遇到選項寫 CPE／NVD 可視為實務補充，不宜作為唯一判準。</div>
 </div>
 
 </div>
