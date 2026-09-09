@@ -89,6 +89,7 @@
   <a href="#t8">分級原則</a>
   <a href="#t9">期限時間階梯</a>
   <a href="#t10">黑箱與白箱檢測</a>
+  <a href="#t11">風險評鑑三階段</a>
   <button id="mask" onclick="toggleMask()">背誦模式</button>
   <input id="q" placeholder="輸入關鍵字過濾表格列，例如「滲透」「罰鍰」「36」">
 </nav>
@@ -334,7 +335,54 @@ VANS 是唯一 C 級也要、但期限放寬到 2 年的項目。</div>
 <div class="note"><b>教材的採用建議：</b>預算充足 → 自動源碼掃描＋人工滲透測試併用；預算有限 → <b class="hl">優先採用自動源碼掃描</b>（不是人工滲透測試）。這是考點。</div>
 </div>
 
-<h2>十一、與本站題庫的對照</h2>
+<h2 id="t11">十一、詳細風險評鑑：三階段與 8 步驟 <span class="tag v">已核對</span></h2>
+<div class="card">
+<p class="sub" style="margin:0 0 10px">出自主要教材 3.3.8「詳細風險評鑑的作法」，步驟名稱與順序逐項對照原文。</p>
+<div class="scroll">
+<table>
+<thead><tr><th>階段</th><th>包含步驟（依序）</th><th>核心任務與記法</th></tr></thead>
+<tbody>
+<tr><td><b>階段 1</b><br>風險識別<br><span style="font-size:12px;color:var(--muted)">Risk Identification</span></td>
+<td>1. 資產識別<br>2. 威脅與脆弱性識別<br>3. 現有控制措施識別<br>4. 後果識別</td>
+<td><b class="hl">「找出來」</b>——盤點有哪些資產、面臨什麼威脅與弱點、目前已有什麼防護、萬一出事會怎樣。<br>
+<span style="font-size:13px;color:var(--muted)">注意第 4 步是「後果<b>識別</b>」（預測可能造成的後果），不是評估。</span></td></tr>
+<tr><td><b>階段 2</b><br>風險分析<br><span style="font-size:12px;color:var(--muted)">Risk Analysis</span></td>
+<td>5. 後果評估<br>6. 事件可能性評估<br>7. 決定風險等級</td>
+<td><b class="hl">「算分數」</b>——評估資產價值與衝擊、評估發生可能性，綜合兩者決定風險等級。<br>
+<span style="font-size:13px;color:var(--muted)">第 5 步是「後果<b>評估</b>」，與階段 1 的「後果識別」只差一字，是高頻陷阱。</span></td></tr>
+<tr><td><b>階段 3</b><br>風險評估<br><span style="font-size:12px;color:var(--muted)">Risk Evaluation</span></td>
+<td>8. 決定風險可接受等級</td>
+<td><b class="hl">「比門檻」</b>——把算出來的風險等級拿去對照「風險接受準則」，判斷是否在可接受範圍內。<br>
+<span style="font-size:13px;color:var(--muted)">只有一個步驟，考出來通常是問「哪一步屬於風險評估階段」。</span></td></tr>
+</tbody>
+</table>
+</div>
+<div class="note"><b>4 ＋ 3 ＋ 1 ＝ 8。</b>階段一最多、階段三只有一個。<br>
+最容易錯的是把「後果識別」和「後果評估」搞混，以及把「決定風險等級」誤放到階段三——
+<b>決定風險「等級」在階段 2，決定風險「可接受等級」才在階段 3</b>。</div>
+<h3>外層：資通安全風險管理流程</h3>
+<div class="scroll">
+<table>
+<thead><tr><th>環節</th><th>內容</th></tr></thead>
+<tbody>
+<tr><td rowspan="4"><b>風險評鑑</b></td><td>全景建立——確定範圍、限制與背景資訊（組織目標、內外部環境）</td></tr>
+<tr><td>風險識別</td></tr>
+<tr><td>風險分析</td></tr>
+<tr><td>風險評估</td></tr>
+<tr><td><b>風險決策點 1</b></td><td>評鑑是否允當？<b class="hl">允當 → 進入風險處理；不允當 → 退回重新評鑑</b></td></tr>
+<tr><td><b>風險處理</b></td><td>風險修改／風險留存／風險避免／風險分擔</td></tr>
+<tr><td><b>風險決策點 2</b></td><td>處理是否允當？不允當則退回</td></tr>
+<tr><td><b>風險接受</b></td><td>殘餘風險經核可後接受</td></tr>
+<tr><td colspan="2"><b class="hl">風險溝通及諮詢</b>與<b class="hl">風險監視與審查</b>兩者<b>貫穿整個流程</b>，不是單一階段</td></tr>
+</tbody>
+</table>
+</div>
+<div class="note"><b>兩個決策點的位置要記牢：</b>決策點 1 在評鑑之後、處理之前；決策點 2 在處理之後、接受之前。<br>
+「風險溝通及諮詢」是貫穿全程的——考題常把它寫成「僅在風險接受後執行」，那是錯的。</div>
+<p class="foot">用語提醒：流程圖標示為「風險辨識」，3.3.8 節內文用「風險識別」，兩者指同一環節。</p>
+</div>
+
+<h2>十二、與本站題庫的對照</h2>
 <div class="card">
 <p style="margin:0 0 8px">下列考點在題庫中出現頻率最高，也是最容易記錯的：</p>
 <ul style="margin:0;padding-left:20px">
@@ -346,6 +394,7 @@ VANS 是唯一 C 級也要、但期限放寬到 2 年的項目。</div>
 <li>社交工程演練每半年、通報應變演練每年</li>
 <li>C 級的 VANS 是 2 年內導入，其他等級是 1 年內</li>
 <li>預算有限時優先採用「自動源碼掃描」，不是人工滲透測試</li>
+<li>「決定風險等級」在風險分析階段；「決定風險可接受等級」才在風險評估階段</li>
 </ul>
 </div>
 
