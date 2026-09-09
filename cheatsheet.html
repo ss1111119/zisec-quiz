@@ -95,6 +95,8 @@
   <a href="#t14">弱點掃描 PDCA</a>
   <a href="#t15">程式庫與職責區隔</a>
   <a href="#t16">組態管理與 GCB</a>
+  <a href="#t17">成熟度與流程構面</a>
+  <a href="#t18">CMMC 2.0</a>
   <button id="mask" onclick="toggleMask()">背誦模式</button>
   <input id="q" placeholder="輸入關鍵字過濾表格列，例如「滲透」「罰鍰」「36」">
 </nav>
@@ -652,6 +654,83 @@ VANS 是唯一 C 級也要、但期限放寬到 2 年的項目。</div>
 <div class="note">GCB 的目的是<b>規範資通訊設備一致性的安全組態設定</b>（個人電腦、伺服器主機及網通設備等），消除因配置不一致產生的漏洞。適用對象為 <b class="hl">A 級及 B 級公務機關</b>（技術面應辦事項）。<br>
 記五類：<b>作業系統、瀏覽器、網通設備、應用程式、雲端服務</b>——由端點往外推，最後才是雲。<br>
 <span class="tag u">教材筆誤</span>教材原文將 RHEL 寫成「RHE」，應為 Red Hat Enterprise Linux。</div>
+</div>
+
+<h2 id="t17">十七、能力度、成熟度與 11 個流程構面 <span class="tag v">已核對</span></h2>
+<div class="card">
+<p class="sub" style="margin:0 0 10px">這裡有<b>兩把不同的尺</b>：能力度量「單一流程」，成熟度量「整個組織」。兩者都是 Level 0～5，名稱又有一半重疊，是最容易混淆的地方。</p>
+
+<h3>17-1　能力度之等級及定義（教材表 27，依 ISO/IEC 33004）</h3>
+<div class="scroll">
+<table>
+<thead><tr><th class="c">Level</th><th>名稱</th><th>定義</th><th>累進要求</th></tr></thead>
+<tbody>
+<tr><td class="c">0</td><td>未執行流程<br>Unperformed</td><td>組織未建立該流程，或無法達成該流程</td><td class="c dash">—</td></tr>
+<tr><td class="c">1</td><td>已執行流程<br>Performed</td><td>該流程之執行結果已達預先設定</td><td class="c dash">—</td></tr>
+<tr><td class="c">2</td><td>已管理流程<br>Managed</td><td>該流程<b>執行過程</b>已被管理；該流程<b>產出</b>已被管理<br><span style="font-size:12px">（教材標註：<b class="hl">符合應辦事項要求</b>）</span></td><td class="c">需滿足 Level 1</td></tr>
+<tr><td class="c">3</td><td>標準化流程<br>Established</td><td>該流程已被<b>標準化</b>；該流程已被<b>有效地部署</b><br><span style="font-size:12px">（教材標註：<b class="hl">範圍擴大或深化應辦事項要求</b>）</span></td><td class="c">需滿足 Level 1～2</td></tr>
+<tr><td class="c">4</td><td>可預測流程<br>Predictable</td><td>該流程可透過<b>衡量結果</b>了解執行成效；該流程已被<b>量化管理</b></td><td class="c">需滿足 Level 1～3</td></tr>
+<tr><td class="c">5</td><td>最佳化流程<br>Optimizing</td><td>基於<b>過去執行成效分析或其他創新方式</b>強化與優化該流程</td><td class="c">需滿足 Level 1～4</td></tr>
+</tbody>
+</table>
+</div>
+
+<h3>17-2　成熟度之等級及定義（教材表 28）</h3>
+<div class="scroll">
+<table>
+<thead><tr><th class="c">Level</th><th>名稱</th><th>定義</th><th>累進要求（解鎖條件）</th></tr></thead>
+<tbody>
+<tr><td class="c">0</td><td>未成熟型<br>Immature</td><td>組織尚未有效執行相關之基本流程</td><td>Level 1 之<b class="hl">任一</b>流程構面能力度為 <b>0</b></td></tr>
+<tr><td class="c">1</td><td>基礎型<br>Basic</td><td>相關流程構面執行結果已達成預先設定，且可支持組織之業務</td><td>Level 1 之流程構面皆達能力度 <b class="hl">1</b></td></tr>
+<tr><td class="c">2</td><td>管理型<br>Managed</td><td>相關流程構面已進行管理，包含<b>規劃、執行及監督</b>之過程</td><td>Level 1～2 之流程構面皆達能力度 <b class="hl">2</b></td></tr>
+<tr><td class="c">3</td><td>制度化型<br>Established</td><td>有效定義與部署<b>標準化流程</b>，使其成為常規作業</td><td>Level 1～3 之流程構面皆達能力度 <b class="hl">3</b></td></tr>
+<tr><td class="c">4</td><td>可預測型<br>Predictable</td><td>依組織目標定義流程<b>量化指標</b>，建立穩定、可預測之流程，蒐集與分析歷史數據，持續改善</td><td>Level 1～4 之流程構面皆達能力度 <b class="hl">4</b></td></tr>
+<tr><td class="c">5</td><td>創新型<br>Innovating</td><td>透過識別<b>創新應用、技術、新機會或潛在風險</b>優化各流程構面</td><td>Level 1～5 之流程構面皆達能力度 <b class="hl">5</b></td></tr>
+</tbody>
+</table>
+</div>
+<div class="fix"><b>兩把尺的名稱陷阱。</b>同一個 Level 編號，能力度與成熟度的名稱有的相同、有的不同：<br>
+‧ Level 2 <b>都叫「管理」</b>（Managed）；Level 3 英文<b>都是 Established</b>，但中文一個叫「標準化流程」、一個叫「制度化型」；Level 4 <b>都叫「可預測」</b>（Predictable）。<br>
+‧ <b class="hl">Level 5 不一樣</b>：能力度是「最佳化流程 Optimizing」，成熟度是「創新型 Innovating」。<br>
+‧ <b class="hl">Level 1 也不一樣</b>：能力度是「已執行流程 Performed」，成熟度是「基礎型 Basic」。<br>
+最關鍵的觀念：<b>成熟度 Level N ＝ Level 1～N 的所有流程構面，能力度都要 ≥ N</b>。不是只看新加入的那幾個構面，是連同前面的一起往上抬。</div>
+
+<h3>17-3　成熟度等級與 11 個流程構面之對應（教材表 29）</h3>
+<div class="scroll">
+<table>
+<thead><tr><th class="c">成熟度</th><th>該級新增之流程構面</th><th class="c">新增</th><th class="c">累計構面數</th></tr></thead>
+<tbody>
+<tr><td class="c"><b>1</b><br>基礎型</td><td><b>S1</b> 資安政策與組織健全<br><b>M3</b> 資安認知與教育訓練<br><b>T2</b> 通訊與作業安全管理</td><td class="c">3</td><td class="c"><b class="hl">3</b></td></tr>
+<tr><td class="c"><b>2</b><br>管理型</td><td><b>M1</b> 資產管理與風險評鑑<br><b>M2</b> 資訊委外安全管理<br><b>T1</b> 存取控制管理</td><td class="c">3</td><td class="c"><b class="hl">6</b></td></tr>
+<tr><td class="c"><b>3</b><br>制度化型</td><td><b>S3</b> 資安資源管理<br><b>T3</b> 資安事件通報與處理<br><b>T4</b> 資通系統開發與維護安全管理</td><td class="c">3</td><td class="c"><b class="hl">9</b></td></tr>
+<tr><td class="c"><b>4</b><br>可預測型</td><td><b>S4</b> 資安管理監督</td><td class="c">1</td><td class="c"><b class="hl">10</b></td></tr>
+<tr><td class="c"><b>5</b><br>創新型</td><td><b>S2</b> 資安治理架構</td><td class="c">1</td><td class="c"><b class="hl">11</b></td></tr>
+</tbody>
+</table>
+</div>
+<div class="note"><b>構面數記法：3－3－3－1－1，累計 3／6／9／10／11。</b>前三級各加三個，後兩級各加一個。<br>
+代號含意：<b>S</b>＝Strategy 策略面、<b>M</b>＝Management 管理面、<b>T</b>＝Technical 技術面。<br>
+<b>最反直覺的兩點</b>：① <b class="hl">S2 資安治理架構排在最高的 Level 5</b>，不是 Level 1——名字聽起來像基礎，其實是最後才解鎖。② <b class="hl">S4 資安管理監督在 Level 4</b>，而 S3 資安資源管理在 Level 3，S 系列是 S1→S3→S4→S2 的順序，不照編號。<br>
+Level 1 的三個構面各屬一個面向（S1、M3、T2），Level 2 也是（M1、M2 兩個 M ＋ T1），Level 3 是 S3＋T3＋T4。</div>
+</div>
+
+<h2 id="t18">十八、CMMC 2.0 三個層級（美國國防部，2024） <span class="tag v">已核對</span></h2>
+<div class="card">
+<p class="sub" style="margin:0 0 10px">CMMC＝Cybersecurity Maturity Model Certification（網路安全成熟度模型驗證）。美國國防部 2024 年發布之修訂版（version 2.13），對象為國防工業基地（DIB）供應商。教材圖 61。</p>
+<div class="scroll">
+<table>
+<thead><tr><th>層級</th><th class="c">保護對象</th><th class="c">要求數</th><th>對應標準</th><th>符合性評鑑</th></tr></thead>
+<tbody>
+<tr><td><b>Level 1</b><br>Foundational<br>基礎級</td><td class="c"><b class="hl">FCI</b><br><span style="font-size:12px">聯邦契約資訊</span></td><td class="c"><b class="hl">15</b> 項</td><td>48 CFR 52.204-21（聯邦採購法規 FAR）之基本保障要求</td><td><b class="hl">每年自我評鑑</b>＋年度確認</td></tr>
+<tr><td><b>Level 2</b><br>Advanced<br>進階級</td><td class="c"><b class="hl">CUI</b><br><span style="font-size:12px">受控非機密資訊</span></td><td class="c"><b class="hl">110</b> 項</td><td>與 <b>NIST SP 800-171 Rev 2</b> 之要求<b class="hl">完全相同</b></td><td>兩種路徑：<br>① 每 3 年<b class="hl">第三方評鑑</b>＋年度確認<br>② 特定計畫得每 3 年自我評鑑＋年度確認</td></tr>
+<tr><td><b>Level 3</b><br>Expert<br>專家級</td><td class="c"><b class="hl">CUI</b></td><td class="c"><b class="hl">134</b> 項</td><td>基於 <b>NIST SP 800-171 與 800-172</b>；含 800-172 之一個子集，並具 DoD 批准之參數</td><td>每 3 年<b class="hl">政府主導評鑑</b></td></tr>
+</tbody>
+</table>
+</div>
+<div class="note"><b>三個數字：15 → 110 → 134。</b>三種評鑑主體：<b class="hl">自己 → 第三方 → 政府</b>，層級越高、查的人越大牌。<br>
+保護對象只有兩種：<b>Level 1 保護 FCI</b>；<b>Level 2 與 Level 3 都保護 CUI</b>（考題常把 Level 2 的保護對象寫成 FCI）。<br>
+Level 2 是唯一有「兩種評鑑路徑」的層級，主要路徑為第三方評鑑，僅特定計畫（select programs）可改為自我評鑑。<br>
+<span class="tag u">注意</span>教材僅於 Level 1、Level 2 明列「年度確認（annual affirmation）」，Level 3 只寫每 3 年政府主導評鑑，未一併列出年度確認。</div>
 </div>
 
 </div>
