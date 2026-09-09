@@ -53,7 +53,19 @@
   .hidden{display:none}
   .foot{color:var(--muted);font-size:12.5px;margin-top:6px}
   a.back{color:var(--brand);font-size:13px;text-decoration:none}
-  @media print{nav,#q{display:none}.card{border:none;padding:0}}
+  #mask{font:inherit;font-size:13px;padding:5px 12px;border-radius:7px;border:1px solid var(--brand);
+    background:#fff;color:var(--brand);cursor:pointer;margin-left:4px}
+  #mask.on{background:var(--brand);color:#fff}
+  body.masked td.c{color:transparent;background:var(--line);cursor:pointer;user-select:none;
+    border-radius:4px;position:relative}
+  body.masked td.c *{color:transparent}
+  body.masked td.c::after{content:"?";color:var(--muted);position:absolute;left:0;right:0;text-align:center}
+  body.masked td.c.show{color:inherit;background:var(--ok-soft)}
+  body.masked td.c.show *{color:inherit}
+  body.masked td.c.show::after{content:""}
+  @media print{nav,#q,#mask{display:none}.card{border:none;padding:0}
+    body.masked td.c{color:inherit!important;background:none!important}
+    body.masked td.c::after{content:""}}
 </style>
 </head>
 <body>
@@ -63,7 +75,7 @@
 <p class="sub">
   <span class="tag v">已核對</span> 表示該列數字已逐字對照法規原文（責任等級分級辦法條文對照表、通報應變及演練辦法、資通安全管理法）。
   <span class="tag u">未核對</span> 表示出自教材整理、尚未對照原文，作答前請自行確認。
-  <br><a class="back" href="./">← 回模擬測驗</a>
+  <br>按「背誦模式」會蓋住所有數字與評等，點格子逐一翻開自我檢查；再按一次全部復原。列印時不受影響。<br><a class="back" href="./">← 回模擬測驗</a>
 </p>
 
 <nav>
@@ -77,6 +89,7 @@
   <a href="#t8">分級原則</a>
   <a href="#t9">期限時間階梯</a>
   <a href="#t10">黑箱與白箱檢測</a>
+  <button id="mask" onclick="toggleMask()">背誦模式</button>
   <input id="q" placeholder="輸入關鍵字過濾表格列，例如「滲透」「罰鍰」「36」">
 </nav>
 
@@ -338,6 +351,17 @@ VANS 是唯一 C 級也要、但期限放寬到 2 年的項目。</div>
 
 </div>
 <script>
+function toggleMask(){
+  var on = document.body.classList.toggle('masked');
+  document.getElementById('mask').classList.toggle('on', on);
+  document.getElementById('mask').textContent = on ? '背誦模式（點格子看答案）' : '背誦模式';
+  if(!on) document.querySelectorAll('td.c.show').forEach(function(td){td.classList.remove('show')});
+}
+document.addEventListener('click', function(e){
+  if(!document.body.classList.contains('masked')) return;
+  var td = e.target.closest ? e.target.closest('td.c') : null;
+  if(td) td.classList.toggle('show');
+});
 document.getElementById('q').addEventListener('input', function(){
   var k = this.value.trim();
   document.querySelectorAll('table tbody tr').forEach(function(tr){
