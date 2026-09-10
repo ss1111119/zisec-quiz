@@ -128,9 +128,10 @@
     <div id="wrong-body"></div>
     <div class="row" style="margin-top:12px">
       <button id="btn-retry-all" onclick="retryAllWrong()">重做累積錯題</button>
+      <button class="ghost sm" onclick="exportWrong()">匯出錯題給 Claude</button>
       <button class="ghost sm" onclick="clearWrong()">清除錯題本</button>
     </div>
-    <p class="foot">交卷後自動記錄答錯的題目；下次答對同一題就會從錯題本移除。跨次作答有效，重新整理不會消失。</p>
+    <p class="foot">交卷後自動記錄答錯的題目（含你當時選的答案）；下次答對同一題就會從錯題本移除。跨次作答有效，重新整理不會消失。</p>
   </div>
 
   <div class="card">
@@ -473,6 +474,7 @@ function updateWrong(){
     else{
       const prev=w[k];
       w[k]={n:(prev&&prev.n||0)+1,date:stamp,
+            pick:exam.resp[exam.items.indexOf(q)].join(''),   /* 當時所選,用以判別是不會還是被誘答 */
             q:{no:q.no,unit:q.unit,point:q.point,multi:q.multi,stem:q.stem,
                options:q.options,answer:q.answer,expl:q.expl,src:q.src}};
     }
@@ -491,6 +493,29 @@ function renderWrong(){
   const b=document.getElementById('btn-retry-all');
   if(b)b.disabled=!ks.length;
 }
+function exportWrong(){
+  const w=loadWrong(),ks=Object.keys(w);
+  if(!ks.length){alert('錯題本是空的。');return;}
+  const rows=ks.map(k=>w[k]).sort((a,b)=>
+    (+(a.q.unit||99))-(+(b.q.unit||99)) || (b.n-a.n));
+  const NL='\n';
+  let t='我的錯題清單(共 '+ks.length+' 題),請據此告訴我哪些考點需要加強:'+NL+NL;
+  let cur='';
+  rows.forEach(r=>{
+    const u=r.q.unit||'?';
+    if(u!==cur){t+='【第 '+u+' 單元】'+NL;cur=u;}
+    t+='- '+(r.q.point||'(無考點標註)')
+      +NL+'  正解 '+(r.q.answer||[]).join('')
+      +'／我選 '+(r.pick||'未作答')
+      +(r.n>1?'　錯 '+r.n+' 次':'')
+      +NL+'  題幹:'+String(r.q.stem||'').slice(0,50)+'…'+NL;
+  });
+  const ta=document.getElementById('pointsOut');
+  ta.value=t;ta.classList.remove('hide');ta.select();
+  try{document.execCommand('copy');alert('已複製 '+ks.length+' 題錯題到剪貼簿,直接貼給 Claude 即可。');}
+  catch(e){alert('請手動複製下方文字。');}
+}
+
 function retryAllWrong(){
   const w=loadWrong(),list=Object.keys(w).map(k=>w[k].q);
   if(!list.length){alert('錯題本是空的。');return;}
