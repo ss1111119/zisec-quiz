@@ -124,6 +124,16 @@
   </div>
 
   <div class="card">
+    <h2>錯題本</h2>
+    <div id="wrong-body"></div>
+    <div class="row" style="margin-top:12px">
+      <button id="btn-retry-all" onclick="retryAllWrong()">重做累積錯題</button>
+      <button class="ghost sm" onclick="clearWrong()">清除錯題本</button>
+    </div>
+    <p class="foot">交卷後自動記錄答錯的題目；下次答對同一題就會從錯題本移除。跨次作答有效，重新整理不會消失。</p>
+  </div>
+
+  <div class="card">
     <h2>累積題庫</h2>
     <div id="bank-body"></div>
     <div class="row" style="margin-top:12px">
@@ -175,6 +185,7 @@
 </div>
 <script>
 const LS='zisec-quiz-v1';
+const LSW='zisec-wrong-v1';   // 錯題本:跨次作答保留,答對即移除
 let parsed=[], exam=null;
 
 /* ---------- 解析器 ---------- */
@@ -402,6 +413,7 @@ function submitExam(auto){
   document.getElementById('result-sum').textContent=
     '答對 '+right+' / '+total+' 題　'+(auto?'(時間到自動交卷)　':'')
     +'換算為正式考試 50 題滿分 100 分制,'+(pass?'達到 70 分及格標準':'未達 70 分及格標準');
+  updateWrong();
   document.getElementById('btn-retry').disabled=(right===total);
   document.getElementById('onlyWrong').checked=false;
   renderReview();show('scr-result');window.scrollTo(0,0);
@@ -440,6 +452,53 @@ function retryWrong(){
 }
 
 /* ---------- 題庫 ---------- */
+/* ---------- 錯題本 ---------- */
+/* 以題幹雜湊作為題目身分,同一題在不同題庫檔案中亦視為同一題 */
+function qkey(q){
+  const s=String(q.stem||'');
+  let h=5381;
+  for(let i=0;i<s.length;i++){h=((h*33)^s.charCodeAt(i))>>>0;}
+  return h.toString(36)+'-'+s.length;
+}
+function loadWrong(){try{return JSON.parse(localStorage.getItem(LSW))||{};}catch(e){return{};}}
+function saveWrong(o){localStorage.setItem(LSW,JSON.stringify(o));}
+/* 交卷後更新:答錯者存入並累計次數,答對者移除 */
+function updateWrong(){
+  const w=loadWrong();
+  const stamp=new Date().toISOString().slice(0,16).replace('T',' ');
+  exam.items.forEach(q=>{
+    const k=qkey(q);
+    if(q._ok){delete w[k];}
+    else{
+      const prev=w[k];
+      w[k]={n:(prev&&prev.n||0)+1,date:stamp,
+            q:{no:q.no,unit:q.unit,point:q.point,multi:q.multi,stem:q.stem,
+               options:q.options,answer:q.answer,expl:q.expl,src:q.src}};
+    }
+  });
+  saveWrong(w);renderWrong();
+}
+function renderWrong(){
+  const w=loadWrong(),ks=Object.keys(w);
+  const byUnit={};
+  ks.forEach(k=>{const u=w[k].q.unit||'?';byUnit[u]=(byUnit[u]||0)+1;});
+  const dist=Object.keys(byUnit).sort((a,b)=>(+a||99)-(+b||99))
+    .map(u=>'第 '+u+' 單元 '+byUnit[u]+' 題').join('、');
+  document.getElementById('wrong-body').innerHTML=ks.length
+    ?'<p class="sub" style="margin:0">錯題本現有 <b>'+ks.length+'</b> 題。<br>'+dist+'</p>'
+    :'<p class="sub" style="margin:0">錯題本是空的。交卷後答錯的題目會自動存入。</p>';
+  const b=document.getElementById('btn-retry-all');
+  if(b)b.disabled=!ks.length;
+}
+function retryAllWrong(){
+  const w=loadWrong(),list=Object.keys(w).map(k=>w[k].q);
+  if(!list.length){alert('錯題本是空的。');return;}
+  startExam(list);
+}
+function clearWrong(){
+  if(confirm('確定清除錯題本?此動作無法復原。')){localStorage.removeItem(LSW);renderWrong();}
+}
+
 function loadBank(){try{return JSON.parse(localStorage.getItem(LS))||[];}catch(e){return[];}}
 function saveBank(items){
   const bank=loadBank();
@@ -468,7 +527,8 @@ function exportPoints(){
   try{document.execCommand('copy');alert('已複製到剪貼簿,可直接貼進 NotebookLM。');}catch(e){alert('請手動複製下方文字。');}
 }
 function exportJSON(){
-  const blob=new Blob([JSON.stringify(loadBank(),null,2)],{type:'application/json'});
+  const data={bank:loadBank(),wrong:loadWrong(),exportedAt:new Date().toISOString()};
+  const blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'});
   const a=document.createElement('a');
   a.href=URL.createObjectURL(blob);a.download='資安題庫備份.json';a.click();
 }
@@ -481,6 +541,7 @@ function esc(s){return String(s==null?'':s).replace(/[&<>"]/g,c=>({'&':'&amp;','
 function show(id){['scr-import','scr-exam','scr-result'].forEach(s=>
   document.getElementById(s).classList.toggle('hide',s!==id));}
 renderBank();
+renderWrong();
 loadBankList();
 </script>
 </body>
