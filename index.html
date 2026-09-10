@@ -47,9 +47,20 @@
   .clock{font-variant-numeric:tabular-nums;font-size:20px;font-weight:700}
   .clock.low{color:var(--bad)}
   .pal{display:flex;flex-wrap:wrap;gap:6px;margin-top:4px}
-  .pal a{display:grid;place-items:center;width:32px;height:32px;border:1px solid var(--line);
-    border-radius:6px;font-size:13px;text-decoration:none;color:var(--muted);background:#fff}
-  .pal a.done{background:var(--brand-soft);border-color:var(--brand);color:var(--brand);font-weight:700}
+  .pal a{position:relative;display:grid;place-items:center;width:38px;height:38px;border:1px solid var(--line);
+    border-radius:6px;font-size:12px;line-height:1.15;text-decoration:none;color:var(--bad);
+    background:#fff;text-align:center}
+  .pal a .pn{font-size:11px;color:var(--muted)}
+  .pal a .pa{font-weight:800;font-size:13px}
+  .pal a.done{background:var(--brand-soft);border-color:var(--brand);color:var(--brand)}
+  .pal a.done .pn{color:var(--brand)}
+  /* 未作答:紅框紅字,與官方答題狀況表之紅底同義 */
+  .pal a.blank{border-color:var(--bad);background:#fff5f5}
+  .pal a.flag::after{content:"★";position:absolute;top:-6px;right:-4px;font-size:12px;color:#e8a400}
+  .flagbox{display:inline-flex;align-items:center;gap:4px;font-size:12px;color:var(--muted);
+    cursor:pointer;user-select:none;margin-left:auto}
+  .flagbox input{margin:0}
+  .q.flagged{background:#fffdf4}
   .score{font-size:44px;font-weight:800;line-height:1.2}
   .pass{color:var(--ok)}.fail{color:var(--bad)}
   .box{border-left:4px solid var(--line);padding:10px 14px;margin-top:10px;background:#fafbfc;border-radius:0 8px 8px 0}
@@ -129,7 +140,9 @@
 <section id="scr-exam" class="hide">
   <div class="bar">
     <div>
-      <div style="font-size:13px;color:var(--muted)">已作答 <span id="answered">0</span> / <span id="total">0</span></div>
+      <div style="font-size:13px;color:var(--muted)">已作答 <span id="answered">0</span> / <span id="total">0</span>
+        　未作答 <span id="blankcnt" style="color:var(--bad);font-weight:700">0</span>
+        　註記 <span id="flagcnt" style="color:#e8a400;font-weight:700">0</span></div>
       <div class="clock" id="clock">75:00</div>
     </div>
     <div class="row">
@@ -280,7 +293,7 @@ function startExam(items){
     for(let i=list.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[list[i],list[j]]=[list[j],list[i]];}
   }
   const mins=items?Math.max(5,Math.round(list.length/50*75)):(+document.getElementById('mins').value||75);
-  exam={items:list,resp:list.map(()=>[]),left:mins*60,timer:null,submitted:false};
+  exam={items:list,resp:list.map(()=>[]),flag:list.map(()=>false),left:mins*60,timer:null,submitted:false};
   if(!items) saveBank(parsed);
   renderExam();show('scr-exam');
   document.getElementById('total').textContent=list.length;
@@ -303,17 +316,55 @@ function renderExam(){
   exam.items.forEach((q,i)=>{
     h+='<div class="q" id="q'+i+'"><div class="qhead"><strong>第 '+(i+1)+' 題</strong>'
       +'<span class="tag '+(q.multi?'multi':'single')+'">'+(q.multi?'複選':'單選')+'</span>'
-      +(q.unit?'<span class="tag">第 '+esc(q.unit)+' 單元</span>':'')+'</div>'
+      +(q.unit?'<span class="tag">第 '+esc(q.unit)+' 單元</span>':'')
+      +'<label class="flagbox noprint"><input type="checkbox" id="f'+i+'" onchange="toggleFlag('+i+',this)">★ 註記待回頭</label>'
+      +'</div>'
       +'<div class="stem">'+esc(q.stem)+'</div>';
     q.options.forEach(o=>{
       h+='<label class="opt" id="o'+i+o.key+'"><input type="'+(q.multi?'checkbox':'radio')+'" name="q'+i+'" value="'+o.key+'" onchange="pick('+i+',this)">'
         +'<span class="k">('+o.key+')</span><span>'+esc(o.text)+'</span></label>';
     });
+    h+='<div class="row noprint" style="margin-top:8px">'
+      +'<button class="ghost sm" onclick="clearPick('+i+')">取消作答</button></div>';
     h+='</div>';
-    pal+='<a href="#q'+i+'" id="p'+i+'">'+(i+1)+'</a>';
+    pal+='<a href="#q'+i+'" id="p'+i+'" class="blank"><span class="pn">'+(i+1)+'</span><span class="pa" id="pa'+i+'">—</span></a>';
   });
   document.getElementById('exam-body').innerHTML=h;
   document.getElementById('pal').innerHTML=pal;
+  updateCounts();
+}
+
+/* 面板同時顯示題號與已選代號;未作答者紅框,經註記者右上角加星 */
+function paintPal(i){
+  const done=exam.resp[i].length>0;
+  const a=document.getElementById('p'+i);
+  a.classList.toggle('done',done);
+  a.classList.toggle('blank',!done);
+  a.classList.toggle('flag',!!exam.flag[i]);
+  document.getElementById('pa'+i).textContent=done?exam.resp[i].join(''):'—';
+}
+
+function updateCounts(){
+  const ans=exam.resp.filter(r=>r.length).length;
+  document.getElementById('answered').textContent=ans;
+  document.getElementById('blankcnt').textContent=exam.items.length-ans;
+  document.getElementById('flagcnt').textContent=exam.flag.filter(Boolean).length;
+}
+
+function toggleFlag(i,el){
+  exam.flag[i]=el.checked;
+  document.getElementById('q'+i).classList.toggle('flagged',el.checked);
+  paintPal(i);updateCounts();
+}
+
+function clearPick(i){
+  exam.resp[i]=[];
+  exam.items[i].options.forEach(o=>{
+    const lab=document.getElementById('o'+i+o.key);
+    lab.classList.remove('sel');
+    const inp=lab.querySelector('input'); if(inp) inp.checked=false;
+  });
+  paintPal(i);updateCounts();
 }
 
 function pick(i,el){
@@ -326,14 +377,19 @@ function pick(i,el){
   q.options.forEach(o=>{
     document.getElementById('o'+i+o.key).classList.toggle('sel',exam.resp[i].includes(o.key));
   });
-  document.getElementById('p'+i).classList.toggle('done',exam.resp[i].length>0);
-  document.getElementById('answered').textContent=exam.resp.filter(r=>r.length).length;
+  paintPal(i);updateCounts();
 }
 
 function submitExam(auto){
   if(exam.submitted)return;
   const blank=exam.resp.filter(r=>!r.length).length;
-  if(!auto&&blank&&!confirm('還有 '+blank+' 題未作答,確定交卷?'))return;
+  const flagged=exam.flag?exam.flag.filter(Boolean).length:0;
+  if(!auto&&(blank||flagged)){
+    const msg=[];
+    if(blank)msg.push('還有 '+blank+' 題未作答');
+    if(flagged)msg.push('有 '+flagged+' 題標了★待回頭');
+    if(!confirm(msg.join('、')+'。確定交卷?'))return;
+  }
   exam.submitted=true;clearInterval(exam.timer);
   let right=0;
   exam.items.forEach((q,i)=>{
