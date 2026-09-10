@@ -139,6 +139,7 @@
     <div class="row" style="margin-top:12px">
       <button class="ghost sm" onclick="exportPoints()">匯出「已考過考點」清單</button>
       <button class="ghost sm" onclick="exportJSON()">備份 JSON</button>
+      <button class="ghost sm" onclick="dedupeBank()">清理重複題目</button>
       <button class="ghost sm" onclick="clearBank()">清除題庫</button>
     </div>
     <p class="foot">下次請 NotebookLM 出題時,把「已考過考點」清單連同命題規則一起貼進去,規則第 3 條的考點盤點才有依據(它記不住前幾次對話)。</p>
@@ -500,11 +501,34 @@ function clearWrong(){
 }
 
 function loadBank(){try{return JSON.parse(localStorage.getItem(LS))||[];}catch(e){return[];}}
+/* 只累積「沒存過」的題目。同一份題庫重複作答不會再存一次,
+   避免匯出的黑名單塞入大量重複考點。 */
 function saveBank(items){
   const bank=loadBank();
+  const seen=new Set();
+  bank.forEach(b=>b.items.forEach(q=>seen.add(qkey(q))));
+  const fresh=items.filter(q=>!seen.has(qkey(q)));
+  if(!fresh.length){renderBank();return;}
   const stamp=new Date().toISOString().slice(0,16).replace('T',' ');
-  bank.push({date:stamp,items:items.map(q=>({no:q.no,unit:q.unit,point:q.point,multi:q.multi,stem:q.stem}))});
+  bank.push({date:stamp,items:fresh.map(q=>({no:q.no,unit:q.unit,point:q.point,multi:q.multi,stem:q.stem}))});
   localStorage.setItem(LS,JSON.stringify(bank));renderBank();
+}
+/* 清理既有資料中的重複題目(同題幹只保留最早一筆) */
+function dedupeBank(){
+  const bank=loadBank();
+  if(!bank.length){alert('題庫是空的。');return;}
+  const seen=new Set();let removed=0;
+  const out=[];
+  bank.forEach(b=>{
+    const keep=b.items.filter(q=>{
+      const k=qkey(q);
+      if(seen.has(k)){removed++;return false;}
+      seen.add(k);return true;
+    });
+    if(keep.length)out.push({date:b.date,items:keep});
+  });
+  localStorage.setItem(LS,JSON.stringify(out));renderBank();
+  alert(removed?('已移除 '+removed+' 筆重複題目,剩餘 '+seen.size+' 題。'):'沒有發現重複題目。');
 }
 function renderBank(){
   const bank=loadBank(),n=bank.reduce((a,b)=>a+b.items.length,0);
