@@ -308,10 +308,11 @@ VANS 是唯一 C 級也要、但期限放寬到 2 年的項目。</div>
 <tr><td>密碼不可與前 3 次相同、強制複雜度</td><td class="c dot">●</td><td class="c dot">●</td><td class="c dot">●</td></tr>
 <tr><td>防範自動化程式登入（CAPTCHA）</td><td class="c dash">—</td><td class="c dot">●</td><td class="c dot">●</td></tr>
 <tr><td>密碼重設發送一次性且具時效之符記</td><td class="c dash">—</td><td class="c dot">●</td><td class="c dot">●</td></tr>
-<tr><td rowspan="4">事件日誌</td><td>日誌保留至少 6 個月</td><td class="c dot">●</td><td class="c dot">●</td><td class="c dot">●</td></tr>
+<tr><td rowspan="5">事件日誌</td><td>日誌保留至少 6 個月</td><td class="c dot">●</td><td class="c dot">●</td><td class="c dot">●</td></tr>
 <tr><td>日誌存取僅限有權限之使用者</td><td class="c dot">●</td><td class="c dot">●</td><td class="c dot">●</td></tr>
 <tr><td>運用雜湊等完整性確保機制</td><td class="c dash">—</td><td class="c dot">●</td><td class="c dot">●</td></tr>
-<tr><td>日誌處理失效時對特定人員提出警告</td><td class="c dash">—</td><td class="c dash">—</td><td class="c dot">●</td></tr>
+<tr><td>日誌處理失效時<b>採取適當之行動</b></td><td class="c dot">●</td><td class="c dot">●</td><td class="c dot">●</td></tr>
+<tr><td>日誌處理失效時<b>對特定人員提出警告</b></td><td class="c dash">—</td><td class="c dash">—</td><td class="c dot">●</td></tr>
 <tr><td rowspan="3">營運持續</td><td>訂定可容忍資料損失時間（RPO）、執行備份</td><td class="c dot">●</td><td class="c dot">●</td><td class="c dot">●</td></tr>
 <tr><td>定期測試備份資訊以驗證可靠性</td><td class="c dash">—</td><td class="c dot">●</td><td class="c dot">●</td></tr>
 <tr><td>異地備份；備份還原納入營運持續演練</td><td class="c dash">—</td><td class="c dash">—</td><td class="c dot">●</td></tr>
@@ -323,7 +324,7 @@ VANS 是唯一 C 級也要、但期限放寬到 2 年的項目。</div>
 </tbody>
 </table>
 </div>
-<div class="note">本表已逐列核對 115.1.7 修正後附表十原文。<b>反過來記更快：普級標「無要求」的只有三格</b>——SDLC <b class="hl">設計階段</b>、系統與通訊保護的<b class="hl">傳輸之機密性與完整性</b>與<b class="hl">資料儲存之安全</b>。其餘每一項控制措施普級都有要求，只是內容較淺。看到「異地備份」「傳輸加密」「滲透測試」「日誌處理失效告警」就是高級專屬。</div>
+<div class="note">本表已逐列核對 115.1.7 修正後附表十原文。<b>反過來記更快：普級標「無要求」的只有三格</b>——SDLC <b class="hl">設計階段</b>、系統與通訊保護的<b class="hl">傳輸之機密性與完整性</b>與<b class="hl">資料儲存之安全</b>。其餘每一項控制措施普級都有要求，只是內容較淺。看到「異地備份」「傳輸加密」「滲透測試」「日誌處理失效告警」就是高級專屬。<br><b class="hl">注意同一項目常有兩層</b>：例如「日誌處理失效之回應」，普級起就要求「採取適當之行動」，高級才<b>新增</b>「對特定人員提出警告」。看到題目問「日誌處理失效之回應屬哪一級以上」，答案是<b class="hl">普</b>；只有問到「提出警告」時才是高級。詳見 7-3 逐項對照。</div>
 <h3>7-3　附表十全構面「普／中／高」逐項對照 <span class="tag v">已核對</span></h3>
 <p class="sub" style="margin:0 0 10px">依 115.1.7 修正後附表十原文整理。中、高等級一律「涵蓋下一級之所有控制措施」，
 所以表中<b>中、高兩欄只寫該級「新增」的項目</b>；寫「同普級」就代表整項三級要求相同。
