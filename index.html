@@ -468,13 +468,15 @@ function saveWrong(o){localStorage.setItem(LSW,JSON.stringify(o));}
 function updateWrong(){
   const w=loadWrong();
   const stamp=new Date().toISOString().slice(0,16).replace('T',' ');
-  exam.items.forEach(q=>{
+  /* 用 forEach 提供的索引,不要用 indexOf:同一份題庫若含重複題目,
+     indexOf 只會回傳第一個位置,導致後面那題記錄到別人的作答。 */
+  exam.items.forEach((q,i)=>{
     const k=qkey(q);
     if(q._ok){delete w[k];}
     else{
       const prev=w[k];
       w[k]={n:(prev&&prev.n||0)+1,date:stamp,
-            pick:exam.resp[exam.items.indexOf(q)].join(''),   /* 當時所選,用以判別是不會還是被誘答 */
+            pick:(exam.resp[i]||[]).join(''),   /* 當時所選,用以判別是不會還是被誘答 */
             q:{no:q.no,unit:q.unit,point:q.point,multi:q.multi,stem:q.stem,
                options:q.options,answer:q.answer,expl:q.expl,src:q.src}};
     }
