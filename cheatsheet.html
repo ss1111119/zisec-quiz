@@ -72,6 +72,7 @@
   .sstep.all{padding-left:2px}
   .sstep .none{color:var(--muted)}
   @media(max-width:560px){.ssname{font-size:14px}.from{margin-left:0}}
+  .key{margin-top:8px;background:var(--brand-soft);border-left:3px solid var(--brand);padding:7px 11px;border-radius:0 7px 7px 0;font-size:13px}
   .hidden{display:none}
   .foot{color:var(--muted);font-size:12.5px;margin-top:6px}
   a.back{color:var(--brand);font-size:13px;text-decoration:none}
@@ -101,6 +102,7 @@
 </p>
 
 <nav>
+  <a href="#t0">易混淆配對</a>
   <a href="#t1">責任等級應辦事項</a>
   <a href="#t2">技術面防護</a>
   <a href="#t3">訓練與證照</a>
@@ -127,6 +129,109 @@
   <button id="mask" onclick="toggleMask()">背誦模式</button>
   <input id="q" placeholder="輸入關鍵字過濾表格列，例如「滲透」「罰鍰」「36」">
 </nav>
+
+<h2 id="t0">〇、易混淆配對總表 <span class="tag v">已核對</span></h2>
+<div class="card">
+<p class="sub" style="margin:0 0 14px">這一節的每一組，都是<b>「知道有這組對照，卻選到另一半」</b>的題型。
+考題最愛把兩者的敘述對調，或把甲的特徵掛到乙身上。每組附一句<b class="hl">切開它的鑰匙</b>，
+看到關鍵字就能當場判斷，不必回想整張表。</p>
+
+<div class="ssg">
+
+  <div class="ssbox">
+    <div class="ssh">1. IDS ↔ IPS<span class="sshsub">附表十／教材表42</span></div>
+    <div class="ssm">
+      <div class="sstep"><b class="lv lv-p">IDS</b><span>監控方式<b>被動</b>；反應能力<b class="hl">僅報告</b>；部署於網路邊緣或主機（旁路）；誤報風險<b>較低</b>；即時防護<b>無</b></span></div>
+      <div class="sstep"><b class="lv lv-h">IPS</b><span>監控方式<b>主動</b>；反應能力<b class="hl">自動防禦</b>；<b>串接於網路流量中</b>；誤報風險<b>較高</b>；即時防護<b>有</b></span></div>
+      <div class="key"><b>鑰匙：P ＝ Prevention ＝ 擋。</b>IPS 串在線上才擋得住，代價是<b class="hl">誤判會斷正常服務、設備故障會斷網</b>；IDS 只是旁邊看著，<b class="hl">只會喊不會擋</b>。</div>
+    </div>
+  </div>
+
+  <div class="ssbox">
+    <div class="ssh">2. 非侵入式 ↔ 侵入式<span class="sshsub">教材 7.2.10</span></div>
+    <div class="ssm">
+      <div class="sstep"><b class="lv lv-p">非侵入式</b><span>不會對目標系統造成影響，<b>發送特定請求並分析回應</b>來判斷弱點；安全性高，適合運作環境</span></div>
+      <div class="sstep"><b class="lv lv-h">侵入式</b><span>可能造成不穩定或破壞；會<b class="hl">執行惡意程式碼、提升權限、取得重要資料</b>，以驗證弱點可利用性</span></div>
+      <div class="key"><b>鑰匙：掃描只看，測試真打。</b>教材明載「<b class="hl">弱點掃描主要採用非侵入式</b>」，滲透測試才傾向侵入式。看到「提升權限、驗證可利用性」＝侵入式。</div>
+    </div>
+  </div>
+
+  <div class="ssbox">
+    <div class="ssh">3. WAF ↔ 電子郵件過濾<span class="sshsub">教材 6.3、6.4</span></div>
+    <div class="ssm">
+      <div class="sstep"><b class="lv lv-p">WAF</b><span>針對<b>應用層封包</b>管控，專注<b class="hl">網站應用程式</b>之攻擊：SQL Injection、XSS。偵測技術為白名單／黑名單／攻擊特徵判斷（針對<b>網頁與參數</b>）</span></div>
+      <div class="sstep"><b class="lv lv-m">郵件過濾</b><span>守 <b>SMTP</b>：過濾垃圾廣告信、防電子郵件社交工程。判斷技術為<b class="hl">連線模式、關鍵字比對、內容過濾條件、外部資料庫比對（RBL）、貝氏</b></span></div>
+      <div class="key"><b>鑰匙：看守哪個門。</b>出現 <b class="hl">SQL Injection／XSS 一定是 WAF</b>；出現<b class="hl">釣魚信、附件、寄件者 IP 就是郵件過濾</b>。<br>
+      <span style="font-size:12.5px">※ 兩者都有「黑名單」，但 WAF 擋的是<b>網頁與參數</b>，郵件過濾比對的是<b>寄件來源</b>。</span></div>
+    </div>
+  </div>
+
+  <div class="ssbox">
+    <div class="ssh">4. 風險三要素 ↔ CIA 防護目標<span class="sshsub">教材 3.1.1、1.3</span></div>
+    <div class="ssm">
+      <div class="sstep"><b class="lv lv-m">風險三要素</b><span><b class="hl">威脅、脆弱性、衝擊</b>。風險定義為「威脅利用其相對應的脆弱性，造成資訊資產受到衝擊的<b>可能性</b>」</span></div>
+      <div class="sstep"><b class="lv lv-p">CIA</b><span><b>機密性、完整性、可用性</b>（＋法律遵循性），是<b class="hl">要保住的東西</b>，不是風險的組成</span></div>
+      <div class="key"><b>鑰匙：三要素是「壞事怎麼發生」，CIA 是「要保住什麼」。</b>問「風險從何而來」選前者；問「防護目標」選後者。<b class="hl">注意三要素裡沒有「資產」</b>——資產是被衝擊的對象，不是要素之一。</div>
+    </div>
+  </div>
+
+  <div class="ssbox">
+    <div class="ssh">5. 事件日誌與可歸責性（六項）<span class="sshsub">附表十</span></div>
+    <div class="ssm">
+      <div class="sstep all"><span>①記錄事件　②日誌紀錄內容　③日誌儲存容量　④日誌處理失效之回應　⑤時戳及校時　⑥日誌資訊之保護</span></div>
+      <div class="key"><b>鑰匙：六項全都帶「日誌」或「時間」的味道。</b>沒這味道的（帳號管理、最小權限、遠端存取）屬<b>存取控制</b>構面，別混進來。</div>
+    </div>
+  </div>
+
+  <div class="ssbox">
+    <div class="ssh">6. RPO ↔ RTO<span class="sshsub">附表十 營運持續計畫</span></div>
+    <div class="ssm">
+      <div class="sstep"><b class="lv lv-p">RPO</b><span>列於<b class="hl">資料備份</b>項下：<b>資料</b>可容忍損失之時間要求。<b>丟多少資料</b></span></div>
+      <div class="sstep"><b class="lv lv-p">RTO</b><span>列於<b class="hl">系統備援</b>項下：系統從中斷至重新恢復服務之<b>最大可容忍中斷時間</b>。<b>停多久</b></span></div>
+      <div class="key"><b>鑰匙：P ＝ Point ＝ 資料回到哪個時間點；T ＝ Time ＝ 停機停多久。</b>兩者<b class="hl">普級皆已要求</b>。</div>
+    </div>
+  </div>
+
+  <div class="ssbox">
+    <div class="ssh">7. 資安治理 ↔ 資安管理<span class="sshsub">教材 4.6.1</span></div>
+    <div class="ssm">
+      <div class="sstep"><b class="lv lv-h">治理</b><span>高層決策，確立方向與目標。權責：<b>機關首長、資通安全長、治理推動小組</b>。自組織需求出發，經<b class="hl">評估</b>後產生<b class="hl">指導</b>與<b class="hl">監視</b></span></div>
+      <div class="sstep"><b class="lv lv-p">管理</b><span>具體執行，將目標轉化為行動。權責：<b>資通安全長、管理推動小組、使用者</b>。包含<b class="hl">規劃</b>等作為</span></div>
+      <div class="key"><b>鑰匙：治理＝評估／指導／監視（EDM），管理＝規劃／執行。</b>資通安全長<b class="hl">兩邊都在</b>，是銜接點。</div>
+    </div>
+  </div>
+
+  <div class="ssbox">
+    <div class="ssh">8. 能力度 ↔ 成熟度<span class="sshsub">教材 4.6.7</span></div>
+    <div class="ssm">
+      <div class="sstep"><b class="lv lv-p">能力度</b><span>針對<b class="hl">個別流程構面</b>之執行程度評定</span></div>
+      <div class="sstep"><b class="lv lv-h">成熟度</b><span>針對<b class="hl">組織整體</b>，須該等級對應之<b>所有</b>流程構面能力度<b class="hl">全數達標</b>才跨級</span></div>
+      <div class="key"><b>鑰匙：一個構面沒達標，整體就卡在下一級。</b>不是平均分，是<b class="hl">木桶效應</b>。</div>
+    </div>
+  </div>
+
+  <div class="ssbox">
+    <div class="ssh">9. 事件等級 第三級 ↔ 第四級<span class="sshsub">通報辦法 §2</span></div>
+    <div class="ssm">
+      <div class="sstep"><b class="lv lv-m">第三級</b><span>未涉 CI 核心業務資訊遭<b>嚴重</b>洩漏；或<b class="hl">一般公務機密、涉 CI 核心業務資訊遭「輕微」洩漏</b></span></div>
+      <div class="sstep"><b class="lv lv-h">第四級</b><span>一般公務機密、涉 CI 核心業務資訊遭<b class="hl">「嚴重」</b>洩漏；或<b class="hl">國家機密遭洩漏</b>（不分輕重）</span></div>
+      <div class="key"><b>鑰匙：同樣是「一般公務機密」，輕微＝三級、嚴重＝四級。</b>但<b class="hl">國家機密只要洩漏就是四級</b>，沒有輕微這個選項。</div>
+    </div>
+  </div>
+
+  <div class="ssbox">
+    <div class="ssh">10. CIA 三構面綜合評定<span class="sshsub">通報辦法 §2／教材 9.3</span></div>
+    <div class="ssm">
+      <div class="sstep all"><span>機密性、完整性、可用性分別評級後，<b class="hl">以最高級別評為該事件之通報等級</b></span></div>
+      <div class="key"><b>鑰匙：取最高，不是取平均，也不是取可用性。</b><br>
+      <span style="font-size:12.5px">教材案例（二）KillDisk：機密性<b>無須通報</b>、完整性<b>4 級</b>、可用性<b>3 級</b> → 綜評 <b class="hl">4 級</b>。</span></div>
+    </div>
+  </div>
+
+</div>
+
+<div class="note"><b>考前 3 分鐘就掃這一節。</b>這十組是最常被對調敘述的地方；記住右下角那句鑰匙，比重讀整張對照表有效。</div>
+</div>
 
 <h2 id="t1">一、公務機關 A／B／C 級應辦事項 <span class="tag v">已核對</span></h2>
 <div class="card">
