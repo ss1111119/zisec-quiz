@@ -124,6 +124,18 @@
   </div>
 
   <div class="card">
+    <h2>模擬考</h2>
+    <div id="mock-body"></div>
+    <div class="row" style="margin-top:12px">
+      <span>抽出</span><input type="number" id="mock-n" min="5" max="200" value="50" style="width:70px"><span>題</span>
+      <button onclick="startMock(false)">隨機抽題</button>
+      <button class="ghost" onclick="startMock(true)">加重錯過的題</button>
+    </div>
+    <p class="sub" style="margin:10px 0 0">正式考試為 50 題、75 分鐘、70 分及格（可錯 15 題）。
+    「加重錯過的題」會依錯誤次數提高被抽中的機率，最多 4 倍。</p>
+  </div>
+
+  <div class="card">
     <h2>錯題本</h2>
     <div id="wrong-body"></div>
     <div class="row" style="margin-top:12px">
@@ -535,7 +547,7 @@ function saveBank(items){
   const seen=new Set();
   bank.forEach(b=>b.items.forEach(q=>seen.add(qkey(q))));
   const fresh=items.filter(q=>!seen.has(qkey(q)));
-  if(!fresh.length){renderBank();return;}
+  if(!fresh.length){renderBank();renderMock();return;}
   const stamp=new Date().toISOString().slice(0,16).replace('T',' ');
   bank.push({date:stamp,items:fresh.map(q=>({no:q.no,unit:q.unit,point:q.point,multi:q.multi,stem:q.stem}))});
   localStorage.setItem(LS,JSON.stringify(bank));renderBank();
@@ -557,6 +569,53 @@ function dedupeBank(){
   localStorage.setItem(LS,JSON.stringify(out));renderBank();
   alert(removed?('已移除 '+removed+' 筆重複題目,剩餘 '+seen.size+' 題。'):'沒有發現重複題目。');
 }
+/* ===== 模擬考:自累積題庫隨機抽題,比照正式考試 50 題 75 分鐘 ===== */
+function mockPool(){
+  /* 以 qkey 去重:同一題可能存在於多份題庫(或同一份被存過兩次) */
+  const seen=new Set(),pool=[];
+  loadBank().forEach(b=>b.items.forEach(q=>{
+    const k=qkey(q);
+    if(!seen.has(k)){seen.add(k);pool.push(q);}
+  }));
+  return pool;
+}
+function startMock(weighted){
+  const pool=mockPool();
+  const n=parseInt(document.getElementById('mock-n').value,10)||50;
+  if(pool.length<n){
+    alert('累積題庫只有 '+pool.length+' 題,不足 '+n+' 題。\n請先載入題庫並至少開始作答一次,題目才會存入。');
+    return;
+  }
+  const wrong=loadWrong();
+  /* 加權抽題:錯過的題目權重隨錯誤次數遞增,最多 4 倍;其餘為 1 倍。
+     用重複放入候選籃的方式實作,再於抽出後以 qkey 去重,避免同一題重複出現。 */
+  let basket=[];
+  pool.forEach(q=>{
+    const w=weighted?Math.min(1+(wrong[qkey(q)]?.n||0)*2,4):1;
+    for(let i=0;i<w;i++) basket.push(q);
+  });
+  const picked=[],used=new Set();
+  while(picked.length<n&&basket.length){
+    const i=Math.floor(Math.random()*basket.length);
+    const q=basket[i];basket.splice(i,1);
+    const k=qkey(q);
+    if(!used.has(k)){used.add(k);picked.push(q);}
+  }
+  document.getElementById('mins').value=Math.round(n*1.5);
+  document.getElementById('shuffle').checked=true;
+  startExam(picked);
+  window.scrollTo(0,0);
+}
+function renderMock(){
+  const pool=mockPool(),wrong=loadWrong();
+  const nw=pool.filter(q=>wrong[qkey(q)]).length;
+  document.getElementById('mock-body').innerHTML=pool.length
+    ?'<p class="sub" style="margin:0">可抽題數 <b>'+pool.length+'</b> 題（已去除重複）'
+      +(nw?'，其中 <b>'+nw+'</b> 題曾經答錯。':'。')
+      +'<br>抽出的題目一律隨機排序，作答時間依題數自動設為每題 1.5 分鐘。</p>'
+    :'<p class="sub" style="margin:0">累積題庫是空的。請先在上方載入題庫並開始作答一次。</p>';
+}
+
 function renderBank(){
   const bank=loadBank(),n=bank.reduce((a,b)=>a+b.items.length,0);
   document.getElementById('bank-body').innerHTML=bank.length
