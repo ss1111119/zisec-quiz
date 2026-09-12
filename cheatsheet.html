@@ -129,6 +129,7 @@
   <a href="#t22">弱點機制邊界</a>
   <a href="#t23">稽核作業時序</a>
   <a href="#t24">標準與框架對照</a>
+  <a href="#t25">加密與簽章</a>
   <a href="#t99">未出過題之節次</a>
   <button id="mask" onclick="toggleMask()">背誦模式</button>
   <input id="q" placeholder="輸入關鍵字過濾表格列，例如「滲透」「罰鍰」「36」">
@@ -1509,6 +1510,101 @@ Level 2 的 110 項是「與 NIST SP 800-171 Rev 2 <b class="hl">完全相同</b
 </div>
 <div class="note"><b>Level 5 是「最佳化」不是「持續改善」。</b>六級皆有<b class="hl">累進要求</b>——要達某級，其下各級必須全部滿足。<br>
 這與<b>成熟度</b>之判定邏輯相同（見 17-3）：<b class="hl">能力度針對個別流程構面，成熟度針對組織整體</b>，且成熟度須該級對應之所有流程構面能力度全數達標才能跨級。</div>
+</div>
+
+
+<h2 id="t25">廿五、加密與簽章技術 <span class="tag v">已核對</span></h2>
+<div class="card">
+<h3>25-1　對稱式 ↔ 非對稱式</h3>
+<div class="scroll">
+<table>
+<thead><tr><th>比較項目</th><th>對稱式加解密</th><th>非對稱式加解密</th></tr></thead>
+<tbody>
+<tr><td>別稱</td><td><b class="hl">私密金鑰密碼學</b><br>Secret Key Cryptography</td><td>公開金鑰密碼學</td></tr>
+<tr><td>金鑰</td><td>加密與解密用<b class="hl">同一把</b>「秘密金鑰」</td><td>一對金鑰：<b class="hl">公開金鑰＋私密金鑰</b></td></tr>
+<tr><td>運作</td><td>同一把金鑰加密、同一把金鑰解密</td><td><b>公鑰加密 → 只能私鑰解</b><br><b>私鑰加密 → 只能公鑰驗證</b></td></tr>
+<tr><td>速度</td><td><b class="hl">快</b></td><td><b class="hl">慢</b></td></tr>
+<tr><td>金鑰數量<br>（n 人互通）</td><td>隨人數增加而<b class="hl">暴增</b>，交換與保護麻煩</td><td>每人 2 把；<b class="hl">1,000 人也只要 2,000 把</b>，公鑰可任意公開傳送</td></tr>
+<tr><td>提供之保護</td><td><b class="hl">只提供機密性</b><br>無法提供不可否認性</td><td>可同時達成機密性與<b class="hl">身分驗證（數位簽章）</b></td></tr>
+<tr><td>常見演算法</td><td>DES（56 位元，已不夠安全）<br>3DES（112／168 位元）<br>RC2／RC4／RC5／RC6（RC4 現已不安全）<br><b class="hl">AES</b>（2000 年獲選為新一代標準，安全且高效）</td><td><b class="hl">RSA</b>（安全性源於極大整數<b>因數分解</b>之困難度）<br><b>ElGamal</b>（安全性源於解<b>離散對數</b>之困難度）<br>二者均具資料加密與數位簽章功能</td></tr>
+</tbody></table>
+</div>
+<div class="note"><b>最常考的兩點：</b><br>
+‧<b class="hl">對稱式只提供機密性，不提供不可否認性</b>——因為雙方持有同一把金鑰，無法證明是誰做的。<br>
+‧<b class="hl">非對稱式慢</b>，所以實務上不直接拿來加大量資料，而是用來包對稱金鑰（見 25-2 數位信封）。<br>
+<b>RSA 靠因數分解、ElGamal 靠離散對數</b>，這組容易對調。</div>
+
+<h3>25-2　數位信封：為什麼要混用兩種</h3>
+<p class="sub" style="margin:0 0 10px"><b class="hl">數位信封結合對稱式與非對稱式之優點</b>——用快的加資料，用慢的包金鑰。</p>
+<div class="scroll">
+<table>
+<thead><tr><th>步驟</th><th>誰做</th><th>做什麼</th><th>用哪把金鑰</th></tr></thead>
+<tbody>
+<tr><td>①</td><td rowspan="2" style="vertical-align:middle"><b>發送方</b></td><td>隨機產生一次性<b>秘密金鑰</b>，以之加密明文 → 得<b>密文</b></td><td><b class="hl">秘密金鑰</b>（對稱）</td></tr>
+<tr><td>②</td><td>加密該秘密金鑰 → 得<b>加密金鑰</b>；將<b>密文＋加密金鑰</b>一併送出</td><td><b class="hl">接收方公鑰</b>（非對稱）</td></tr>
+<tr><td>③</td><td rowspan="2" style="vertical-align:middle"><b>接收方</b></td><td>解開加密金鑰 → 取回原始<b>秘密金鑰</b></td><td><b class="hl">接收方私鑰</b>（非對稱）</td></tr>
+<tr><td>④</td><td>以秘密金鑰解開密文 → 還原<b>明文</b></td><td><b class="hl">秘密金鑰</b>（對稱）</td></tr>
+</tbody></table>
+</div>
+<div class="note"><b>鑰匙：資料用對稱（快），金鑰用非對稱（安全）。</b><br>
+<b class="hl">包住秘密金鑰的是「接收方公鑰」，拆開的是「接收方私鑰」</b>——因為目的是「只有接收者拆得開」。
+這裡<b>不涉及發送方的金鑰</b>，與數位簽章正好相反（見 25-3）。</div>
+
+<h3>25-3　數位簽章：雜湊 ＋ 非對稱</h3>
+<p class="sub" style="margin:0 0 10px">目的是<b>證明電子檔案為簽章者所傳送，並能在資料被竄改時發現</b>。
+同時提供<b class="hl">完整性、鑑別性、不可否認性</b>三者。</p>
+<div class="scroll">
+<table>
+<thead><tr><th></th><th>發送方（簽署）</th><th>接收方（驗證）</th></tr></thead>
+<tbody>
+<tr><td>第一步</td><td>對明文執行<b class="hl">雜湊</b>運算</td><td>對收到的明文執行<b>相同雜湊</b>運算</td></tr>
+<tr><td>第二步</td><td>得固定長度之<b>訊息摘要</b></td><td>算出一份<b>新的訊息摘要</b></td></tr>
+<tr><td>第三步</td><td>以<b class="hl">發送方私鑰</b>簽署該摘要</td><td>以<b class="hl">發送方公鑰</b>驗證數位簽章</td></tr>
+<tr><td>第四步</td><td>形成<b>數位簽章</b></td><td>取出簽章中原本的摘要</td></tr>
+<tr><td>第五步</td><td>傳送<b class="hl">明文＋數位簽章</b></td><td><b class="hl">比對兩份摘要是否相同</b></td></tr>
+</tbody></table>
+</div>
+<div class="note"><b>三個性質各由哪一半提供：</b><br>
+‧<b class="hl">完整性</b> ← <b>雜湊值比對</b>（改一個 bit 摘要就不同）<br>
+‧<b class="hl">鑑別性與不可否認性</b> ← <b>只有發送方擁有私鑰</b><br>
+<b class="hl">注意：數位簽章簽的是「摘要」不是「明文」</b>，且明文是<b>照原樣傳送</b>的——
+數位簽章<b class="hl">不提供機密性</b>。要保密須另外加密（或用數位信封）。</div>
+
+<div class="fix"><b>數位信封 ↔ 數位簽章，用「誰的金鑰」一秒分辨。</b><br>
+‧<b class="hl">數位信封用「接收方」的金鑰</b>——公鑰包、私鑰拆，目的是<b>只有接收者看得到</b>（機密性）。<br>
+‧<b class="hl">數位簽章用「發送方」的金鑰</b>——私鑰簽、公鑰驗，目的是<b>證明是誰送的</b>（鑑別性／不可否認性）。<br>
+一句話：<b>要保密看接收方，要證明身分看發送方。</b></div>
+
+<h3>25-4　雜湊函式</h3>
+<div class="scroll">
+<table>
+<thead><tr><th>項目</th><th>內容</th></tr></thead>
+<tbody>
+<tr><td>定義</td><td>將<b>任何長度</b>之資料轉換成<b class="hl">固定長度</b>之「訊息摘要（Message Digest）」，也稱「<b>數位指紋</b>」</td></tr>
+<tr><td rowspan="3" style="vertical-align:middle">特性</td><td>原始訊息不變則雜湊值相同（且唯一）</td></tr>
+<tr><td><b class="hl">無法從雜湊值回推原始訊息（單向），不具可逆性</b></td></tr>
+<tr><td>兩個雜湊值不同，則其原始輸入必不相同</td></tr>
+<tr><td>演算法</td><td>MD5、SHA-256、SHA-512、SHA3-512<br>
+<b class="hl">MD5 已證實易受碰撞攻擊</b>（可找到兩組不同資料產生相同雜湊值），不再適用於數位簽章、憑證驗證與檔案完整性檢查</td></tr>
+</tbody></table>
+</div>
+
+<h3>25-5　加密技術強度</h3>
+<div class="scroll">
+<table>
+<thead><tr><th>項目</th><th>內容</th></tr></thead>
+<tbody>
+<tr><td>強度之衡量</td><td>密碼被<b>破解所需花費之時間與資源</b></td></tr>
+<tr><td>影響因素<br>（四項）</td><td><b class="hl">演算法強度</b>／<b class="hl">金鑰保護機制</b>／<b class="hl">金鑰長度</b>／<b class="hl">亂數產生器不可預測性</b></td></tr>
+<tr><td>安全性之來源</td><td><b class="hl">不在於演算法的保密，而應經得起挑戰</b><br>專屬演算法不見得安全；經得起挑戰者才是被證明為安全</td></tr>
+<tr><td>實務失守原因</td><td>目前加解密被成功攻擊者<b class="hl">大部分屬人為因素</b>：<br>不正確地實作加密機制／不安全的金鑰保密機制</td></tr>
+</tbody></table>
+</div>
+<div class="note"><b>對應防護基準：</b>「傳輸之機密性與完整性」與「資料儲存之安全」二項，
+<b class="hl">普級與中級均無要求，高級始有要求</b>（見 7-3）。
+高級要求採加密機制、使用<b>公開且經國際機構驗證、未遭破解</b>之演算法、金鑰或憑證<b>定期更換</b>、
+伺服器端金鑰保管應訂定管理規範。<br>
+<b class="hl">「不在於演算法保密」與「應使用公開演算法」是同一件事的兩種說法</b>，二者互相印證。</div>
 </div>
 
 
