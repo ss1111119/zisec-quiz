@@ -232,6 +232,51 @@
     </div>
   </div>
 
+  <div class="ssbox" style="border-color:var(--bad)">
+    <div class="ssh" style="background:var(--bad)">11. 反覆錯的五組：用推的，不要用背的<span class="sshsub">針對「選到對調版本」之對策</span></div>
+
+    <div class="ssm">
+      <div class="ssname">CNS 與 ISO 的年份<span class="from from-h">錨點</span></div>
+      <div class="key"><b>國際先、國內後——CNS 的年份永遠不會早於它對應的 ISO。</b><br>
+      CNS 22301：<b class="hl">2021</b> ＝ ISO 22301：<b class="hl">2019</b>　✓（國內晚兩年）<br>
+      CNS 22301：2019 ＝ ISO 22301：2021　<b class="hl">✗ 不可能</b>（國內不會比國際早）<br>
+      <span style="font-size:12.5px">同理：CNS 27001：2023＝ISO 2022、CNS 27002：2023＝ISO 2022、CNS 27005：2024＝ISO 2022。
+      <b>看到 CNS 年份比 ISO 早，直接刪掉這個選項</b>，不必回想正確年份。</span></div>
+    </div>
+
+    <div class="ssm">
+      <div class="ssname">22301 ↔ 22313<span class="from from-h">錨點</span></div>
+      <div class="key"><b>問「能不能拿證書」。</b><br>
+      <b class="hl">22301 能</b>——它是<b>要求事項</b>，可供第三方驗證，我國並轉訂為 CNS 22301：2021。<br>
+      <b class="hl">22313 不能</b>——它只是<b>使用指引</b>，教你怎麼做，沒有國家標準對應。<br>
+      <span style="font-size:12.5px">推論：有 CNS 對應的那個就是要求事項。22300 則是詞彙標準，連實作都不談。</span></div>
+    </div>
+
+    <div class="ssm">
+      <div class="ssname">IDS ↔ IPS<span class="from from-h">錨點</span></div>
+      <div class="key"><b>先確定「IPS 串在線上」，其餘全部用推的。</b><br>
+      串在線上 → 封包必須流過它 → <b class="hl">所以能擋</b> → 擋錯就斷正常服務（<b>誤報風險高</b>）→ 設備壞掉整條路斷（<b>故障致中斷</b>）。<br>
+      IDS 在旁邊看副本 → 擋不了 → <b class="hl">只能報告</b> → 報錯了也不影響通訊（<b>誤報風險低</b>）→ 壞掉不影響網路。<br>
+      <span style="font-size:12.5px"><b>一個記憶點推出四個答案</b>，不必分別背誤報風險與故障影響。</span></div>
+    </div>
+
+    <div class="ssm">
+      <div class="ssname">WAF ↔ 電子郵件過濾<span class="from from-h">錨點</span></div>
+      <div class="key"><b>看攻擊打在哪裡，不看攻擊叫什麼。</b><br>
+      SQL Injection、XSS 是<b class="hl">打網站</b>的 → 網站歸 <b>WAF</b>。<br>
+      釣魚信、惡意附件是<b class="hl">寄進信箱</b>的 → 信箱歸 <b>郵件過濾</b>。<br>
+      <span style="font-size:12.5px">題目同時出現兩種攻擊時，<b>先標出各自打哪裡</b>再配對，不要憑名稱印象直覺選。</span></div>
+    </div>
+
+    <div class="ssm">
+      <div class="ssname">能力度 ↔ 成熟度<span class="from from-h">錨點</span></div>
+      <div class="key"><b>能力度是零件，成熟度是整機。</b><br>
+      一個<b class="hl">流程構面</b>＝一個零件 → 評它的是<b>能力度</b>。<br>
+      整台機器能不能出貨 → 看<b>成熟度</b>，而且<b class="hl">任一零件不合格整機就不能升級</b>（門檻原則，非平均）。<br>
+      <span style="font-size:12.5px">記「<b>構面對能力度</b>」這一組搭配即可，成熟度自然是另一邊。</span></div>
+    </div>
+  </div>
+
 </div>
 
 <div class="note"><b>考前 3 分鐘就掃這一節。</b>這十組是最常被對調敘述的地方；記住右下角那句鑰匙，比重讀整張對照表有效。</div>
