@@ -1191,6 +1191,28 @@ Level 2 是唯一有「兩種評鑑路徑」的層級，主要路徑為第三方
 
 
 <h3>19-3　採購六階段之資安管控（教材 8.5）</h3>
+<div class="fix" style="border-left-color:var(--brand);background:var(--brand-soft)">
+<b>六階段動詞鏈：想 → 寫 → 簽 → 盯 → 收 → 守</b><br>
+<table style="margin-top:8px">
+<thead><tr><th>階段</th><th>一個字</th><th>該階段在做什麼</th></tr></thead>
+<tbody>
+<tr><td>① 計畫</td><td><b class="hl">想</b></td><td>該不該委外、有什麼風險——資安需求明確化並進行風險評估</td></tr>
+<tr><td>② 招標</td><td><b class="hl">寫</b></td><td>把資安要求<b>寫進 RFP</b>；<b class="hl">SSDLC 六階段規定於此納入 RFP 及契約書</b>；備妥保密協議書</td></tr>
+<tr><td>③ 決標</td><td><b class="hl">簽</b></td><td><b class="hl">簽約</b>——將資安共識轉為具法律效力之義務與責任</td></tr>
+<tr><td>④ 履約管理</td><td><b class="hl">盯</b></td><td>持續監督廠商遵循資安要求（7 個面向）</td></tr>
+<tr><td>⑤ 驗收</td><td><b class="hl">收</b></td><td>上線前確認所有資安要求均已達成（3 個面向）</td></tr>
+<tr><td>⑥ 保固</td><td><b class="hl">守</b></td><td>維持<b>驗收完成時之狀態</b>；任何變更須受嚴格變更管理控制</td></tr>
+</tbody></table>
+<div style="margin-top:8px"><b>三個最常錯的，用動詞鏈一秒定位：</b><br>
+‧<b class="hl">SSDLC 納入 RFP</b> → 那是在「<b>寫</b>」→ <b>招標階段</b>（不是計畫，計畫只是「想」還沒動筆）<br>
+‧<b class="hl">簽約</b> → 那是在「<b>簽</b>」→ <b>決標階段</b>（不是履約管理，履約是簽完之後才「盯」）<br>
+‧<b class="hl">保密協議書</b> → 招標階段就要<b>備妥</b>，早於簽約</div>
+</div>
+
+<div class="note"><b>五步驟落在哪兩個「想」裡：</b>委外管理五步驟中，<b class="hl">決定需求</b>與<b class="hl">識別可行解決方案</b>都還在「想」的範圍，故二者同屬<b>計畫階段</b>。
+到了「選定解決方案」才進入「簽」的階段（決標）。<br>
+<b class="hl">常見錯誤是把「識別可行解決方案」與「選定解決方案」配成一組</b>——二者名稱相似，惟前者是想、後者是簽，分屬不同階段。</div>
+
 <div class="scroll">
 <table>
 <thead><tr><th>階段</th><th>教材對該階段之定位（原文）</th><th>該節之細部結構</th></tr></thead>
@@ -1379,6 +1401,27 @@ Level 2 是唯一有「兩種評鑑路徑」的層級，主要路徑為第三方
 CNS 27001：2023 之章節為 1 適用範圍、2 引用標準、3 用語及定義、4 組織全景、5 領導作為、6 規劃、7 支援、8 運作、9 績效評估、10 改善，共 <b>10 章</b>加附錄 A。</div>
 
 <h3>24-3　營運持續管理（BCMS）</h3>
+<div class="fix" style="border-left-color:var(--brand);background:var(--brand-soft)">
+<b>營運持續三兄弟：只有 22301 是「有」，另外兩個三項全「沒有」。</b>
+<div class="scroll" style="margin-top:8px">
+<table>
+<thead><tr><th></th><th>有 CNS 對應？</th><th>可供驗證？</th><th>屬 27000 系列？</th></tr></thead>
+<tbody>
+<tr><td><b class="hl">ISO 22301</b><br>要求事項</td><td><b class="hl">有</b><br>CNS 22301：2021</td><td><b class="hl">可以</b></td><td>否</td></tr>
+<tr><td><b>ISO 22313</b><br>使用指引</td><td><b class="hl">沒有</b></td><td><b class="hl">不行</b></td><td><b class="hl">否</b></td></tr>
+<tr><td><b>ISO 22300</b><br>詞彙與核心概念</td><td>沒有</td><td>不行</td><td>否</td></tr>
+</tbody></table>
+</div>
+<div style="margin-top:8px"><b class="hl">223xx 整個家族都不屬於 27000 系列</b>（它們屬「安全與韌性」領域）；
+家族內<b class="hl">只有 22301 有 CNS、只有 22301 可驗證</b>。<br>
+<b>22313 最常被誤認</b>——它只是教你怎麼做的使用指引，三項全「沒有」。</div>
+</div>
+
+<div class="note"><b>27002 與 27005 不要混：</b>
+<b class="hl">27002 緊貼 27001</b>——27001 之附錄 A 列出控制措施，27002 就是那些控制措施的<b>詳細說明</b>，故稱「控制措施之實施指引」，本身不作為驗證依據。
+<b class="hl">27005 則是風險管理指引</b>，講的是風險識別、分析、評估與處理，與控制措施是兩件事。<br>
+一句話：<b>問「控制措施」找 27002，問「風險」找 27005，問「要求事項／驗證」找 27001。</b></div>
+
 <div class="scroll">
 <table>
 <thead><tr><th>標準</th><th>類別</th><th>說明</th><th>對應 CNS</th></tr></thead>
