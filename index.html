@@ -124,6 +124,16 @@
   </div>
 
   <div class="card">
+    <h2>全庫模擬考</h2>
+    <div id="allmock-body"></div>
+    <div class="row" style="margin-top:12px">
+      <span>抽出</span><input type="number" id="allmock-n" min="5" max="200" value="50" style="width:70px"><span>題</span>
+      <button onclick="startAllMock(false)">隨機抽題</button>
+      <button class="ghost" onclick="startAllMock(true)">加重錯過的題</button>
+    </div>
+  </div>
+
+  <div class="card">
     <h2>模擬考</h2>
     <div id="mock-body"></div>
     <div class="row" style="margin-top:12px">
@@ -547,7 +557,7 @@ function saveBank(items){
   const seen=new Set();
   bank.forEach(b=>b.items.forEach(q=>seen.add(qkey(q))));
   const fresh=items.filter(q=>!seen.has(qkey(q)));
-  if(!fresh.length){renderBank();renderMock();return;}
+  if(!fresh.length){renderBank();renderMock();renderAllMock();return;}
   const stamp=new Date().toISOString().slice(0,16).replace('T',' ');
   bank.push({date:stamp,items:fresh.map(q=>({no:q.no,unit:q.unit,point:q.point,multi:q.multi,stem:q.stem}))});
   localStorage.setItem(LS,JSON.stringify(bank));renderBank();
@@ -569,6 +579,80 @@ function dedupeBank(){
   localStorage.setItem(LS,JSON.stringify(out));renderBank();
   alert(removed?('已移除 '+removed+' 筆重複題目,剩餘 '+seen.size+' 題。'):'沒有發現重複題目。');
 }
+/* ===== 全庫模擬考:直接讀 banks/ 下所有題庫檔,不必先載入 ===== */
+let __allPool=null;                       /* 快取,避免每次重抓 14 個檔 */
+async function fetchAllQuestions(){
+  if(__allPool) return __allPool;
+  const r=await fetch('banks/index.json',{cache:'no-store'});
+  if(!r.ok) throw new Error('讀不到 banks/index.json');
+  const list=await r.json();
+  const seen=new Set(),pool=[];
+  for(const b of list){
+    const rr=await fetch('banks/'+b.file,{cache:'no-store'});
+    if(!rr.ok) continue;
+    parseText(await rr.text()).forEach(q=>{
+      const k=qkey(q);
+      if(!seen.has(k)){seen.add(k);q._src=b.file;pool.push(q);}
+    });
+  }
+  __allPool=pool;
+  return pool;
+}
+async function startAllMock(weighted){
+  const btns=document.querySelectorAll('#allmock-body ~ .row button');
+  btns.forEach(b=>b.disabled=true);
+  const body=document.getElementById('allmock-body');
+  const keep=body.innerHTML;
+  body.innerHTML='<p class="sub" style="margin:0">正在讀取全部題庫,請稍候…</p>';
+  try{
+    const pool=await fetchAllQuestions();
+    const n=parseInt(document.getElementById('allmock-n').value,10)||50;
+    if(pool.length<n){
+      alert('全部題庫僅 '+pool.length+' 題,不足 '+n+' 題。');
+      body.innerHTML=keep;return;
+    }
+    const wrong=loadWrong();
+    /* 加權:錯過者依次數提高被抽中機率,上限 4 倍;抽出後以 qkey 去重 */
+    let basket=[];
+    pool.forEach(q=>{
+      const w=weighted?Math.min(1+(wrong[qkey(q)]?.n||0)*2,4):1;
+      for(let i=0;i<w;i++) basket.push(q);
+    });
+    const picked=[],used=new Set();
+    while(picked.length<n&&basket.length){
+      const i=Math.floor(Math.random()*basket.length);
+      const q=basket[i];basket.splice(i,1);
+      const k=qkey(q);
+      if(!used.has(k)){used.add(k);picked.push(q);}
+    }
+    document.getElementById('mins').value=Math.round(n*1.5);
+    document.getElementById('shuffle').checked=true;
+    startExam(picked);
+    window.scrollTo(0,0);
+  }catch(e){
+    body.innerHTML=keep;
+    alert('讀取題庫失敗:'+e.message+'\n若以 file:// 直接開啟本檔,瀏覽器會擋住讀取,請改用本機伺服器或改用下方「模擬考」。');
+  }finally{
+    btns.forEach(b=>b.disabled=false);
+  }
+}
+async function renderAllMock(){
+  const el=document.getElementById('allmock-body');
+  if(!el) return;
+  try{
+    const r=await fetch('banks/index.json',{cache:'no-store'});
+    if(!r.ok) throw 0;
+    const list=await r.json();
+    const tot=list.reduce((a,b)=>a+(b.count||0),0);
+    el.innerHTML='<p class="sub" style="margin:0">直接自 <b>'+list.length+'</b> 份題庫、共 <b>'
+      +tot+'</b> 題中隨機抽題，<b>不需要先載入題庫</b>。<br>'
+      +'首次點選需讀取全部檔案，約數秒；抽出題目一律隨機排序，作答時間依題數自動設為每題 1.5 分鐘。</p>';
+  }catch(e){
+    el.innerHTML='<p class="sub" style="margin:0">目前無法讀取題庫清單'
+      +'（以 file:// 開啟時瀏覽器會擋住）。請改用下方「模擬考」，或以本機伺服器開啟本頁。</p>';
+  }
+}
+
 /* ===== 模擬考:自累積題庫隨機抽題,比照正式考試 50 題 75 分鐘 ===== */
 function mockPool(){
   /* 以 qkey 去重:同一題可能存在於多份題庫(或同一份被存過兩次) */
