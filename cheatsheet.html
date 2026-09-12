@@ -128,6 +128,7 @@
   <a href="#t21">BCP 時間指標</a>
   <a href="#t22">弱點機制邊界</a>
   <a href="#t23">稽核作業時序</a>
+  <a href="#t24">標準與框架對照</a>
   <a href="#t99">未出過題之節次</a>
   <button id="mask" onclick="toggleMask()">背誦模式</button>
   <input id="q" placeholder="輸入關鍵字過濾表格列，例如「滲透」「罰鍰」「36」">
@@ -1165,6 +1166,119 @@ Level 2 是唯一有「兩種評鑑路徑」的層級，主要路徑為第三方
 </div>
 
 </div>
+<h2 id="t24">廿四、國內外資安標準與框架對照 <span class="tag v">已核對</span></h2>
+<div class="card">
+<h3>24-1　ISO/IEC 27000 系列（教材表19，共 17 項）</h3>
+<p class="sub" style="margin:0 0 10px">表19 原表<b>只有「分類／年份／ISO/IEC／名稱」四欄，並無 CNS 欄</b>。
+下表之 CNS 欄係另自教材 4.2.2、4.2.3、4.2.4 及 3.6.2 各節補入，<b class="hl">教材未提及 CNS 編號者一律留空</b>。</p>
+<div class="scroll">
+<table>
+<thead><tr><th>分類</th><th>ISO/IEC</th><th>年份</th><th>名稱</th><th>對應 CNS</th></tr></thead>
+<tbody>
+<tr><td class="grp" colspan="5">詞彙標準</td></tr>
+<tr><td></td><td><b>27000</b></td><td>2018</td><td>資訊安全管理系統－概觀及詞彙</td><td class="dash">教材未提</td></tr>
+<tr><td class="grp" colspan="5">要求事項標準（可驗證）</td></tr>
+<tr><td></td><td><b class="hl">27001</b></td><td>2022</td><td>資訊安全管理系統－要求</td><td><b class="hl">CNS 27001：2023</b></td></tr>
+<tr><td></td><td>27006-1</td><td>2024</td><td>提供<b>資訊安全管理系統</b>審核與驗證機構的要求－第 1 部分：一般要求</td><td class="dash">教材未提</td></tr>
+<tr><td></td><td>27006-2</td><td>2021</td><td>提供<b>資訊安全管理系統</b>審核與認證機構的要求－<b class="hl">第 2 部分：隱私資訊管理系統</b></td><td class="dash">教材未提</td></tr>
+<tr><td class="grp" colspan="5">指導綱要標準</td></tr>
+<tr><td></td><td><b class="hl">27002</b></td><td>2022</td><td>資訊安全控制措施</td><td><b class="hl">CNS 27002：2023</b></td></tr>
+<tr><td></td><td>27003</td><td>2017</td><td>資訊安全管理系統－指導綱要<br><span style="font-size:12px;color:var(--muted)">（教材 3.6.2 另稱「資訊安全管理系統實作指引」）</span></td><td><b>CNS 27003</b></td></tr>
+<tr><td></td><td>27004</td><td>2016</td><td>資訊安全管理－監控、測量、分析與評估</td><td class="dash">教材未提</td></tr>
+<tr><td></td><td><b class="hl">27005</b></td><td>2022</td><td>資訊安全風險管理指引</td><td><b class="hl">CNS 27005：2024</b></td></tr>
+<tr><td></td><td>27007</td><td>2020</td><td>資訊安全管理系統稽核指導綱要</td><td class="dash">教材未提</td></tr>
+<tr><td></td><td>27008</td><td>2019</td><td>資訊安全控制評鑑指導綱要</td><td class="dash">教材未提</td></tr>
+<tr><td></td><td>27013</td><td>2021</td><td>ISO/IEC 27001 與 <b>ISO/IEC 20000-1</b> 整合實作指引</td><td class="dash">教材未提</td></tr>
+<tr><td></td><td>27014</td><td>2020</td><td>資訊安全治理</td><td class="dash">教材未提</td></tr>
+<tr><td class="grp" colspan="5">行業特定指導綱要標準</td></tr>
+<tr><td></td><td>27010</td><td>2015</td><td>跨行業與跨組織通訊的資訊安全管理</td><td class="dash">教材未提</td></tr>
+<tr><td></td><td>27011</td><td>2024</td><td>基於 27002 之<b>電信組織</b>資訊安全控制措施</td><td class="dash">教材未提</td></tr>
+<tr><td></td><td>27017</td><td>2015</td><td>基於 27002 之<b>雲端服務</b>資訊安全控制措施指導綱要</td><td class="dash">教材未提</td></tr>
+<tr><td></td><td>27018</td><td>2019</td><td><b>作為 PII 處理者的</b>公有雲保護個人可識別資訊指導綱要</td><td class="dash">教材未提</td></tr>
+<tr><td></td><td>27701</td><td>2025</td><td>隱私資訊管理系統（PIMS）要求事項及指導綱要</td><td class="dash">教材未提</td></tr>
+</tbody></table>
+</div>
+<div class="note"><b>四個有 CNS 對應的才是重點</b>：27001（要求事項、可驗證）、27002（控制措施指引）、27005（風險管理）、27003（實作指引）。
+另<b class="hl">CNS 31000「風險管理－指導綱要」</b>不在 27000 系列，但教材 3.6.2 載明 CNS 27005 整合了它的一般風險管理原則。<br>
+<b>27001 與 27002 最常被對調</b>：27001 是<b class="hl">要求事項</b>、用於驗證；27002 是<b class="hl">控制措施指引</b>、不作為驗證標準。27001 附錄 A 列控制措施，27002 則詳細說明之。</div>
+
+<h3>24-2　CNS 27002：2023 四大類控制措施</h3>
+<div class="scroll">
+<table>
+<thead><tr><th>章次</th><th>類別</th><th>項數</th></tr></thead>
+<tbody>
+<tr><td>A.5</td><td>組織控制措施</td><td><b class="hl">37</b></td></tr>
+<tr><td>A.6</td><td>人員控制措施</td><td><b class="hl">8</b></td></tr>
+<tr><td>A.7</td><td>實體控制措施</td><td><b class="hl">14</b></td></tr>
+<tr><td>A.8</td><td>技術控制措施</td><td><b class="hl">34</b></td></tr>
+<tr><td></td><td><b>合計</b></td><td><b class="hl">93</b></td></tr>
+</tbody></table>
+</div>
+<div class="note"><b>記法：組織最多、技術次之、實體再次、人員最少。</b>37 ＞ 34 ＞ 14 ＞ 8，合計 93。<br>
+CNS 27001：2023 之章節為 1 適用範圍、2 引用標準、3 用語及定義、4 組織全景、5 領導作為、6 規劃、7 支援、8 運作、9 績效評估、10 改善，共 <b>10 章</b>加附錄 A。</div>
+
+<h3>24-3　營運持續管理（BCMS）</h3>
+<div class="scroll">
+<table>
+<thead><tr><th>標準</th><th>類別</th><th>說明</th><th>對應 CNS</th></tr></thead>
+<tbody>
+<tr><td><b class="hl">ISO 22301：2019</b></td><td>要求事項</td><td>營運持續管理系統，可驗證</td><td><b class="hl">CNS 22301：2021</b></td></tr>
+<tr><td>ISO 22300：2021</td><td>詞彙與核心概念</td><td>較廣泛之詞彙及核心概念標準，BCMS 之定義為其一部分</td><td class="dash">教材未提</td></tr>
+<tr><td>ISO 22313：2020</td><td>使用指引</td><td>營運持續管理系統實作建議</td><td class="dash">教材未提</td></tr>
+</tbody></table>
+</div>
+<div class="note"><b>注意年份交錯：CNS 是 2021、ISO 是 2019。</b>這與 27001（CNS 2023／ISO 2022）、27002（CNS 2023／ISO 2022）、27005（CNS 2024／ISO 2022）同理，<b class="hl">CNS 年份一律晚於對應之 ISO</b>——先有國際標準才轉訂國家標準。<br>
+<b class="hl">BCMS 不屬於 ISO/IEC 27000 系列</b>，它屬「安全與韌性」領域，這點常被拿來做錯誤選項。</div>
+
+<h3>24-4　NIST 框架與指引</h3>
+<div class="scroll">
+<table>
+<thead><tr><th>標準</th><th>內容</th></tr></thead>
+<tbody>
+<tr><td><b class="hl">NIST CSF 2.0<br>：2024</b></td><td>資通安全框架，<b>自願性</b>。為 2014 年首次發布以來最重大之更新。六大核心功能：<br>
+<b class="hl">治理（Govern-GV）</b>：CSF 2.0 <b>新增</b>之第六個功能——建立並溝通資安策略、角色、責任及監督<br>
+識別（Identify-ID）→ 保護（Protect-PR）→ 偵測（Detect-DE）→ 回應（Respond-RS）→ 復原（Recover-RC）</td></tr>
+<tr><td>NIST SP 800-218</td><td>安全軟體開發框架（SSDF）</td></tr>
+<tr><td>NIST SP 800-210</td><td>雲端服務（IaaS／PaaS／SaaS）存取控制指引</td></tr>
+<tr><td>NIST SP 800-171 Rev 2</td><td>CMMC Level 2 之 110 項要求與其<b>完全相同</b></td></tr>
+<tr><td>NIST SP 800-172</td><td>CMMC Level 3 要求之來源之一</td></tr>
+</tbody></table>
+</div>
+<div class="note"><b>CSF 2.0 最可能的考點就是「新增了治理（GV）」。</b>原為五大功能 ID／PR／DE／RS／RC，2.0 才加上 GV 成為六大。
+<b class="hl">治理打底，後五項是事件處理的時間軸</b>：識別→保護→偵測→回應→復原。</div>
+
+<h3>24-5　CMMC 2.0（美國國防部網路安全成熟度模型驗證）</h3>
+<p class="sub" style="margin:0 0 10px">教材載明為美國國防部（DoD）<b>2024 年</b>發布之最新修訂版本（<b>version 2.13</b>），適用於國防工業基地（DIB）供應商。</p>
+<div class="scroll">
+<table>
+<thead><tr><th>等級</th><th>保護對象</th><th>項數</th><th>依據</th><th>評鑑方式</th></tr></thead>
+<tbody>
+<tr><td><b>Level 1</b><br>Foundational<br>基礎級</td><td><b class="hl">FCI</b><br>聯邦契約資訊</td><td><b class="hl">15 項</b></td><td>48 CFR 52.204-21（FAR）之基本保障要求</td><td>每年自我評鑑＋年度確認</td></tr>
+<tr><td><b>Level 2</b><br>Advanced<br>進階級</td><td><b class="hl">CUI</b><br>受控非機密資訊</td><td><b class="hl">110 項</b></td><td>與 <b>NIST SP 800-171 Rev 2</b> 完全相同</td><td>每 3 年第三方評鑑等兩種路徑</td></tr>
+<tr><td><b>Level 3</b><br>Expert<br>專家級</td><td><b class="hl">CUI</b></td><td><b class="hl">134 項</b></td><td>基於 800-171 與 <b>800-172</b>（含 800-172 之子集，具 DoD 批准之參數）</td><td class="dash">—</td></tr>
+</tbody></table>
+</div>
+<div class="note"><b>FCI 看 Level 1，CUI 看 Level 2 與 Level 3。</b>項數 <b class="hl">15 → 110 → 134</b>。
+Level 2 的 110 項是「與 NIST SP 800-171 Rev 2 <b class="hl">完全相同</b>」，不是「對應」或「參考」。</div>
+
+<h3>24-6　ISO/IEC 33020：2015 能力度六級</h3>
+<div class="scroll">
+<table>
+<thead><tr><th>等級</th><th>名稱</th><th>定義</th><th>累進要求</th></tr></thead>
+<tbody>
+<tr><td>Level 5</td><td><b class="hl">最佳化流程</b><br>Optimizing</td><td>基於過去執行成效分析或其他創新方式強化與優化該流程</td><td>需滿足 Level 1～4</td></tr>
+<tr><td>Level 4</td><td>可預測流程<br>Predictable</td><td>可透過衡量結果了解執行成效；已被量化管理</td><td>需滿足 Level 1～3</td></tr>
+<tr><td>Level 3</td><td>標準化流程<br>Established</td><td>已被標準化；已被有效地部署</td><td>需滿足 Level 1～2</td></tr>
+<tr><td>Level 2</td><td>已管理流程<br>Managed</td><td>該流程已被管理</td><td>需滿足 Level 1</td></tr>
+<tr><td>Level 1</td><td>已執行流程</td><td>符合應辦事項要求</td><td class="dash">—</td></tr>
+<tr><td>Level 0</td><td><b class="hl">未執行流程</b><br>Unperformed</td><td>組織尚未建立該流程，或無法達成該流程</td><td class="dash">—</td></tr>
+</tbody></table>
+</div>
+<div class="note"><b>Level 5 是「最佳化」不是「持續改善」。</b>六級皆有<b class="hl">累進要求</b>——要達某級，其下各級必須全部滿足。<br>
+這與<b>成熟度</b>之判定邏輯相同（見 17-3）：<b class="hl">能力度針對個別流程構面，成熟度針對組織整體</b>，且成熟度須該級對應之所有流程構面能力度全數達標才能跨級。</div>
+</div>
+
+
 <h2 id="t99">附、未出過題之教材節次速掃 <span class="tag u">僅供確認,非考點整理</span></h2>
 <div class="card">
 <p class="sub" style="margin:0 0 14px"><b class="hl">本節已完成階段性任務。</b>題庫現有 636 題，教材 279 個三層節次<b>已全數出過題</b>，零覆蓋節次為 0。下列 55 節係前次尚未涵蓋、已由 v12 題庫補齊者，內文摘錄保留供快速對照之用——<b>作答後若對某節仍無把握，可直接在此翻閱教材原文</b>。</p>
