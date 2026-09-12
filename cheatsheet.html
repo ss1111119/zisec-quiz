@@ -277,8 +277,37 @@
     </div>
   </div>
 
+  <div class="ssbox">
+    <div class="ssh">12. 四種防護機制各守什麼<span class="sshsub">看「它在檢查什麼東西」</span></div>
+    <div class="ssm">
+      <div class="sstep"><b class="lv lv-p">網路防火牆</b><span>看<b class="hl">連線</b>——依來源與目的 <b>IP 及通訊埠</b>設規則（第三、四層）。限制不必要之服務埠號開啟，僅允許必要之服務連線</span></div>
+      <div class="sstep"><b class="lv lv-m">WAF</b><span>看<b class="hl">網站</b>——應用層（第七層）之攻擊：SQL Injection、XSS</span></div>
+      <div class="sstep"><b class="lv lv-h">防毒軟體</b><span>看<b class="hl">檔案與程式</b>——偵測已知惡意軟體，依特徵碼比對</span></div>
+      <div class="sstep"><b class="lv lv-h">IDS／IPS</b><span>看<b class="hl">流量中的攻擊特徵</b>——IDS 只報告、IPS 會阻斷</span></div>
+      <div class="key"><b>鑰匙：問「它在檢查什麼」。</b>IP 與埠號→防火牆；網頁參數→WAF；檔案→防毒；封包特徵→IDS/IPS。<br>
+      <b class="hl">最常見的錯誤是把「阻擋惡意軟體」掛到防火牆身上</b>——那是防毒的事。防火牆管的是「這條連線能不能通」，不看檔案內容。<br>
+      <span style="font-size:12.5px">※ 端點自己也能關閉不必要之服務及埠口（<b>附表十 SSDLC 部署與維運階段，普級即要求</b>），但那只保護該台機器；
+      網路防火牆守的是<b>整個網段的邊界</b>，且端點一旦被入侵，攻擊者可自行重開埠口，防火牆仍擋著——二者為<b class="hl">互補而非擇一</b>。</span></div>
+    </div>
+  </div>
+
+  <div class="ssbox">
+    <div class="ssh">13. 風險處理四策略<span class="sshsub">留存與避免最常對調</span></div>
+    <div class="ssm">
+      <div class="sstep"><b class="lv lv-p">風險修改</b><span>施行、移除或改變<b>控制措施</b>以降低風險等級</span></div>
+      <div class="sstep"><b class="lv lv-m">風險留存</b><span><b class="hl">不採取進一步行動而保留風險</b>。須經組織高層正式批准並持續監控；留存後之風險即為<b>殘餘風險</b></span></div>
+      <div class="sstep"><b class="lv lv-h">風險避免</b><span><b class="hl">直接放棄或終止該活動</b>，從根本消除風險</span></div>
+      <div class="sstep"><b class="lv lv-h">風險分擔</b><span>將部分或全部風險分攤至<b>第三方</b>——投保，或於契約中增訂懲罰性違約金條款</span></div>
+      <div class="key"><b>鑰匙：留存＝什麼都不做，避免＝那件事不做了。</b><br>
+      看到「不採取額外行動」「接受後果」→ <b class="hl">留存</b>；看到「放棄、終止、停辦」→ <b class="hl">避免</b>。<br>
+      <span style="font-size:12.5px">※ 留存<b class="hl">不等於放著不管</b>——仍須經高層批准、制定應變計畫並持續監視審查。
+      「因已核准即永久合規、不再納入監視」是典型的錯誤敘述。</span></div>
+    </div>
+  </div>
+
 </div>
 
+<div class="fix"><b>另一類失分與知識無關：反向問法。</b>題幹出現<b class="hl">「不正確」「錯誤」「不包括」「不屬於」</b>時，正解是<b>錯誤</b>的那個敘述。作答時先把這幾個字圈起來再看選項——選到一個「正確敘述」當答案，是最可惜的失分。</div>
 <div class="note"><b>考前 3 分鐘就掃這一節。</b>這十組是最常被對調敘述的地方；記住右下角那句鑰匙，比重讀整張對照表有效。</div>
 </div>
 
