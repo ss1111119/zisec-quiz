@@ -75,6 +75,14 @@
   .key{margin-top:8px;background:var(--brand-soft);border-left:3px solid var(--brand);padding:7px 11px;border-radius:0 7px 7px 0;font-size:13px}
   .gapb{font-size:12.5px;color:var(--ink);line-height:1.75;opacity:.92}
   .gapb b{color:var(--brand)}
+  #fill.on{background:var(--bad);color:#fff;border-color:var(--bad)}
+  td.c input.fi{width:100%;box-sizing:border-box;border:1px solid var(--line);border-radius:5px;
+    padding:3px 5px;font-size:13px;font-family:inherit;background:#fff;color:var(--ink)}
+  td.c input.fi:focus{outline:2px solid var(--brand);outline-offset:-1px}
+  td.c.ok{background:var(--ok-soft)}
+  td.c.ok input.fi{border-color:var(--ok);color:var(--ok);font-weight:700}
+  td.c.ng{background:var(--bad-soft)}
+  td.c.ng input.fi{border-color:var(--bad);color:var(--bad)}
   .hidden{display:none}
   .foot{color:var(--muted);font-size:12.5px;margin-top:6px}
   a.back{color:var(--brand);font-size:13px;text-decoration:none}
@@ -133,8 +141,18 @@
   <a href="#t26">人員作業辦法</a>
   <a href="#t99">未出過題之節次</a>
   <button id="mask" onclick="toggleMask()">背誦模式</button>
+  <button id="fill" onclick="toggleFill()">填答模式</button>
   <input id="q" placeholder="輸入關鍵字過濾表格列，例如「滲透」「罰鍰」「36」">
 </nav>
+
+<div id="fillbar" class="card hide" style="position:sticky;top:8px;z-index:20;padding:10px 14px;margin-bottom:12px">
+  <div class="row" style="gap:10px;align-items:center;flex-wrap:wrap">
+    <button onclick="checkFill()">核對答案</button>
+    <button class="ghost" onclick="resetFill()">清空重填</button>
+    <span id="fillmsg" class="foot" style="margin:0"></span>
+  </div>
+  <p class="foot" style="margin:6px 0 0">表格中原本標為可遮蔽的格子已換成輸入框（全表共 221 格）。不必一次填完——填幾格就按「核對答案」，只會計算有填的格子。答對轉綠、答錯轉紅並直接顯示正解。空白與全半形差異不影響判定。</p>
+</div>
 
 <h2 id="t0">〇、易混淆配對總表 <span class="tag v">已核對</span></h2>
 <div class="card">
@@ -1794,6 +1812,68 @@ function toggleMask(){
   document.getElementById('mask').textContent = on ? '背誦模式（點格子看答案）' : '背誦模式';
   if(!on) document.querySelectorAll('td.c.show').forEach(function(td){td.classList.remove('show')});
 }
+/* ===== 填答模式:把可遮蔽格子換成輸入框,自行作答後比對 ===== */
+function fillNorm(s){
+  /* 正規化:去空白、全形轉半形、統一斜線與括號,使「每 3 年」＝「每3年」 */
+  return String(s).replace(/[\s　]/g,'')
+    .replace(/[０-９]/g,function(c){return String.fromCharCode(c.charCodeAt(0)-65248)})
+    .replace(/[／/]/g,'/').replace(/[（）]/g,function(c){return c==='（'?'(':')'})
+    .replace(/[，、]/g,',').toUpperCase();
+}
+function toggleFill(){
+  var on=document.body.classList.toggle('filling');
+  var btn=document.getElementById('fill');
+  btn.classList.toggle('on',on);
+  btn.textContent=on?'填答模式（輸入後按下方核對）':'填答模式';
+  document.getElementById('fillbar').classList.toggle('hide',!on);
+  if(on){
+    /* 進入填答模式前先關掉背誦模式,兩者不並用 */
+    if(document.body.classList.contains('masked')) toggleMask();
+    document.querySelectorAll('td.c').forEach(function(td){
+      if(td.dataset.ans===undefined){
+        td.dataset.ans=td.textContent.trim();
+        td.dataset.html=td.innerHTML;
+      }
+      td.innerHTML='<input class="fi" type="text" autocomplete="off" spellcheck="false">';
+    });
+    document.getElementById('fillmsg').textContent='';
+  }else{
+    document.querySelectorAll('td.c').forEach(function(td){
+      if(td.dataset.html!==undefined){td.innerHTML=td.dataset.html;}
+      td.classList.remove('ok','ng');
+    });
+    document.getElementById('fillmsg').textContent='';
+  }
+}
+function checkFill(){
+  var right=0,wrong=0,blank=0;
+  document.querySelectorAll('td.c').forEach(function(td){
+    var inp=td.querySelector('input.fi');
+    if(!inp) return;
+    var v=inp.value.trim();
+    if(!v){blank++;td.classList.remove('ok','ng');return;}
+    if(fillNorm(v)===fillNorm(td.dataset.ans)){
+      right++;td.classList.add('ok');td.classList.remove('ng');
+    }else{
+      wrong++;td.classList.add('ng');td.classList.remove('ok');
+      inp.value=v+'  ✗ 正解：'+td.dataset.ans;
+    }
+  });
+  var tot=right+wrong;
+  document.getElementById('fillmsg').textContent=
+    tot? ('已核對 '+tot+' 格：答對 '+right+'、答錯 '+wrong+
+          (blank?('，未填 '+blank+' 格'):'')+'　正確率 '+Math.round(right/tot*100)+'%')
+       : '尚未填寫任何格子。';
+}
+function resetFill(){
+  document.querySelectorAll('td.c').forEach(function(td){
+    var inp=td.querySelector('input.fi');
+    if(inp) inp.value='';
+    td.classList.remove('ok','ng');
+  });
+  document.getElementById('fillmsg').textContent='';
+}
+
 document.addEventListener('click', function(e){
   if(!document.body.classList.contains('masked')) return;
   var td = e.target.closest ? e.target.closest('td.c') : null;
