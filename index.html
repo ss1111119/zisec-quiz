@@ -590,7 +590,8 @@ async function fetchAllQuestions(){
   for(const b of list){
     const rr=await fetch('banks/'+b.file,{cache:'no-store'});
     if(!rr.ok) continue;
-    parseText(await rr.text()).forEach(q=>{
+    const pr=parseQuiz(await rr.text());
+    (pr.items||[]).forEach(q=>{
       const k=qkey(q);
       if(!seen.has(k)){seen.add(k);q._src=b.file;pool.push(q);}
     });
