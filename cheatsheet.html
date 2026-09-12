@@ -1605,6 +1605,41 @@ Level 2 的 110 項是「與 NIST SP 800-171 Rev 2 <b class="hl">完全相同</b
 高級要求採加密機制、使用<b>公開且經國際機構驗證、未遭破解</b>之演算法、金鑰或憑證<b>定期更換</b>、
 伺服器端金鑰保管應訂定管理規範。<br>
 <b class="hl">「不在於演算法保密」與「應使用公開演算法」是同一件事的兩種說法</b>，二者互相印證。</div>
+
+<h3>25-6　三種基礎技術一次比完</h3>
+<div class="scroll">
+<table>
+<thead><tr><th>比較項目</th><th>對稱式加密</th><th>非對稱式加密</th><th>雜湊函式</th></tr></thead>
+<tbody>
+<tr><td><b>金鑰數量</b></td><td><b class="hl">1 把</b><br>（秘密金鑰）</td><td><b class="hl">2 把</b><br>（公鑰＋私鑰）</td><td><b class="hl">0 把</b><br>不使用金鑰</td></tr>
+<tr><td><b>可否還原</b></td><td>可解密還原</td><td>可解密還原</td><td><b class="hl">不可逆</b><br>無法回推原始訊息</td></tr>
+<tr><td><b>輸出長度</b></td><td>隨明文長度而異</td><td>隨明文長度而異</td><td><b class="hl">固定長度</b><br>不論輸入多長</td></tr>
+<tr><td><b>速度</b></td><td>快</td><td><b class="hl">慢</b></td><td>快</td></tr>
+<tr><td><b>主要用途</b></td><td>大量資料加密</td><td>金鑰交換、數位簽章</td><td>完整性驗證、密碼儲存</td></tr>
+<tr><td><b>代表演算法</b></td><td>AES、3DES、DES</td><td>RSA、ElGamal</td><td>SHA-256、SHA-512、<br>SHA3-512、MD5（已不安全）</td></tr>
+</tbody></table>
+</div>
+<div class="note"><b>用金鑰數量就能分三類：1 把對稱、2 把非對稱、0 把雜湊。</b><br>
+<b class="hl">雜湊沒有金鑰、不可逆、輸出固定長度</b>——這三點是它與另外兩者的根本差異，也是最常被拿來出錯誤選項的地方
+（例如宣稱「雜湊值可還原原始明文」或「雜湊需使用金鑰」）。</div>
+
+<h3>25-7　哪個技術提供哪個性質</h3>
+<div class="scroll">
+<table>
+<thead><tr><th>技術</th><th>機密性</th><th>完整性</th><th>鑑別性</th><th>不可否認性</th></tr></thead>
+<tbody>
+<tr><td><b>對稱式加密</b></td><td><b class="hl">✔</b></td><td class="dash">—</td><td class="dash">—</td><td><b class="hl">✘ 明確不提供</b></td></tr>
+<tr><td><b>非對稱式加密</b></td><td><b class="hl">✔</b></td><td class="dash">—</td><td><b class="hl">✔</b><br><span style="font-size:12px">透過數位簽章</span></td><td class="dash">—</td></tr>
+<tr><td><b>雜湊函式</b></td><td class="dash">—</td><td><b class="hl">✔</b></td><td class="dash">—</td><td class="dash">—</td></tr>
+<tr><td><b>數位簽章</b><br><span style="font-size:12px">雜湊＋非對稱</span></td><td><b class="hl">✘ 不提供</b><br><span style="font-size:12px">明文照原樣傳送</span></td><td><b class="hl">✔</b></td><td><b class="hl">✔</b></td><td><b class="hl">✔</b></td></tr>
+<tr><td><b>數位信封</b><br><span style="font-size:12px">對稱＋非對稱</span></td><td><b class="hl">✔</b></td><td class="dash">—</td><td class="dash">—</td><td class="dash">—</td></tr>
+</tbody></table>
+</div>
+<div class="fix"><b>這張表的兩個重點，都是「明明看起來該有卻沒有」：</b><br>
+‧<b class="hl">對稱式不提供不可否認性</b>——教材明文列為其缺點。雙方持同一把金鑰，無從證明是誰做的。<br>
+‧<b class="hl">數位簽章不提供機密性</b>——它傳送的是「明文＋簽章」，任何人都看得到內容。要保密須另行加密。<br>
+<b>反過來記：數位簽章一次給你完整性、鑑別性、不可否認性三項，唯獨沒有機密性。</b></div>
+
 </div>
 
 
