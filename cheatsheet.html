@@ -141,6 +141,7 @@
   <a href="#t26">人員作業辦法</a>
   <a href="#t27">雲端服務模式</a>
   <a href="#t28">VANS 四層</a>
+  <a href="#t29">考場回報補遺</a>
   <a href="#t99">未出過題之節次</a>
   <button id="mask" onclick="toggleMask()">背誦模式</button>
   <button id="fill" onclick="toggleFill()">填答模式</button>
@@ -1804,6 +1805,110 @@ Level 2 的 110 項是「與 NIST SP 800-171 Rev 2 <b class="hl">完全相同</b
 以及後續之<b class="hl">弱點追蹤管理</b>。<br>
 <b>比對範疇</b>：公務機關以全機關之資訊資產為原則；其中核心資通系統及其他支持核心業務持續運作相關之
 伺服器主機與使用者電腦，應依應辦事項辦理期限完成。</div>
+</div>
+
+
+<h2 id="t29">廿九、考場回報之高頻細節補遺 <span class="tag v">已核對</span></h2>
+<div class="card">
+<p class="sub" style="margin:0 0 12px">本節係依網路上考生回報之考題方向補齊，內容一律回查教材原文確認。
+<b class="hl">回報文為匿名回憶，非官方資料</b>，惟所述考點均見於教材，故整理供對照。</p>
+
+<h3>29-1　火災分類與滅火方式（教材表 50，依內政部消防署）</h3>
+<div class="scroll">
+<table>
+<thead><tr><th>類別</th><th>別名</th><th>可燃物</th><th>滅火方式</th></tr></thead>
+<tbody>
+<tr><td><b class="hl">A 類</b></td><td class="c">普通火災</td><td class="c">木材、紙張、衣服及塑膠</td><td class="c">水、ABC 類乾粉、泡沫之滅火器</td></tr>
+<tr><td><b class="hl">B 類</b></td><td class="c">油類火災</td><td class="c">石油、焦油、油、溶劑、酒精及液態瓦斯</td><td class="c">BC 類或 ABC 類乾粉、泡沫、CO₂、FM-200</td></tr>
+<tr><td><b class="hl">C 類</b></td><td class="c">電氣火災</td><td class="c">電器設備、電路及電纜</td><td class="c">BC 類或 ABC 類乾粉、CO₂、FM-200</td></tr>
+<tr><td><b class="hl">D 類</b></td><td class="c">金屬火災</td><td class="c">鎂、鈉及鉀</td><td class="c">乾粉（特殊滅火藥劑）</td></tr>
+</tbody></table>
+</div>
+<div class="note"><b>機房最相關的是 C 類電氣火災。</b><b class="hl">C 類不可用水、也不用泡沫</b>——因為會導電。
+只有 <b>A 類</b>能用水與泡沫；<b class="hl">B 類可用泡沫但不可用水</b>。<br>
+<b>ABC 類乾粉三種都能用</b>（A、B、C），是通用型；<b>D 類金屬火災只能用特殊乾粉</b>，其他都不行。</div>
+
+<h3>29-2　三種稽核類型（教材表 23）</h3>
+<div class="scroll">
+<table>
+<thead><tr><th>類型</th><th>是誰稽核誰</th><th>稽核範圍</th><th>稽核項目</th></tr></thead>
+<tbody>
+<tr><td><b class="hl">第一方稽核</b></td><td class="c">內部資通安全稽核<br><span style="font-size:12px">組織內部之自我檢查</span></td><td class="c">全機關</td><td class="c">稽核項目檢核表</td></tr>
+<tr><td><b class="hl">第二方稽核</b></td><td class="c">上級機關稽核下級機關，<br>或機關稽核委外廠商</td><td class="c">全機關</td><td class="c">稽核項目檢核表</td></tr>
+<tr><td><b class="hl">第三方稽核</b></td><td class="c">導入及通過公正第三方<br>ISMS 驗證</td><td class="c">驗證範圍</td><td class="c">資訊安全控制措施</td></tr>
+</tbody></table>
+</div>
+<div class="note"><b>一秒分辨：看「稽核者是誰」。</b>自己查自己＝第一方；上級查下級、機關查廠商＝第二方；外部驗證機構＝第三方。<br>
+<b class="hl">只有第三方之範圍是「驗證範圍」而非全機關</b>，項目也是「資訊安全控制措施」而非檢核表——這組最常被對調。<br>
+<b>第一方稽核即分級辦法第 11 條第 1 項應辦事項之「內部資通安全稽核」</b>，A 級每年 2 次、B 級每年 1 次。</div>
+
+<h3>29-3　完整／差異／增量備份</h3>
+<div class="scroll">
+<table>
+<thead><tr><th>方式</th><th>備份什麼</th><th>速度與空間</th><th>還原時需要</th></tr></thead>
+<tbody>
+<tr><td><b class="hl">完整備份</b></td><td class="c">全部檔案完整複製一份</td><td class="c">耗時長、佔用空間大</td><td class="c">僅需該次完整備份</td></tr>
+<tr><td><b class="hl">差異備份</b></td><td class="c">上次<b>完整備份</b>後有變更或新增者</td><td class="c">較完整備份快、空間較少</td><td class="c">完整備份 ＋ <b class="hl">最近一次</b>差異備份</td></tr>
+<tr><td><b class="hl">增量備份</b></td><td class="c">上次<b>完整或增量備份</b>後有變更或新增者</td><td class="c"><b class="hl">速度最快、空間最少</b></td><td class="c">完整備份 ＋ <b class="hl">依序套用所有</b>增量備份</td></tr>
+</tbody></table>
+</div>
+<div class="note"><b>差異與增量的分界點不同，這是唯一要記的差別：</b><br>
+‧<b class="hl">差異＝跟「完整備份」比</b>，所以每天越備越大，但還原只要兩份<br>
+‧<b class="hl">增量＝跟「上一次備份」比</b>，所以每天都很小，但還原要全部串起來<br>
+<b>教材範例</b>：週一完整備份、週二至週五備份，若週五毀損——差異備份需復原<b class="hl">週一完整＋週四差異</b>；
+增量備份需復原<b class="hl">週一完整＋週二至週四全部增量</b>。<br>
+<b class="hl">題目問「節省空間」選增量，問「還原簡單快速」選差異。</b></div>
+
+<h3>29-4　惡意程式五種型態</h3>
+<div class="scroll">
+<table>
+<thead><tr><th>型態</th><th>教材定義</th><th>分辨關鍵</th></tr></thead>
+<tbody>
+<tr><td><b class="hl">病毒</b><br>Virus</td><td class="c">惡意程式碼片段，透過感染其他合法程式或檔案進行傳播，執行時造成破壞</td><td class="c"><b>要寄生</b>在別的程式</td></tr>
+<tr><td><b class="hl">蠕蟲</b><br>Worm</td><td class="c"><b class="hl">獨立運行</b>之惡意程式，能透過網路<b class="hl">自我複製與傳播</b>，通常不需使用者互動</td><td class="c"><b>自己會跑、自己會傳</b></td></tr>
+<tr><td><b class="hl">木馬</b><br>Trojan Horse</td><td class="c"><b class="hl">偽裝成合法軟體</b>，誘騙使用者下載並執行，一旦運行則執行惡意行為</td><td class="c"><b>靠騙你自己裝</b></td></tr>
+<tr><td><b class="hl">間諜軟體</b><br>Spyware</td><td class="c">監控使用者行為、竊取個人資訊並秘密傳送，通常於使用者不知情下運行</td><td class="c"><b>偷看、偷傳</b></td></tr>
+<tr><td><b class="hl">後門程式</b><br>Backdoor</td><td class="c">允許攻擊者<b class="hl">繞過正常身分驗證</b>機制，遠端控制受感染之系統</td><td class="c"><b>繞過驗證進來</b></td></tr>
+</tbody></table>
+</div>
+<div class="note"><b>最常被對調的是病毒與蠕蟲：</b><b class="hl">病毒要寄生、蠕蟲能獨立</b>；
+蠕蟲<b>不需要使用者互動</b>就能靠網路自我複製，病毒則須隨宿主程式被執行。<br>
+<b>惡意程式常見傳播途徑</b>（教材 6.1.1）：電子郵件（<b class="hl">最常見</b>）、USB 硬碟、網站瀏覽、即時通訊、檔案傳輸／分享。<br>
+<b class="hl">防毒軟體之管理重點第一項即為「定期自動更新病毒碼」</b>——題目問「如何有效防範惡意軟體」或
+「不更新防毒軟體之長期對策」，答案都指向此。</div>
+
+<h3>29-5　CNS 27002：2023 之資產分類</h3>
+<div class="scroll">
+<table>
+<thead><tr><th>類別</th><th>定義</th><th>包含</th></tr></thead>
+<tbody>
+<tr><td><b class="hl">主要資產</b><br>Primary</td><td class="c">對組織<b>核心運作至關重要</b>，受損將直接影響組織之使命與目標</td>
+<td class="c"><b class="hl">資訊（含資料）</b>、<b class="hl">營運過程與活動</b></td></tr>
+<tr><td><b class="hl">支援資產</b><br>Supporting</td><td class="c">支持主要資產運作所需之<b>基礎設施與資源</b></td>
+<td class="c">硬體、軟體、網路、<b class="hl">人員</b>、<b class="hl">場域</b>（機房、辦公地點）、<b class="hl">組織結構</b>（部門、職責劃分）</td></tr>
+</tbody></table>
+</div>
+<div class="note"><b>主要資產只有兩項：資訊、營運過程與活動。</b>其餘全是支援資產。<br>
+<b class="hl">硬體、軟體、網路、人員都是「支援」不是「主要」</b>——這點最常被誤選。
+資產之總定義為<b>「對組織具備價值的任何事物」</b>。</div>
+
+<h3>29-6　其他零星對照</h3>
+<div class="scroll">
+<table>
+<thead><tr><th>考點</th><th>要點</th></tr></thead>
+<tbody>
+<tr><td><b>資安相關法令</b></td><td>教材所列為：<b class="hl">資通安全管理法、個人資料保護法、國家機密保護法、人工智慧基本法</b>，
+及其他業務相關法規（如醫療法、兒童及少年福利與權益保障法）。<br>
+<b class="hl">公司法不在其中</b>；問「哪一部法律與資安無關」多指向純組織治理性質之法律。</td></tr>
+<tr><td><b>數位證據</b></td><td>定義四要件之首為「<b>由電腦儲存或傳送之資料</b>」，特性為<b class="hl">易變性、隱匿性、無形性</b>。<br>
+處理時須<b class="hl">實作控制措施以維護監管鏈</b>——監管鏈指證據自<b>收集、分析到最終呈現</b>之完整性及可信度。</td></tr>
+<tr><td><b>備份模式</b></td><td><b>本地備份</b>：存於原地點，機房火警時可能同時毀損。<br>
+<b class="hl">異地備份</b>：存於不同地點，應考慮地震帶、颱風、土石流以規避同時受災，<b>相距愈遠防護效果愈佳</b>。</td></tr>
+<tr><td><b>絕對化用詞</b></td><td>選項若出現「<b class="hl">可完全取代</b>」「<b class="hl">可完全阻擋</b>」「一律」「絕對」，
+在資安領域幾乎必為錯誤——例如「WAF 可取代防火牆」「WAF 可完全阻擋 XSS 與 SQL Injection」皆誤。
+<b>各機制為互補而非替代，且無任何機制能百分之百阻擋。</b></td></tr>
+</tbody></table>
+</div>
 </div>
 
 
