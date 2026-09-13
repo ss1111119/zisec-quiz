@@ -140,6 +140,7 @@
   <a href="#t25">加密與簽章</a>
   <a href="#t26">人員作業辦法</a>
   <a href="#t27">雲端服務模式</a>
+  <a href="#t28">VANS 四層</a>
   <a href="#t99">未出過題之節次</a>
   <button id="mask" onclick="toggleMask()">背誦模式</button>
   <button id="fill" onclick="toggleFill()">填答模式</button>
@@ -1763,6 +1764,46 @@ Level 2 的 110 項是「與 NIST SP 800-171 Rev 2 <b class="hl">完全相同</b
 <b class="hl">使用者直接用的是應用程式（SaaS），能自己開機配置的是虛擬機器（IaaS）</b>，API 則夾在中間，
 於 PaaS 與 SaaS 中通常由供應商提供。<br>
 另請留意<b class="hl">NIST SP 800-210</b> 即為雲端服務（IaaS／PaaS／SaaS）之<b>存取控制</b>指引（見 24-4）。</div>
+</div>
+
+
+<h2 id="t28">廿八、VANS 資訊資產涵蓋範圍（四層） <span class="tag v">已核對</span></h2>
+<div class="card">
+<p class="sub" style="margin:0 0 10px">VANS 進行弱點比對時涵蓋<b class="hl">四個技術層次</b>，
+由上而下為：應用軟體資產 → 應用框架／程式語言 → 應用程式中介軟體 → 作業系統。
+<b>越上層越靠近使用者、越底層越靠近硬體</b>。</p>
+<div class="scroll">
+<table>
+<thead><tr><th>層次</th><th>位置</th><th>說明</th><th>教材所舉實例</th></tr></thead>
+<tbody>
+<tr><td><b class="hl">應用軟體資產</b></td><td class="c">最上層</td>
+<td>終端使用者或業務部門<b>直接使用</b>的應用程式，<b class="hl">通常是攻擊者嘗試利用的切入點</b></td>
+<td class="c">Adobe 系列軟體、MySQL、Office</td></tr>
+<tr><td><b class="hl">應用框架／程式語言</b></td><td class="c">中間層</td>
+<td>應用程式開發所依賴之基礎框架及程式語言，<b class="hl">其弱點可能影響多個應用程式</b></td>
+<td class="c">Java 的 Struts2、PHP、.NET</td></tr>
+<tr><td><b class="hl">應用程式中介軟體</b><br>Middleware</td><td class="c">支撐層</td>
+<td><b class="hl">連接作業系統與應用程式</b>，提供應用程式運行之基礎服務</td>
+<td class="c">Microsoft IIS、Apache Tomcat</td></tr>
+<tr><td><b class="hl">作業系統</b></td><td class="c">最底層</td>
+<td>所有應用程式及服務運行之<b>基礎平台</b></td>
+<td class="c">Windows Server 及其他 Windows 系列作業系統</td></tr>
+</tbody></table>
+</div>
+
+<div class="fix"><b>最常被對調的是「中介軟體」與「作業系統」的實例。</b><br>
+‧<b class="hl">中介軟體＝IIS、Tomcat</b>（Web 伺服器這類「跑應用程式的東西」）<br>
+‧<b class="hl">作業系統＝Windows Server</b><br>
+看到選項把 <b>Windows Server 掛在中介軟體層</b>，就是錯的。<br>
+另注意 <b class="hl">MySQL 在教材中列於「應用軟體資產」最上層</b>，不在中介軟體層——
+雖然資料庫在別處（如 IaaS/PaaS 的說明）被歸為中介軟體，惟本節係依教材圖 50 之分類。</div>
+
+<div class="note"><b>VANS 是什麼：</b>資通安全弱點通報機制，係<b>資安弱點比對之工具</b>——
+透過與<b class="hl">國際權威弱點資料庫</b>比對機關資產，掌握弱點狀況並及時修補。
+其作業至少含括<b class="hl">資訊資產盤點管理</b>、與國際弱點資料庫查詢或比對是否存在已公開揭露之安全漏洞資訊，
+以及後續之<b class="hl">弱點追蹤管理</b>。<br>
+<b>比對範疇</b>：公務機關以全機關之資訊資產為原則；其中核心資通系統及其他支持核心業務持續運作相關之
+伺服器主機與使用者電腦，應依應辦事項辦理期限完成。</div>
 </div>
 
 
