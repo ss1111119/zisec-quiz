@@ -45,6 +45,7 @@
   .note{background:var(--warn-soft);border-left:4px solid var(--warn);padding:9px 13px;border-radius:0 8px 8px 0;margin:10px 0;font-size:13.5px}
   .fix{background:var(--bad-soft);border-left:4px solid var(--bad);padding:9px 13px;border-radius:0 8px 8px 0;margin:10px 0;font-size:13.5px}
   nav{position:sticky;top:0;z-index:9;background:var(--card);border:1px solid var(--line);
+    max-height:46vh;overflow-y:auto;
     border-radius:10px;padding:9px 12px;margin-bottom:14px}
   nav a{display:inline-block;margin:2px 9px 2px 0;font-size:13px;color:var(--brand);text-decoration:none}
   nav a:hover{text-decoration:underline}
@@ -146,16 +147,15 @@
   <button id="mask" onclick="toggleMask()">背誦模式</button>
   <button id="fill" onclick="toggleFill()">填答模式</button>
   <input id="q" placeholder="輸入關鍵字過濾表格列，例如「滲透」「罰鍰」「36」">
-</nav>
-
-<div id="fillbar" class="card hide" style="position:sticky;top:8px;z-index:20;padding:10px 14px;margin-bottom:12px">
-  <div class="row" style="gap:10px;align-items:center;flex-wrap:wrap">
-    <button onclick="checkFill()">核對答案</button>
-    <button class="ghost" onclick="resetFill()">清空重填</button>
-    <span id="fillmsg" class="foot" style="margin:0"></span>
+  <div id="fillbar" class="hide" style="margin-top:9px;padding-top:9px;border-top:1px solid var(--line)">
+    <div class="row" style="gap:10px;align-items:center;flex-wrap:wrap">
+      <button onclick="checkFill()">核對答案</button>
+      <button class="ghost" onclick="resetFill()">清空重填</button>
+      <span id="fillmsg" class="foot" style="margin:0"></span>
+    </div>
+    <p class="foot" style="margin:6px 0 0">可填答格共 <b id="fillcnt">—</b> 格。不必一次填完——填幾格就按「核對答案」，只計算有填的格子。答對轉綠、答錯轉紅並直接顯示正解。空白與全半形差異不影響判定。</p>
   </div>
-  <p class="foot" style="margin:6px 0 0">表格中原本標為可遮蔽的格子已換成輸入框（全表共 221 格）。不必一次填完——填幾格就按「核對答案」，只會計算有填的格子。答對轉綠、答錯轉紅並直接顯示正解。空白與全半形差異不影響判定。</p>
-</div>
+</nav>
 
 <h2 id="t0">〇、易混淆配對總表 <span class="tag v">已核對</span></h2>
 <div class="card">
@@ -2070,6 +2070,8 @@ function toggleFill(){
       }
       td.innerHTML='<input class="fi" type="text" autocomplete="off" spellcheck="false">';
     });
+    var n=document.querySelectorAll('td.c').length;
+    var fc=document.getElementById('fillcnt'); if(fc) fc.textContent=n;
     document.getElementById('fillmsg').textContent='';
   }else{
     document.querySelectorAll('td.c').forEach(function(td){
