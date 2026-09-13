@@ -139,6 +139,7 @@
   <a href="#t24">標準與框架對照</a>
   <a href="#t25">加密與簽章</a>
   <a href="#t26">人員作業辦法</a>
+  <a href="#t27">雲端服務模式</a>
   <a href="#t99">未出過題之節次</a>
   <button id="mask" onclick="toggleMask()">背誦模式</button>
   <button id="fill" onclick="toggleFill()">填答模式</button>
@@ -1713,6 +1714,55 @@ Level 2 的 110 項是「與 NIST SP 800-171 Rev 2 <b class="hl">完全相同</b
 ‧<b class="hl">作成懲處前</b> → 應給予<b>陳述意見之機會</b>（§22）<br>
 二者分屬不同章節、不同程序，但都是「處分前先讓當事人說話」的設計。<br>
 另注意<b class="hl">查核是函請「法務部調查局」</b>辦理，不是機關自行查核，也不是警政單位。</div>
+</div>
+
+
+<h2 id="t27">廿七、雲端運算之服務模式 <span class="tag v">已核對</span></h2>
+<div class="card">
+<h3>27-1　三種模式之管理責任界線（教材表 49）</h3>
+<p class="sub" style="margin:0 0 10px">本表之核心是<b class="hl">「哪些由使用者管、哪些由供應商管」</b>。
+由 IaaS 到 SaaS，<b>使用者管得越來越少、供應商管得越來越多</b>。</p>
+<div class="scroll">
+<table>
+<thead><tr><th>服務模式</th><th>使用者管理層面</th><th>雲端服務供應商管理層面</th></tr></thead>
+<tbody>
+<tr><td><b class="hl">IaaS</b><br>基礎設施即服務</td>
+<td class="c">作業系統、中介軟體（如資料庫、Web 伺服器）、應用程式</td>
+<td class="c">硬體（伺服器、儲存、網路）之管理與維護</td></tr>
+<tr><td><b class="hl">PaaS</b><br>平台即服務</td>
+<td class="c">應用程式、資料</td>
+<td class="c">硬體、作業系統、中介軟體之管理與維護</td></tr>
+<tr><td><b class="hl">SaaS</b><br>軟體即服務</td>
+<td class="c">應用程式內之使用者設定及資料</td>
+<td class="c">硬體、作業系統、中介軟體、應用程式之管理及維護</td></tr>
+</tbody></table>
+</div>
+<div class="note"><b>用「使用者要管到哪一層」記最快：</b><br>
+‧<b class="hl">IaaS</b>：供應商只給你<b>硬體</b>（伺服器、儲存、網路）→ 作業系統以上全部自己來<br>
+‧<b class="hl">PaaS</b>：供應商連<b>作業系統與中介軟體</b>都幫你顧好 → 你只管<b>應用程式與資料</b><br>
+‧<b class="hl">SaaS</b>：供應商連<b>應用程式</b>都做好 → 你只管<b>程式內的設定與資料</b><br>
+<b class="hl">三種模式下「資料」都是使用者的責任</b>——供應商從來不替你管資料內容與存取授權。</div>
+
+<div class="fix"><b>最常見的錯誤敘述：「在 IaaS 模式下，供應商全權負責應用程式內的資料存取授權與帳號管理」。</b><br>
+這句話錯兩層：<b class="hl">IaaS 的應用程式本來就由「使用者」管理</b>（供應商只管到硬體）；
+而且<b class="hl">縱使是 SaaS，應用程式內的使用者設定與資料仍屬使用者責任</b>。
+換言之，<b>不論哪一種模式，資料與帳號授權都不會變成供應商的事</b>。</div>
+
+<h3>27-2　架構層級與交付形式之對應</h3>
+<div class="scroll">
+<table>
+<thead><tr><th>架構層級</th><th>說明</th><th>主要對應之交付模式</th></tr></thead>
+<tbody>
+<tr><td><b>應用程式</b><br>Applications</td><td>最終使用者直接使用之服務</td><td class="c">SaaS</td></tr>
+<tr><td><b>應用程式開發介面</b><br>API</td><td>定義系統互動之標準介面</td><td class="c">PaaS 或 SaaS<br><span style="font-size:12px">通常由雲端服務提供者管理與提供</span></td></tr>
+<tr><td><b>虛擬機器</b><br>Virtual Machines</td><td>使用者可直接配置與管理之獨立虛擬計算環境</td><td class="c">IaaS</td></tr>
+<tr><td><b>硬體</b><br>伺服器／儲存／網路</td><td>實體基礎設施</td><td class="c">三種模式均由供應商管理</td></tr>
+</tbody></table>
+</div>
+<div class="note"><b>由上而下就是「離使用者越來越遠」：</b>應用程式 → API → 虛擬機器 → 硬體。
+<b class="hl">使用者直接用的是應用程式（SaaS），能自己開機配置的是虛擬機器（IaaS）</b>，API 則夾在中間，
+於 PaaS 與 SaaS 中通常由供應商提供。<br>
+另請留意<b class="hl">NIST SP 800-210</b> 即為雲端服務（IaaS／PaaS／SaaS）之<b>存取控制</b>指引（見 24-4）。</div>
 </div>
 
 
